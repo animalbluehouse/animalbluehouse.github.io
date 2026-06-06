@@ -159,6 +159,13 @@
     <div class="counter-status" id="counter-status"></div>
   </div>
 
+  <div class="share-bar">
+    <div style="font-size:13px;color:var(--testo-dim);">Hai amici da portare?</div>
+    <a class="share-btn" href="#" onclick="shareWA(); return false;" target="_blank" id="share-link">
+      💬 Condividi con gli amici
+    </a>
+  </div>
+
   <div class="seats-section">
     <div class="seats-title">Quanti posti vuoi prenotare?</div>
     <div class="seats-visual">
@@ -345,6 +352,11 @@
     a.download = `prenotazioni-${new Date().toLocaleDateString('it-IT').replace(/\//g,'-')}.csv`;
     a.click(); showToast('Lista scaricata!');
   };
+
+  function shareWA() {
+    const url = 'https://wa.me/?text=' + encodeURIComponent('Ehi! Prenota il tuo posto al cinema di Animal Blue House: ' + window.location.href);
+    window.open(url, '_blank');
+  }
 
   function showToast(msg) {
     const t = document.getElementById('toast');

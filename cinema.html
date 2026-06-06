@@ -353,11 +353,6 @@
     a.click(); showToast('Lista scaricata!');
   };
 
-  function shareWA() {
-    const url = 'https://wa.me/?text=' + encodeURIComponent('Ehi! Prenota il tuo posto al cinema di Animal Blue House: ' + window.location.href);
-    window.open(url, '_blank');
-  }
-
   function showToast(msg) {
     const t = document.getElementById('toast');
     t.textContent = msg; t.classList.add('show');

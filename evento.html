@@ -113,12 +113,6 @@
   .spinner { width:24px; height:24px; border:3px solid rgba(255,255,255,0.1); border-top-color:var(--verde); border-radius:50%; animation:spin 0.8s linear infinite; margin:80px auto; }
   @keyframes spin { to { transform:rotate(360deg); } }
 
-  /* Share bar */
-  .share-bar { display:flex; align-items:center; justify-content:space-between; padding:0 20px; margin-bottom:20px; }
-  .share-title-label { font-size:20px; font-weight:700; color:var(--testo); }
-  .share-btn { display:flex; align-items:center; gap:6px; background:rgba(37,211,102,0.15); border:1px solid rgba(37,211,102,0.3); border-radius:20px; padding:7px 14px; text-decoration:none; font-size:12px; font-weight:600; color:#25D366; white-space:nowrap; }
-  .share-btn:active { background:rgba(37,211,102,0.25); }
-  .share-icon { font-size:15px; }
 
   .fade-in { animation:fadeIn 0.4s ease forwards; opacity:0; }
   @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
@@ -200,16 +194,11 @@
         <div class="event-header fade-in">
           <div class="header-deco"></div>
           <div class="event-tipo-badge">${emoji} ${tipo||'Evento'}</div>
+          <div class="event-titolo">${titolo}</div>
           <div class="event-meta-row">
             ${data ? `<div class="meta-pill">📅 ${data}</div>` : ''}
             ${ora ? `<div class="meta-pill">🕐 ${ora}</div>` : ''}
           </div>
-        </div>
-        <div class="share-bar fade-in">
-          <div class="share-title-label">${titolo}</div>
-          <a class="share-btn" href="https://wa.me/?text=${encodeURIComponent('Ehi! Guarda questo evento di Animal Blue House: ' + window.location.href)}" target="_blank">
-            <span class="share-icon">💬</span> Condividi
-          </a>
         </div>
         ${desc ? `<div class="desc-section fade-in"><div class="desc-text">${desc}</div></div>` : ''}
         ${photos.length > 0 ? '<div class="divider"></div>' : ''}

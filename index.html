@@ -344,11 +344,16 @@
   loadPartner();
   loadMembersCount();
 
-  // Splash screen
-  setTimeout(() => {
-    document.getElementById('splash').classList.add('hide');
-    setTimeout(() => document.getElementById('splash').remove(), 500);
-  }, 1500);
+  // Splash screen - solo al primo avvio
+  if (!sessionStorage.getItem('abh-visited')) {
+    sessionStorage.setItem('abh-visited', '1');
+    setTimeout(() => {
+      document.getElementById('splash').classList.add('hide');
+      setTimeout(() => document.getElementById('splash').remove(), 500);
+    }, 1500);
+  } else {
+    document.getElementById('splash').remove();
+  }
 </script>
 </body>
 </html>

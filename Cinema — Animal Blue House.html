@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0046)file:///C:/Users/rogea/Downloads/cinema_2.html -->
+<!-- saved from url=(0046)file:///C:/Users/rogea/Downloads/cinema_3.html -->
 <html lang="it"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -145,9 +145,9 @@
 
   <div class="counter-card">
     <div class="counter-label">Posti disponibili</div>
-    <div class="counter-number" id="counter-num" style="color: rgb(58, 138, 58);">89</div>
+    <div class="counter-number" id="counter-num" style="color: rgb(58, 138, 58);">82</div>
     <div class="counter-sub">su 90 posti totali</div>
-    <div class="counter-bar"><div class="counter-bar-fill" id="counter-fill" style="width: 1%; background: rgb(58, 138, 58);"></div></div>
+    <div class="counter-bar"><div class="counter-bar-fill" id="counter-fill" style="width: 9%; background: rgb(58, 138, 58);"></div></div>
     <div class="counter-status" id="counter-status" style="color: rgb(58, 138, 58);">Disponibile 🟢</div>
   </div>
 
@@ -292,14 +292,21 @@
     // Salva su Firebase per il counter in tempo reale
     await set(ref(db, `seats/${bookingId}`), { name, contact, count:selectedNum, timestamp:new Date().toISOString() });
 
-    // Salva su Google Sheet
+    // Salva su Google Sheet tramite form nascosto
     try {
-      await fetch('https://script.google.com/macros/s/AKfycbzQtNTPXpnQzU6GD18gQXjTuJI-dcR6a4FI_YJoJ0CrPZSGftxJFYzvRfLicRY_eoM47A/exec', {
-        method:'POST',
-        mode:'no-cors',
-        headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ id:bookingId, nome:name, contatto:contact, posti:selectedNum, dataOra:dataOra })
+      var form = document.createElement('form');
+      form.method = 'POST';
+      form.action = 'https://script.google.com/macros/s/AKfycbzQtNTPXpnQzU6GD18gQXjTuJI-dcR6a4FI_YJoJ0CrPZSGftxJFYzvRfLicRY_eoM47A/exec';
+      form.target = 'hidden-iframe';
+      var fields = { id:bookingId, nome:name, contatto:contact, posti:selectedNum, dataOra:dataOra };
+      Object.entries(fields).forEach(([k,v]) => {
+        var input = document.createElement('input');
+        input.type = 'hidden'; input.name = k; input.value = v;
+        form.appendChild(input);
       });
+      document.body.appendChild(form);
+      form.submit();
+      document.body.removeChild(form);
     } catch(e) { console.log('Sheet sync error:', e); }
 
     closeModal();
@@ -350,6 +357,7 @@
     setTimeout(() => t.classList.remove('show'), 2800);
   }
 </script>
+<iframe name="hidden-iframe" style="display:none;" src="./Cinema — Animal Blue House_files/saved_resource.html"></iframe>
 
 
 </body></html>

@@ -257,7 +257,7 @@
             isOggi = dataEvento.toDateString() === oggi.toDateString();
           }
         }
-        const oggiBadge = isOggi ? '<div class="oggi-badge">STASERA 🎬</div>' : '';
+        const oggiBadge = isOggi ? '<div class="oggi-badge">STASERA</div>' : '';
         const oggiClass = isOggi ? ' oggi' : '';
 
         return `<a class="event-card fade-in${oggiClass}" href="${href}" style="animation-delay:${i*0.08}s">

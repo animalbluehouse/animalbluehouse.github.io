@@ -118,7 +118,9 @@
   /* Contatti */
   .contacts { margin:28px 16px 0; background:var(--card-bg); border-radius:16px; padding:16px 18px; box-shadow:0 3px 16px rgba(0,0,0,0.1); border:1.5px solid var(--border); }
   .contacts-title { font-family:'Bangers',cursive; font-size:16px; letter-spacing:1px; color:var(--verde); margin-bottom:12px; }
-  .contact-item { display:flex; align-items:center; gap:10px; padding:7px 0; border-bottom:0.5px solid var(--border); font-size:14px; color:var(--text-muted); text-decoration:none; }
+  .contact-item { display:flex; align-items:center; gap:12px; padding:9px 0; border-bottom:0.5px solid var(--border); font-size:14px; color:var(--text-muted); text-decoration:none; }
+  .contact-icon { width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .contact-icon svg { width:22px; height:22px; display:block; }
   .contact-item:last-child { border-bottom:none; }
   .contact-item span { font-size:18px; }
 
@@ -131,7 +133,7 @@
 <div class="bg-overlay"></div>
 <div class="container">
   <header>
-    <img src="logo.jpg" alt="Animal Blue House" class="logo-img" />
+    <img src="logo.jpg.jpeg" alt="Animal Blue House" class="logo-img" />
     <div class="week-badge" id="week-label">caricamento...</div>
   </header>
 
@@ -140,11 +142,26 @@
     <div class="loading"><div class="spinner"></div>Caricamento eventi...</div>
   </div>
 
-  <div class="contacts">
+<div class="contacts">
     <div class="contacts-title">Contatti</div>
-    <a class="contact-item" href="https://wa.me/393534918218" target="_blank"><span>💬</span> +39 353 4918218</a>
-    <a class="contact-item" href="https://instagram.com/animalbluehouse" target="_blank"><span>📸</span> @animalbluehouse</a>
-    <a class="contact-item" href="mailto:animalbluehouse.sm@gmail.com"><span>✉️</span> animalbluehouse.sm@gmail.com</a>
+    <a class="contact-item" href="tel:+393534918218">
+      <div class="contact-icon" style="background:#E8F5E9;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#2D6A2D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>
+      </div>
+      +39 353 4918218
+    </a>
+    <a class="contact-item" href="https://instagram.com/animalbluehouse" target="_blank">
+      <div class="contact-icon" style="background:#fce4ec;">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="url(#ig)"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" stroke="url(#ig)"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="url(#ig)"/><defs><linearGradient id="ig" x1="2" y1="22" x2="22" y2="2" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#f09433"/><stop offset="25%" stop-color="#e6683c"/><stop offset="50%" stop-color="#dc2743"/><stop offset="75%" stop-color="#cc2366"/><stop offset="100%" stop-color="#bc1888"/></linearGradient></defs></svg>
+      </div>
+      @animalbluehouse
+    </a>
+    <a class="contact-item" href="mailto:animalbluehouse.sm@gmail.com">
+      <div class="contact-icon" style="background:#E3F2FD;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1565C0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      </div>
+      animalbluehouse.sm@gmail.com
+    </a>
   </div>
 </div>
 

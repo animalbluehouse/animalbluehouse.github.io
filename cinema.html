@@ -139,7 +139,7 @@
 <div class="container">
   <div class="top-bar">
     <a class="back-btn" href="index.html">←</a>
-    <div class="page-title">🎬 Serata Cinema</div>
+    <div class="page-title" id="page-title">🎬 Serata Cinema</div>
     <span class="admin-link" onclick="openAdmin()">admin</span>
   </div>
 
@@ -204,6 +204,28 @@
 <script type="module">
   import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
   import { getDatabase, ref, onValue, set, remove } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
+
+  // Carica titolo film dallo Sheet
+  (async () => {
+    try {
+      const SHEET_ID = '1fjfNvu2nO_8ntIycM9L-qzc7uCL6roEZ-wGypsiqU1w';
+      const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Eventi`;
+      const res = await fetch(url);
+      const text = await res.text();
+      const json = JSON.parse(text.substring(47, text.length - 2));
+      const rows = json.table.rows;
+      for (const row of rows) {
+        const tipo = (row.c[3]?.v || '').toLowerCase();
+        if (tipo === 'cinema') {
+          const titoloFilm = row.c[6]?.v || '';
+          if (titoloFilm) {
+            document.getElementById('page-title').textContent = '🎬 ' + titoloFilm;
+          }
+          break;
+        }
+      }
+    } catch(e) {}
+  })();
 
   const app = initializeApp({ databaseURL:"https://animal-blue-house-default-rtdb.europe-west1.firebasedatabase.app" });
   const db = getDatabase(app);

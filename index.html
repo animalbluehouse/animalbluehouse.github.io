@@ -28,15 +28,11 @@
   /* Sfondo giornali */
   .bg {
     position:fixed; inset:0; z-index:0;
-    background-image: url('https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1200&q=80');
-    background-size:cover;
-    background-position:center;
-    filter:blur(3px) brightness(0.85) saturate(0.4);
-    transform:scale(1.05);
+    background: radial-gradient(ellipse at top left, #1a3a1a 0%, #0d1f0d 40%, #050f05 100%);
   }
   .bg-overlay {
     position:fixed; inset:0; z-index:1;
-    background:rgba(240,235,220,0.55);
+    background: radial-gradient(ellipse at bottom right, rgba(45,106,45,0.15) 0%, transparent 60%);
   }
 
   .container { max-width:480px; margin:0 auto; padding:0 0 48px; position:relative; z-index:2; }
@@ -216,7 +212,7 @@
       const html = events.map((ev, i) => {
         const emoji = getTypeEmoji(ev.tipo);
         const isCinema = (ev.tipo||'').toLowerCase() === 'cinema';
-      const href = isCinema ? '/cinema.html' : `/evento.html?i=${ev.index}`;
+        const href = isCinema ? 'cinema.html' : `evento.html?i=${ev.index}`;
         const poster = ev.locandina
           ? `<img src="${ev.locandina}" alt="${ev.titolo}" loading="lazy" />`
           : `<div class="fallback">${emoji}</div>`;

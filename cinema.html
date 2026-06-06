@@ -9,13 +9,13 @@
   :root {
     --verde: #2D6A2D; --verde-light: #4CAF50;
     --giallo: #F5C518; --rosso: #E53935;
-    --card-bg: rgba(255,255,255,0.92); --border: rgba(0,0,0,0.08);
-    --text: #1a1a1a; --text-muted: #555;
+    --card-bg: rgba(255,255,255,0.08); --border: rgba(255,255,255,0.12);
+    --text: #f0f0f0; --text-muted: rgba(255,255,255,0.5);
   }
   * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
   body { font-family:'DM Sans',sans-serif; color:var(--text); min-height:100vh; }
-  .bg { position:fixed; inset:0; z-index:0; background-image:url('https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1200&q=80'); background-size:cover; background-position:center; filter:blur(3px) brightness(0.85) saturate(0.4); transform:scale(1.05); }
-  .bg-overlay { position:fixed; inset:0; z-index:1; background:rgba(240,235,220,0.55); }
+  .bg { position:fixed; inset:0; z-index:0; background: radial-gradient(ellipse at top left, #1a3a1a 0%, #0d1f0d 40%, #050f05 100%); }
+  .bg-overlay { position:fixed; inset:0; z-index:1; background: radial-gradient(ellipse at bottom right, rgba(45,106,45,0.15) 0%, transparent 60%); }
   .container { max-width:480px; margin:0 auto; padding:0 0 140px; position:relative; z-index:2; }
 
   .top-bar { padding:20px 20px 0; display:flex; align-items:center; gap:12px; }
@@ -28,7 +28,7 @@
   .counter-number { font-family:'Bangers',cursive; font-size:80px; line-height:1; letter-spacing:2px; transition:color 0.5s, transform 0.3s; }
   .counter-sub { font-size:13px; color:var(--text-muted); margin-top:4px; }
   .counter-bar-wrap { margin:16px 0 8px; }
-  .counter-bar { height:8px; background:rgba(0,0,0,0.08); border-radius:4px; overflow:hidden; }
+  .counter-bar { height:8px; background:rgba(255,255,255,0.1); border-radius:4px; overflow:hidden; }
   .counter-bar-fill { height:8px; border-radius:4px; transition:width 0.8s ease, background 0.5s; }
   .counter-status { font-family:'Bangers',cursive; font-size:18px; letter-spacing:1px; margin-top:10px; }
 
@@ -39,7 +39,7 @@
   .info-card strong { color:var(--text); }
 
   /* Barra fissa */
-  .booking-bar { position:fixed; bottom:0; left:50%; transform:translateX(-50%); width:100%; max-width:480px; background:rgba(255,252,245,0.97); border-top:1.5px solid var(--border); padding:14px 20px 28px; z-index:50; box-shadow:0 -4px 20px rgba(0,0,0,0.1); }
+  .booking-bar { position:fixed; bottom:0; left:50%; transform:translateX(-50%); width:100%; max-width:480px; background:rgba(5,15,5,0.97); border-top:1.5px solid var(--border); padding:14px 20px 28px; z-index:50; box-shadow:0 -4px 20px rgba(0,0,0,0.1); }
   .booking-bar-inner { display:flex; align-items:center; gap:12px; }
   .selected-info { flex:1; }
   .selected-count { font-family:'Bangers',cursive; font-size:18px; letter-spacing:0.5px; color:var(--text); }
@@ -50,37 +50,37 @@
 
   /* Contatore posti selezionati grafici */
   .seats-visual { display:flex; gap:8px; justify-content:center; margin:16px 16px 0; flex-wrap:wrap; }
-  .seat-dot { width:44px; height:44px; border-radius:10px; border:2px dashed rgba(0,0,0,0.2); display:flex; align-items:center; justify-content:center; font-size:20px; transition:all 0.2s; background:rgba(255,255,255,0.6); }
+  .seat-dot { width:44px; height:44px; border-radius:10px; border:2px dashed rgba(255,255,255,0.2); display:flex; align-items:center; justify-content:center; font-size:20px; transition:all 0.2s; background:rgba(255,255,255,0.06); color:#f0f0f0; }
   .seat-dot.active { background:var(--verde); border-color:var(--verde); }
   .seat-dot.active::after { content:'✓'; color:#fff; font-size:16px; font-weight:bold; }
 
   /* Modal */
   .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:100; align-items:flex-end; justify-content:center; }
   .modal-overlay.active { display:flex; }
-  .modal { background:#fffcf5; border-radius:24px 24px 0 0; padding:24px; width:100%; max-width:480px; animation:slideUp 0.3s ease; border-top:1.5px solid var(--border); }
+  .modal { background:#0f2a0f; border-radius:24px 24px 0 0; padding:24px; width:100%; max-width:480px; animation:slideUp 0.3s ease; border-top:1.5px solid var(--border); }
   @keyframes slideUp { from { transform:translateY(100%); } to { transform:translateY(0); } }
   .modal h3 { font-family:'Bangers',cursive; font-size:22px; letter-spacing:1px; margin-bottom:4px; }
   .modal-recap { font-size:13px; color:var(--text-muted); margin-bottom:20px; }
-  .modal input { width:100%; background:#fff; border:1.5px solid rgba(0,0,0,0.12); border-radius:10px; padding:13px 14px; font-size:14px; color:var(--text); font-family:'DM Sans',sans-serif; outline:none; margin-bottom:12px; }
+  .modal input { width:100%; background:rgba(255,255,255,0.08); border:1.5px solid rgba(255,255,255,0.15); border-radius:10px; padding:13px 14px; font-size:14px; color:var(--text); font-family:'DM Sans',sans-serif; outline:none; margin-bottom:12px; }
   .modal input:focus { border-color:var(--verde); }
-  .modal input::placeholder { color:rgba(0,0,0,0.3); }
+  .modal input::placeholder { color:rgba(255,255,255,0.25); }
   .modal-btns { display:flex; gap:10px; }
   .btn-confirm { flex:1; background:var(--verde); color:#fff; border:none; border-radius:10px; padding:13px; font-size:14px; font-weight:500; font-family:'DM Sans',sans-serif; cursor:pointer; }
-  .btn-cancel { background:rgba(0,0,0,0.06); color:var(--text-muted); border:none; border-radius:10px; padding:13px 18px; font-size:14px; font-family:'DM Sans',sans-serif; cursor:pointer; }
+  .btn-cancel { background:rgba(255,255,255,0.08); color:var(--text-muted); border:0.5px solid rgba(255,255,255,0.1); border-radius:10px; padding:13px 18px; font-size:14px; font-family:'DM Sans',sans-serif; cursor:pointer; }
 
   /* Admin */
   .admin-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:200; align-items:center; justify-content:center; padding:24px; }
   .admin-overlay.active { display:flex; }
-  .admin-modal { background:#fffcf5; border-radius:20px; padding:24px; width:100%; max-width:360px; border:1.5px solid var(--border); }
+  .admin-modal { background:#0f2a0f; border-radius:20px; padding:24px; width:100%; max-width:360px; border:1.5px solid var(--border); }
   .admin-modal h3 { font-family:'Bangers',cursive; font-size:20px; letter-spacing:1px; margin-bottom:6px; }
   .admin-modal p { font-size:13px; color:var(--text-muted); margin-bottom:16px; }
-  .admin-modal input { width:100%; background:#fff; border:1.5px solid rgba(0,0,0,0.12); border-radius:10px; padding:12px 14px; font-size:14px; color:var(--text); font-family:'DM Sans',sans-serif; outline:none; margin-bottom:12px; }
+  .admin-modal input { width:100%; background:rgba(255,255,255,0.08); border:1.5px solid rgba(255,255,255,0.15); border-radius:10px; padding:12px 14px; font-size:14px; color:var(--text); font-family:'DM Sans',sans-serif; outline:none; margin-bottom:12px; }
   .admin-actions { display:flex; flex-direction:column; gap:10px; margin-top:4px; }
   .btn-reset { background:rgba(229,57,53,0.1); color:var(--rosso); border:1.5px solid rgba(229,57,53,0.3); border-radius:10px; padding:13px; font-size:14px; font-family:'DM Sans',sans-serif; cursor:pointer; font-weight:500; }
   .btn-download { background:rgba(45,106,45,0.1); color:var(--verde); border:1.5px solid rgba(45,106,45,0.3); border-radius:10px; padding:13px; font-size:14px; font-family:'DM Sans',sans-serif; cursor:pointer; font-weight:500; }
-  .btn-close-admin { background:rgba(0,0,0,0.06); color:var(--text-muted); border:none; border-radius:10px; padding:13px; font-size:14px; font-family:'DM Sans',sans-serif; cursor:pointer; }
+  .btn-close-admin { background:rgba(255,255,255,0.08); color:var(--text-muted); border:0.5px solid rgba(255,255,255,0.1); border-radius:10px; padding:13px; font-size:14px; font-family:'DM Sans',sans-serif; cursor:pointer; }
 
-  .admin-link { position:absolute; top:22px; right:20px; font-size:11px; color:rgba(0,0,0,0.25); cursor:pointer; z-index:3; }
+  .admin-link { position:absolute; top:22px; right:20px; font-size:11px; color:rgba(255,255,255,0.25); cursor:pointer; z-index:3; }
 
   .toast { position:fixed; bottom:110px; left:50%; transform:translateX(-50%) translateY(10px); background:#1a1a1a; border-radius:12px; padding:12px 20px; font-size:13px; color:#fff; z-index:300; opacity:0; transition:all 0.3s; white-space:nowrap; pointer-events:none; }
   .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
@@ -157,12 +157,12 @@
     <h3>Area Admin</h3>
     <p>Inserisci la password per accedere</p>
     <input type="password" id="admin-password" placeholder="Password" />
-    <button class="btn-confirm" style="width:100%;" onclick="checkAdmin()">Accedi</button>
+    <button class="btn-confirm" style="width:100%;margin-bottom:10px;" onclick="checkAdmin()">Accedi</button>
     <div class="admin-actions" id="admin-actions" style="display:none;">
       <button class="btn-download" onclick="downloadData()">⬇ Scarica lista prenotazioni</button>
       <button class="btn-reset" onclick="resetSeats()">↺ Azzera tutti i posti</button>
-      <button class="btn-close-admin" onclick="closeAdmin()">Chiudi</button>
     </div>
+    <button class="btn-close-admin" style="width:100%;margin-top:10px;" onclick="closeAdmin()">✕ Chiudi</button>
   </div>
 </div>
 

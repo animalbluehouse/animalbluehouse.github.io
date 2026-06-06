@@ -159,7 +159,8 @@
       const json = JSON.parse(text.substring(47, text.length - 2));
       const rows = json.table.rows;
       if (!rows || rows.length === 0) { document.getElementById('events-list').innerHTML = '<div class="loading">Nessun evento in programma.</div>'; return; }
-      const events = rows.map((row, i) => ({ titolo:row.c[0]?.v||'', data:row.c[1]?.v||'', ora:row.c[2]?.v||'', tipo:row.c[3]?.v||'', descrizione:row.c[4]?.v||'', locandina:row.c[5]?.v||'', index:i })).filter(e => e.titolo);
+      const parseData = (c) => { if (!c || !c.v) return ''; if (c.f) return c.f; if (typeof c.v === 'string') return c.v; return c.v; };
+      const events = rows.map((row, i) => ({ titolo:row.c[0]?.v||'', data:parseData(row.c[1]), ora:row.c[2]?.v||'', tipo:row.c[3]?.v||'', descrizione:row.c[4]?.v||'', locandina:row.c[5]?.v||'', attivo:(row.c[7]?.v||'').toString().toUpperCase(), index:i })).filter(e => e.titolo && e.attivo === 'SI');
       if (events.length === 0) { document.getElementById('events-list').innerHTML = '<div class="loading">Nessun evento in programma.</div>'; return; }
       const html = events.map((ev, i) => {
         const emoji = getTypeEmoji(ev.tipo);

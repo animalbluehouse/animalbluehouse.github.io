@@ -38,7 +38,7 @@
   .login-title { font-size:28px; font-weight:700; color:var(--testo); margin-bottom:4px; }
   .login-sub { font-size:14px; color:var(--testo-dim); margin-bottom:32px; }
   .login-card { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); border-radius:20px; padding:24px; width:100%; max-width:340px; backdrop-filter:blur(20px); }
-  .login-card input { width:100%; background:rgba(255,255,255,0.08); border:1.5px solid rgba(255,255,255,0.12); border-radius:12px; padding:14px; font-size:16px; color:var(--testo); font-family:'Fredoka',sans-serif; outline:none; margin-bottom:14px; letter-spacing:2px; }
+  .login-card input { width:100%; margin-bottom:10px; background:rgba(255,255,255,0.08); border:1.5px solid rgba(255,255,255,0.12); border-radius:12px; padding:14px; font-size:16px; color:var(--testo); font-family:'Fredoka',sans-serif; outline:none; margin-bottom:14px; letter-spacing:2px; }
   .login-card input:focus { border-color:var(--verde); }
   .login-card input::placeholder { color:var(--testo-dim); letter-spacing:0; }
   .btn-login { width:100%; background:var(--verde); color:#fff; border:none; border-radius:12px; padding:14px; font-size:17px; font-weight:700; font-family:'Fredoka',sans-serif; cursor:pointer; box-shadow:0 0 20px var(--verde-glow); }
@@ -214,19 +214,25 @@
   // Check se già loggato
   if (sessionStorage.getItem('abh-admin') === '1') showDashboard();
 
+  const ADMIN_USERNAME = "ABH@dm1n26";
   window.checkLogin = function() {
+    const user = document.getElementById('user-input').value;
     const pw = document.getElementById('pw-input').value;
-    if (pw === ADMIN_PASSWORD) {
+    if (user === ADMIN_USERNAME && pw === ADMIN_PASSWORD) {
       sessionStorage.setItem('abh-admin', '1');
       showDashboard();
     } else {
       document.getElementById('login-error').style.display = 'block';
       document.getElementById('pw-input').value = '';
+      document.getElementById('user-input').value = '';
     }
   };
 
   document.getElementById('pw-input').addEventListener('keydown', e => {
     if (e.key === 'Enter') window.checkLogin();
+  });
+  document.getElementById('user-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.getElementById('pw-input').focus();
   });
 
   window.logout = function() {

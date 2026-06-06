@@ -214,26 +214,21 @@
   // Check se già loggato
   if (sessionStorage.getItem('abh-admin') === '1') showDashboard();
 
-  const ADMIN_USERNAME = "ABH@dm1n26";
   window.checkLogin = function() {
-    const user = document.getElementById('user-input').value;
     const pw = document.getElementById('pw-input').value;
-    if (user === ADMIN_USERNAME && pw === ADMIN_PASSWORD) {
+    if (pw === ADMIN_PASSWORD) {
       sessionStorage.setItem('abh-admin', '1');
       showDashboard();
     } else {
       document.getElementById('login-error').style.display = 'block';
       document.getElementById('pw-input').value = '';
-      document.getElementById('user-input').value = '';
     }
   };
 
   document.getElementById('pw-input').addEventListener('keydown', e => {
     if (e.key === 'Enter') window.checkLogin();
   });
-  document.getElementById('user-input').addEventListener('keydown', e => {
-    if (e.key === 'Enter') document.getElementById('pw-input').focus();
-  });
+
 
   window.logout = function() {
     sessionStorage.removeItem('abh-admin');

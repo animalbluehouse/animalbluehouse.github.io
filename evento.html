@@ -20,7 +20,7 @@
   body { font-family:'Fredoka',sans-serif; color:var(--testo); min-height:100vh; background:#050f05; overflow-x:hidden; }
 
   .bg { position:fixed; inset:0; z-index:0; background:radial-gradient(ellipse at top left, #1a3a1a 0%, #0d1f0d 45%, #050f05 100%); }
-  .bg-glow { position:fixed; inset:0; z-index:0; background:radial-gradient(ellipse at 70% 10%, rgba(58,138,58,0.1) 0%, transparent 50%), radial-gradient(ellipse at 20% 90%, rgba(245,197,24,0.05) 0%, transparent 50%); pointer-events:none; }
+  .bg-glow { position:fixed; inset:0; z-index:0; background:radial-gradient(ellipse at 70% 10%, rgba(58,138,58,0.1) 0%, transparent 50%); pointer-events:none; }
 
   .container { max-width:480px; margin:0 auto; padding:0 0 48px; position:relative; z-index:2; }
 
@@ -34,87 +34,79 @@
     box-shadow:0 0 16px rgba(58,138,58,0.3);
   }
 
-  /* Header */
+  /* Header compatto */
   .event-header {
-    position:relative; min-height:280px;
-    display:flex; flex-direction:column; justify-content:flex-end;
-    overflow:hidden; padding:80px 20px 28px;
+    padding:72px 20px 20px;
+    position:relative; overflow:hidden;
   }
-  .event-header::before { content:''; position:absolute; inset:0; z-index:0; background:linear-gradient(135deg, rgba(58,138,58,0.2) 0%, rgba(245,197,24,0.06) 50%, rgba(58,100,58,0.18) 100%); }
-  .header-blob { position:absolute; z-index:0; border-radius:50%; filter:blur(40px); opacity:0.5; }
-  .blob1 { width:200px; height:200px; background:rgba(58,138,58,0.3); top:-60px; right:-40px; animation:float1 6s ease-in-out infinite; }
-  .blob2 { width:150px; height:150px; background:rgba(245,197,24,0.12); bottom:-30px; left:-20px; animation:float2 8s ease-in-out infinite; }
-  .blob3 { width:100px; height:100px; background:rgba(90,170,90,0.2); top:40px; left:35%; animation:float3 5s ease-in-out infinite; }
-  @keyframes float1 { 0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-10px,10px) scale(1.05)} }
-  @keyframes float2 { 0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(10px,-8px) scale(1.08)} }
-  @keyframes float3 { 0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-5px,12px) scale(0.95)} }
-  .header-deco { position:absolute; top:0; left:0; right:0; height:3px; z-index:1; background:linear-gradient(90deg, transparent, var(--verde), var(--giallo), var(--verde), transparent); }
-  .header-content { position:relative; z-index:1; }
-  .event-tipo-badge { display:inline-flex; align-items:center; gap:6px; background:rgba(58,138,58,0.25); border:1px solid rgba(58,138,58,0.4); border-radius:20px; padding:4px 12px; font-size:12px; font-weight:600; color:var(--verde-light); letter-spacing:1px; text-transform:uppercase; margin-bottom:10px; backdrop-filter:blur(10px); }
-  .event-titolo { font-size:34px; font-weight:700; color:var(--testo); line-height:1.1; letter-spacing:-0.5px; margin-bottom:12px; }
-  .event-meta-row { display:flex; gap:10px; flex-wrap:wrap; }
-  .meta-pill { display:flex; align-items:center; gap:6px; background:rgba(255,255,255,0.08); border:0.5px solid rgba(255,255,255,0.12); border-radius:20px; padding:5px 12px; font-size:13px; color:var(--testo-muted); backdrop-filter:blur(10px); }
-
-  /* Gallery sovrapposta */
-  .gallery-section { padding:28px 0 0; }
-  .gallery-label { font-size:11px; font-weight:600; letter-spacing:2px; color:var(--verde); padding:0 20px; margin-bottom:20px; text-transform:uppercase; display:flex; align-items:center; gap:8px; }
-  .gallery-label::after { content:''; flex:1; height:1px; background:rgba(58,138,58,0.3); }
-
-  .gallery-stack {
-    position:relative;
-    height:220px;
-    display:flex; align-items:center; justify-content:center;
-    margin:0 20px;
-    cursor:pointer;
-  }
-
-  .stack-item {
-    position:absolute;
-    width:180px; height:180px;
-    border-radius:20px;
-    overflow:hidden;
-    border:2px solid rgba(255,255,255,0.1);
-    box-shadow:0 8px 32px rgba(0,0,0,0.5);
-    transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1);
-    cursor:pointer;
-  }
-  .stack-item img { width:100%; height:100%; object-fit:cover; }
-
-  /* Posizioni stack — 5 foto */
-  .stack-item:nth-child(1) { transform:rotate(-8deg) translateX(-80px); z-index:1; filter:blur(2px) brightness(0.6); width:140px; height:140px; }
-  .stack-item:nth-child(2) { transform:rotate(-4deg) translateX(-40px); z-index:2; filter:blur(1px) brightness(0.75); width:155px; height:155px; }
-  .stack-item:nth-child(3) { transform:rotate(0deg) translateX(0); z-index:5; filter:none; width:180px; height:180px; border-color:rgba(58,138,58,0.6); box-shadow:0 8px 40px rgba(0,0,0,0.6), 0 0 0 3px rgba(58,138,58,0.2); }
-  .stack-item:nth-child(4) { transform:rotate(4deg) translateX(40px); z-index:2; filter:blur(1px) brightness(0.75); width:155px; height:155px; }
-  .stack-item:nth-child(5) { transform:rotate(8deg) translateX(80px); z-index:1; filter:blur(2px) brightness(0.6); width:140px; height:140px; }
-
-  /* Frecce navigazione */
-  .gallery-nav { display:flex; align-items:center; justify-content:center; gap:20px; margin-top:16px; }
-  .nav-btn { width:40px; height:40px; border-radius:50%; background:rgba(58,138,58,0.2); border:1.5px solid rgba(58,138,58,0.4); display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:18px; color:var(--testo); transition:all 0.2s; }
-  .nav-btn:active { background:rgba(58,138,58,0.4); transform:scale(0.93); }
-  .gallery-counter { font-size:13px; color:var(--testo-dim); font-weight:500; }
-
-  /* Dots */
-  .gallery-dots { display:flex; gap:6px; justify-content:center; margin-top:12px; }
-  .dot { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.2); transition:all 0.3s; }
-  .dot.active { background:var(--verde); width:18px; border-radius:3px; }
+  .header-deco { position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, transparent, var(--verde), var(--giallo), var(--verde), transparent); }
+  .event-tipo-badge { display:inline-flex; align-items:center; gap:6px; background:rgba(58,138,58,0.2); border:1px solid rgba(58,138,58,0.35); border-radius:20px; padding:3px 10px; font-size:11px; font-weight:600; color:var(--verde-light); letter-spacing:1px; text-transform:uppercase; margin-bottom:8px; }
+  .event-titolo { font-size:28px; font-weight:700; color:var(--testo); line-height:1.1; margin-bottom:10px; }
+  .event-meta-row { display:flex; gap:8px; flex-wrap:wrap; }
+  .meta-pill { display:flex; align-items:center; gap:5px; background:rgba(255,255,255,0.07); border:0.5px solid rgba(255,255,255,0.1); border-radius:20px; padding:4px 10px; font-size:12px; color:var(--testo-muted); }
 
   /* Descrizione */
-  .desc-section { padding:28px 16px 0; }
-  .desc-card { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08); border-radius:18px; padding:22px; backdrop-filter:blur(10px); position:relative; overflow:hidden; }
-  .desc-card::before { content:'🛸'; position:absolute; right:16px; top:16px; font-size:32px; opacity:0.15; }
-  .desc-title { font-size:16px; font-weight:700; color:var(--testo); margin-bottom:12px; }
+  .desc-section { padding:20px 20px 0; }
   .desc-text { font-size:15px; color:var(--testo-muted); line-height:1.8; }
-  .desc-text p { margin-bottom:10px; }
+  .desc-text p { margin-bottom:8px; }
   .desc-text p:last-child { margin-bottom:0; }
 
+  /* Divisore */
+  .divider { margin:24px 20px 0; height:1px; background:linear-gradient(90deg, transparent, rgba(58,138,58,0.4), transparent); }
+
+  /* Foto grandi scorrevoli */
+  .photos-section { padding:24px 0 0; }
+  .photos-label { font-size:11px; font-weight:600; letter-spacing:2px; color:var(--verde); padding:0 20px; margin-bottom:16px; text-transform:uppercase; display:flex; align-items:center; gap:8px; }
+  .photos-label::after { content:''; flex:1; height:1px; background:rgba(58,138,58,0.3); }
+
+  .photos-scroll {
+    display:flex; gap:14px;
+    padding:0 20px 20px;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+  }
+  .photos-scroll::-webkit-scrollbar { display:none; }
+
+  .photo-item {
+    flex-shrink:0;
+    width:280px;
+    scroll-snap-align:center;
+    border-radius:18px;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,0.08);
+    box-shadow:0 8px 32px rgba(0,0,0,0.4);
+    position:relative;
+  }
+  .photo-item img {
+    width:100%; height:320px;
+    object-fit:cover; display:block;
+  }
+  .photo-item .photo-overlay {
+    position:absolute; bottom:0; left:0; right:0;
+    background:linear-gradient(to top, rgba(5,15,5,0.7) 0%, transparent 60%);
+    padding:16px 14px 12px;
+    font-size:12px; color:rgba(240,240,232,0.5);
+  }
+
+  /* Hint scorri */
+  .scroll-hint { display:flex; align-items:center; justify-content:center; gap:6px; padding:4px 0 0; font-size:12px; color:var(--testo-dim); }
+  .scroll-hint-dots { display:flex; gap:5px; }
+  .sdot { width:5px; height:5px; border-radius:50%; background:rgba(255,255,255,0.15); transition:all 0.3s; }
+  .sdot.active { background:var(--verde); width:14px; border-radius:3px; }
+
   /* Lightbox */
-  .lightbox { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.92); z-index:100; align-items:center; justify-content:center; }
+  .lightbox { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.93); z-index:100; align-items:center; justify-content:center; }
   .lightbox.active { display:flex; }
-  .lightbox img { max-width:90vw; max-height:80vh; border-radius:16px; object-fit:contain; }
+  .lightbox img { max-width:92vw; max-height:82vh; border-radius:14px; object-fit:contain; }
   .lightbox-close { position:absolute; top:20px; right:20px; font-size:28px; color:#fff; cursor:pointer; }
 
   .spinner { width:24px; height:24px; border:3px solid rgba(255,255,255,0.1); border-top-color:var(--verde); border-radius:50%; animation:spin 0.8s linear infinite; margin:80px auto; }
   @keyframes spin { to { transform:rotate(360deg); } }
+
+  .fade-in { animation:fadeIn 0.4s ease forwards; opacity:0; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
 </style>
 </head>
 <body>
@@ -137,84 +129,17 @@
   const idx = parseInt(new URLSearchParams(window.location.search).get('i') || '0');
   const emojis = { cinema:'🎬', torneo:'🃏', cultura:'🎭', musica:'🎵', sport:'⚽', comedy:'🎤', party:'🎉' };
 
-  // Foto fisse per evento — aggiungi qui nuovi eventi
   const eventPhotos = {
     'polleggedi': ['polleggedi-1.jpg','polleggedi-2.jpg','polleggedi-3.jpg','polleggedi-4.jpg','polleggedi-5.jpg']
   };
 
-  // Descrizioni fisse per evento
   const eventDescriptions = {
     'polleggedi': `<p>Polleggedì non è solo una serata — è il rituale che trasforma un venerdì qualunque in qualcosa che aspetti tutta la settimana.</p><p>Musica, risate, facce che conosci e facce nuove. Un posto dove puoi arrivare da solo e sentirti già a casa dopo cinque minuti.</p><p>Ci vediamo lì. 🛸</p>`
   };
 
   function getKey(titolo) {
-    return (titolo||'').toLowerCase().replace(/\s+/g,'').replace(/[àáâ]/g,'a').replace(/[èéê]/g,'e').replace(/[ìíî]/g,'i').replace(/[òóô]/g,'o').replace(/[ùúû]/g,'u').replace(/ì/g,'i').replace(/è/g,'e');
+    return (titolo||'').toLowerCase().replace(/\s+/g,'').replace(/[àáâ]/g,'a').replace(/[èéê]/g,'e').replace(/[ìíî]/g,'i').replace(/[òóô]/g,'o').replace(/[ùúû]/g,'u');
   }
-
-  let currentIndex = 0;
-  let photos = [];
-
-  function renderStack() {
-    const stack = document.getElementById('gallery-stack');
-    if (!stack) return;
-    const total = photos.length;
-    stack.innerHTML = photos.map((p, i) => {
-      const offset = i - currentIndex;
-      const clamped = Math.max(-2, Math.min(2, offset));
-      return `<div class="stack-item" style="--offset:${clamped}" onclick="handleStackClick(${i})" data-index="${i}">
-        <img src="${p}" alt="Foto ${i+1}" loading="lazy" />
-      </div>`;
-    }).join('');
-
-    // Applica posizioni dinamiche
-    const items = stack.querySelectorAll('.stack-item');
-    items.forEach((item, i) => {
-      const offset = i - currentIndex;
-      const abs = Math.abs(offset);
-      const sign = offset < 0 ? -1 : offset > 0 ? 1 : 0;
-      const rotate = sign * abs * 4;
-      const translateX = sign * abs * 40;
-      const scale = abs === 0 ? 1 : abs === 1 ? 0.86 : 0.75;
-      const zIndex = abs === 0 ? 5 : abs === 1 ? 3 : 1;
-      const blur = abs === 0 ? 0 : abs === 1 ? 1 : 2;
-      const brightness = abs === 0 ? 1 : abs === 1 ? 0.75 : 0.6;
-      const size = abs === 0 ? 180 : abs === 1 ? 155 : 140;
-      item.style.cssText = `
-        transform: rotate(${rotate}deg) translateX(${translateX}px) scale(${scale});
-        z-index: ${zIndex};
-        filter: blur(${blur}px) brightness(${brightness});
-        width: ${size}px; height: ${size}px;
-        border-color: ${abs === 0 ? 'rgba(58,138,58,0.6)' : 'rgba(255,255,255,0.1)'};
-        box-shadow: ${abs === 0 ? '0 8px 40px rgba(0,0,0,0.6), 0 0 0 3px rgba(58,138,58,0.2)' : '0 8px 32px rgba(0,0,0,0.5)'};
-        position:absolute; border-radius:20px; overflow:hidden;
-        cursor:pointer; transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1);
-        border: 2px solid;
-      `;
-    });
-
-    // Update counter e dots
-    document.getElementById('gallery-counter').textContent = `${currentIndex + 1} / ${total}`;
-    document.querySelectorAll('.dot').forEach((d,i) => d.classList.toggle('active', i === currentIndex));
-  }
-
-  window.handleStackClick = function(i) {
-    if (i === currentIndex) {
-      openLightbox(photos[i]);
-    } else {
-      currentIndex = i;
-      renderStack();
-    }
-  };
-
-  window.prevPhoto = function() {
-    currentIndex = (currentIndex - 1 + photos.length) % photos.length;
-    renderStack();
-  };
-
-  window.nextPhoto = function() {
-    currentIndex = (currentIndex + 1) % photos.length;
-    renderStack();
-  };
 
   async function load() {
     try {
@@ -232,54 +157,53 @@
       const data = dataRaw?.f || (typeof dataRaw?.v === 'string' ? dataRaw.v : '') || '';
       const ora = row.c[2]?.v||'';
       const tipo = row.c[3]?.v||'';
-      const descSheet = row.c[4]?.v||'';
       const emoji = emojis[(tipo||'').toLowerCase()] || '📅';
       const key = getKey(titolo);
-      photos = eventPhotos[key] || [];
-      const descFixed = eventDescriptions[key] || '';
-      const descFinal = descFixed || (descSheet ? `<p>${descSheet}</p>` : '');
+      const photos = eventPhotos[key] || [];
+      const desc = eventDescriptions[key] || (row.c[4]?.v ? `<p>${row.c[4].v}</p>` : '');
 
       document.title = `${titolo} — Animal Blue House`;
 
-      const galleryHTML = photos.length > 0 ? `
-        <div class="gallery-section">
-          <div class="gallery-label">Galleria</div>
-          <div class="gallery-stack" id="gallery-stack"></div>
-          <div class="gallery-dots" id="gallery-dots">
-            ${photos.map((_,i) => `<div class="dot ${i===0?'active':''}"></div>`).join('')}
+      const photosHTML = photos.length > 0 ? `
+        <div class="photos-section fade-in">
+          <div class="photos-label">Galleria</div>
+          <div class="photos-scroll" id="photos-scroll">
+            ${photos.map((p,i) => `
+              <div class="photo-item" onclick="openLightbox('${p}')">
+                <img src="${p}" alt="Foto ${i+1}" loading="lazy" />
+                <div class="photo-overlay">${i+1} / ${photos.length}</div>
+              </div>`).join('')}
           </div>
-          <div class="gallery-nav">
-            <div class="nav-btn" onclick="prevPhoto()">←</div>
-            <div class="gallery-counter" id="gallery-counter">1 / ${photos.length}</div>
-            <div class="nav-btn" onclick="nextPhoto()">→</div>
+          <div class="scroll-hint">
+            <div class="scroll-hint-dots" id="scroll-dots">
+              ${photos.map((_,i) => `<div class="sdot ${i===0?'active':''}"></div>`).join('')}
+            </div>
           </div>
         </div>` : '';
 
       document.getElementById('content').innerHTML = `
-        <div class="event-header">
+        <div class="event-header fade-in">
           <div class="header-deco"></div>
-          <div class="header-blob blob1"></div>
-          <div class="header-blob blob2"></div>
-          <div class="header-blob blob3"></div>
-          <div class="header-content">
-            <div class="event-tipo-badge">${emoji} ${tipo||'Evento'}</div>
-            <div class="event-titolo">${titolo}</div>
-            <div class="event-meta-row">
-              ${data ? `<div class="meta-pill"><span>📅</span>${data}</div>` : ''}
-              ${ora ? `<div class="meta-pill"><span>🕐</span>${ora}</div>` : ''}
-            </div>
+          <div class="event-tipo-badge">${emoji} ${tipo||'Evento'}</div>
+          <div class="event-titolo">${titolo}</div>
+          <div class="event-meta-row">
+            ${data ? `<div class="meta-pill">📅 ${data}</div>` : ''}
+            ${ora ? `<div class="meta-pill">🕐 ${ora}</div>` : ''}
           </div>
         </div>
-        ${galleryHTML}
-        ${descFinal ? `
-        <div class="desc-section">
-          <div class="desc-card">
-            <div class="desc-title">Info evento</div>
-            <div class="desc-text">${descFinal}</div>
-          </div>
-        </div>` : ''}`;
+        ${desc ? `<div class="desc-section fade-in"><div class="desc-text">${desc}</div></div>` : ''}
+        ${photos.length > 0 ? '<div class="divider"></div>' : ''}
+        ${photosHTML}`;
 
-      if (photos.length > 0) renderStack();
+      // Dots scroll sync
+      if (photos.length > 0) {
+        const scroll = document.getElementById('photos-scroll');
+        scroll?.addEventListener('scroll', () => {
+          const itemW = 280 + 14;
+          const active = Math.round(scroll.scrollLeft / itemW);
+          document.querySelectorAll('.sdot').forEach((d,i) => d.classList.toggle('active', i === active));
+        });
+      }
 
     } catch(e) {
       document.getElementById('content').innerHTML = '<p style="padding:80px 24px;color:rgba(255,255,255,0.4);text-align:center">Errore nel caricamento.</p>';

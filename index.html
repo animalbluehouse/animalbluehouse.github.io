@@ -216,7 +216,7 @@
       const html = events.map((ev, i) => {
         const emoji = getTypeEmoji(ev.tipo);
         const isCinema = (ev.tipo||'').toLowerCase() === 'cinema';
-        const href = isCinema ? 'cinema.html' : `evento.html?i=${ev.index}`;
+      const href = isCinema ? '/cinema.html' : `/evento.html?i=${ev.index}`;
         const poster = ev.locandina
           ? `<img src="${ev.locandina}" alt="${ev.titolo}" loading="lazy" />`
           : `<div class="fallback">${emoji}</div>`;

@@ -133,18 +133,21 @@
 
 <script>
   const SHEET_ID = '1fjfNvu2nO_8ntIycM9L-qzc7uCL6roEZ-wGypsiqU1w';
-  const SHEET_NAME = 'Eventi';
+  const SHEET_NAME = 'Foglio1';
 
-  function getWeekLabel() {
-    const now = new Date();
-    const day = now.getDay();
-    const diff = now.getDate() - day + (day === 0 ? -6 : 1);
-    const mon = new Date(now); mon.setDate(diff);
-    const sun = new Date(mon); sun.setDate(mon.getDate() + 6);
-    const fmt = d => d.toLocaleDateString('it-IT', { day:'numeric', month:'short' });
-    return `${fmt(mon)} → ${fmt(sun)}`;
+  async function loadWeekLabel() {
+    try {
+      const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Config`;
+      const res = await fetch(url);
+      const text = await res.text();
+      const json = JSON.parse(text.substring(47, text.length - 2));
+      const val = json.table.rows[0]?.c[0]?.v || '';
+      if (val) {
+        document.getElementById('week-label').textContent = val.replace('-', ' → ');
+      }
+    } catch(e) {}
   }
-  document.getElementById('week-label').textContent = getWeekLabel();
+  loadWeekLabel();
 
   function getTypeEmoji(tipo) {
     const map = { 'cinema':'🎬','torneo':'🃏','cultura':'🎭','musica':'🎵','sport':'⚽','comedy':'🎤','party':'🎉' };
@@ -161,7 +164,7 @@
       if (!rows || rows.length === 0) { document.getElementById('events-list').innerHTML = '<div class="loading">Nessun evento in programma.</div>'; return; }
       const parseData = (c) => { if (!c || !c.v) return ''; if (c.f) return c.f; if (typeof c.v === 'string') return c.v; return c.v; };
       if (rows[0] && rows[0].c[0] && (rows[0].c[0].v||'').toString().toUpperCase() === 'TITOLO') rows.shift();
-      const events = rows.map((row, i) => ({ titolo:row.c[0]?.v||'', data:parseData(row.c[1]), ora:row.c[2]?.v||'', tipo:row.c[3]?.v||'', descrizione:row.c[4]?.v||'', locandina:row.c[5]?.v||'', attivo:(row.c[7]?.v||'').toString().toUpperCase(), index:i })).filter(e => e.titolo && e.attivo === 'SI');
+      const events = rows.map((row, i) => ({ titolo:row.c[0]?.v||'', data:parseData(row.c[1]), ora:row.c[2]?.v||'', tipo:row.c[3]?.v||'', descrizione:row.c[4]?.v||'', locandina:row.c[5]?.v||'', attivo:(row.c[7]?.v||'').toString().trim().toUpperCase(), index:i })).filter(e => e.titolo && e.attivo === 'SI');
       if (events.length === 0) { document.getElementById('events-list').innerHTML = '<div class="loading">Nessun evento in programma.</div>'; return; }
       const html = events.map((ev, i) => {
         const emoji = getTypeEmoji(ev.tipo);

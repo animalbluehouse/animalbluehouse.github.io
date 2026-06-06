@@ -97,6 +97,13 @@
   .about-card { margin:0 16px 0; background:rgba(255,255,255,0.04); border:0.5px solid rgba(255,255,255,0.08); border-radius:16px; padding:18px; font-size:14px; color:var(--testo-muted); line-height:1.8; display:flex; flex-direction:column; gap:8px; }
   .about-card strong { color:var(--testo); }
 
+  /* Counter tesserati */
+  .members-bar { margin:0 16px; background:rgba(255,255,255,0.05); border:0.5px solid rgba(255,255,255,0.1); border-radius:12px; padding:12px 16px; display:flex; align-items:center; gap:12px; backdrop-filter:blur(10px); }
+  .members-icon { font-size:20px; }
+  .members-info { flex:1; }
+  .members-label { font-size:11px; font-weight:600; color:var(--testo-dim); text-transform:uppercase; letter-spacing:1px; }
+  .members-count { font-size:22px; font-weight:700; color:var(--verde-light); line-height:1.2; }
+
   /* Download bar */
   .download-bar {
     display:flex; align-items:center; justify-content:space-between;
@@ -147,6 +154,15 @@
   <!-- Su di noi -->
   <div class="section-label" style="margin-top:28px;">Su di noi</div>
   <div class="events-list" id="partner-list" style="margin-top:14px;"></div>
+
+  <!-- Tesserati counter -->
+  <div class="members-bar" style="margin-bottom:12px;">
+    <div class="members-icon">🛸</div>
+    <div class="members-info">
+      <div class="members-label">Tesserati Animal Blue House</div>
+      <div class="members-count" id="members-count">—</div>
+    </div>
+  </div>
 
   <!-- Download bar -->
   <a class="download-bar" href="https://drive.google.com/drive/folders/1Jw-LAj4uGHCqn9hsOEp9Si6W642g48EL?usp=sharing" target="_blank">
@@ -277,8 +293,26 @@
     } catch(e) { console.log('Partner load error:', e); }
   }
 
+  async function loadMembersCount() {
+    try {
+      const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Tesserati`;
+      const res = await fetch(url);
+      const text = await res.text();
+      const json = JSON.parse(text.substring(47, text.length - 2));
+      let rows = json.table.rows;
+      if (!rows) return;
+      // Salta intestazione e conta righe con numero tessera
+      const count = rows.filter((row, i) => {
+        if (i === 0 && (row.c[0]?.v||'').toString().toUpperCase().includes('TESSERA')) return false;
+        return row.c[0]?.v;
+      }).length;
+      document.getElementById('members-count').textContent = count + ' iscritti';
+    } catch(e) { console.log('Members error:', e); }
+  }
+
   loadEvents();
   loadPartner();
+  loadMembersCount();
 </script>
 </body>
 </html>

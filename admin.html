@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>Admin — Animal Blue House</title>
+<meta name="description" content="Area riservata Animal Blue House.">
+<meta name="keywords" content="">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Admin — Animal Blue House">
+<meta property="og:description" content="Area riservata Animal Blue House.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://animalbluehouse.github.io/logo.jpg.jpeg">
+<meta name="theme-color" content="#0d1f0d">
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -78,6 +86,23 @@
 
   .empty-bookings { text-align:center; padding:32px; color:var(--testo-dim); font-size:14px; }
 
+  /* Tesserati */
+  .search-bar { display:flex; gap:8px; margin-bottom:12px; }
+  .search-input { flex:1; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:10px 14px; font-size:14px; color:var(--testo); font-family:'Fredoka',sans-serif; outline:none; }
+  .search-input:focus { border-color:var(--verde); }
+  .search-input::placeholder { color:var(--testo-dim); }
+  .filter-select { background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:10px 12px; font-size:13px; color:var(--testo); font-family:'Fredoka',sans-serif; outline:none; cursor:pointer; }
+  .member-item { background:rgba(255,255,255,0.04); border:0.5px solid rgba(255,255,255,0.08); border-radius:12px; padding:12px 14px; display:flex; align-items:center; gap:12px; margin-bottom:8px; }
+  .member-avatar { width:38px; height:38px; border-radius:50%; background:rgba(58,138,58,0.2); border:1px solid rgba(58,138,58,0.3); display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:var(--verde); flex-shrink:0; }
+  .member-info { flex:1; min-width:0; }
+  .member-name { font-size:14px; font-weight:600; color:var(--testo); }
+  .member-meta { font-size:12px; color:var(--testo-dim); margin-top:2px; }
+  .member-badge { font-size:11px; font-weight:600; padding:3px 8px; border-radius:20px; flex-shrink:0; }
+  .badge-active { background:rgba(58,138,58,0.2); color:var(--verde-light); border:0.5px solid rgba(58,138,58,0.3); }
+  .badge-inactive { background:rgba(255,255,255,0.05); color:var(--testo-dim); border:0.5px solid rgba(255,255,255,0.1); }
+  .members-total { font-size:13px; color:var(--testo-dim); margin-bottom:10px; }
+  .members-total span { color:var(--verde-light); font-weight:700; }
+
   .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(10px); background:rgba(20,40,20,0.95); border:1px solid rgba(58,138,58,0.4); border-radius:14px; padding:12px 20px; font-size:14px; color:var(--testo); z-index:300; opacity:0; transition:all 0.3s; white-space:nowrap; pointer-events:none; backdrop-filter:blur(10px); }
   .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
 
@@ -151,10 +176,25 @@
 
     <!-- Lista prenotazioni -->
     <div class="section">
-      <div class="section-label">Prenotazioni</div>
+      <div class="section-label">Prenotazioni cinema</div>
       <div class="bookings-list" id="bookings-list">
         <div class="spinner"></div>
       </div>
+    </div>
+
+    <!-- Lista tesserati -->
+    <div class="section">
+      <div class="section-label">Tesserati</div>
+      <div class="search-bar">
+        <input type="text" class="search-input" id="search-input" placeholder="Cerca per nome o tessera..." oninput="filterMembers()" />
+        <select class="filter-select" id="filter-select" onchange="filterMembers()">
+          <option value="tutti">Tutti</option>
+          <option value="attivi">Rinnovati</option>
+          <option value="scaduti">Non rinnovati</option>
+        </select>
+      </div>
+      <div class="members-total" id="members-total"></div>
+      <div id="members-list"><div class="spinner"></div></div>
     </div>
   </div>
 </div>
@@ -200,6 +240,7 @@
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('dashboard').style.display = 'block';
     startListening();
+    loadMembers();
   }
 
   function startListening() {
@@ -265,6 +306,68 @@
     const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
     a.download = `prenotazioni-${new Date().toLocaleDateString('it-IT').replace(/\//g,'-')}.csv`;
     a.click(); showToast('✓ Lista scaricata!');
+  };
+
+  const SHEET_ID_MAIN = '1fjfNvu2nO_8ntIycM9L-qzc7uCL6roEZ-wGypsiqU1w';
+  let allMembers = [];
+
+  async function loadMembers() {
+    try {
+      const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID_MAIN}/gviz/tq?tqx=out:json&sheet=Tesserati`;
+      const res = await fetch(url);
+      const text = await res.text();
+      const json = JSON.parse(text.substring(47, text.length - 2));
+      let rows = json.table.rows;
+      if (!rows) { document.getElementById('members-list').innerHTML = '<div style="text-align:center;padding:20px;color:var(--testo-dim)">Nessun tesserato</div>'; return; }
+      // Salta intestazione
+      if (rows[0] && (rows[0].c[0]?.v||'').toString().toUpperCase().includes('TESSERA')) rows = rows.slice(1);
+      allMembers = rows.filter(row => row.c[0]?.v || row.c[1]?.v).map(row => ({
+        tessera: row.c[0]?.v || '—',
+        nome: row.c[1]?.v || '',
+        cognome: row.c[2]?.v || '',
+        nascita: row.c[3]?.f || row.c[3]?.v || '',
+        contatto: row.c[4]?.v || '',
+        rinnovata: row.c[5]?.v === true || (row.c[5]?.v||'').toString().toLowerCase() === 'true'
+      }));
+      renderMembers(allMembers);
+    } catch(e) { document.getElementById('members-list').innerHTML = '<div style="text-align:center;padding:20px;color:var(--testo-dim)">Errore caricamento</div>'; }
+  }
+
+  function renderMembers(members) {
+    document.getElementById('members-total').innerHTML = `Totale: <span>${members.length}</span> tesserati`;
+    if (members.length === 0) {
+      document.getElementById('members-list').innerHTML = '<div style="text-align:center;padding:20px;color:var(--testo-dim)">Nessun risultato</div>';
+      return;
+    }
+    document.getElementById('members-list').innerHTML = members.map(m => {
+      const initial = ((m.nome||'?')[0] + (m.cognome||'?')[0]).toUpperCase();
+      const badgeClass = m.rinnovata ? 'badge-active' : 'badge-inactive';
+      const badgeText = m.rinnovata ? '✓ Rinnovata' : 'Non rinnovata';
+      return `<div class="member-item">
+        <div class="member-avatar">${initial}</div>
+        <div class="member-info">
+          <div class="member-name">${m.nome} ${m.cognome} <span style="color:var(--testo-dim);font-size:12px">#${m.tessera}</span></div>
+          <div class="member-meta">${m.contatto ? m.contatto + ' · ' : ''}${m.nascita || ''}</div>
+        </div>
+        <div class="member-badge ${badgeClass}">${badgeText}</div>
+      </div>`;
+    }).join('');
+  }
+
+  window.filterMembers = function() {
+    const search = (document.getElementById('search-input')?.value || '').toLowerCase();
+    const filter = document.getElementById('filter-select')?.value || 'tutti';
+    let filtered = allMembers.filter(m => {
+      const matchSearch = !search ||
+        (m.nome + ' ' + m.cognome).toLowerCase().includes(search) ||
+        m.tessera.toString().toLowerCase().includes(search) ||
+        m.contatto.toLowerCase().includes(search);
+      const matchFilter = filter === 'tutti' ||
+        (filter === 'attivi' && m.rinnovata) ||
+        (filter === 'scaduti' && !m.rinnovata);
+      return matchSearch && matchFilter;
+    });
+    renderMembers(filtered);
   };
 
   function showToast(msg) {

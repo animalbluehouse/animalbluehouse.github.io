@@ -319,14 +319,14 @@
       const json = JSON.parse(text.substring(47, text.length - 2));
       let rows = json.table.rows;
       if (!rows) { document.getElementById('members-list').innerHTML = '<div style="text-align:center;padding:20px;color:var(--testo-dim)">Nessun tesserato</div>'; return; }
-      // Salta intestazione
-      if (rows[0] && (rows[0].c[0]?.v||'').toString().toUpperCase().includes('TESSERA')) rows = rows.slice(1);
-      allMembers = rows.filter(row => row.c[0]?.v || row.c[1]?.v).map(row => ({
-        tessera: row.c[0]?.v || '—',
+      // Salta sempre la prima riga (intestazione)
+      rows = rows.slice(1);
+      allMembers = rows.filter(row => row.c[0]?.v != null || row.c[1]?.v).map(row => ({
+        tessera: row.c[0]?.f || row.c[0]?.v || '—',
         nome: row.c[1]?.v || '',
         cognome: row.c[2]?.v || '',
         nascita: row.c[3]?.f || row.c[3]?.v || '',
-        contatto: row.c[4]?.v || '',
+        contatto: row.c[4]?.f || row.c[4]?.v || '',
         rinnovata: row.c[5]?.v === true || (row.c[5]?.v||'').toString().toLowerCase() === 'true'
       }));
       renderMembers(allMembers);

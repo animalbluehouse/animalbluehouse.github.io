@@ -90,6 +90,23 @@
   .loading { text-align:center; padding:60px 24px; color:var(--testo-muted); font-size:15px; }
   .spinner { width:28px; height:28px; border:3px solid rgba(255,255,255,0.1); border-top-color:var(--verde); border-radius:50%; animation:spin 0.8s linear infinite; margin:0 auto 12px; }
   @keyframes spin { to { transform:rotate(360deg); } }
+
+  /* Download bar */
+  .download-bar {
+    display:flex; align-items:center; justify-content:space-between;
+    margin:20px 16px 0;
+    background:rgba(255,255,255,0.05);
+    border:0.5px solid rgba(255,255,255,0.1);
+    border-radius:12px; padding:10px 14px;
+    text-decoration:none;
+    backdrop-filter:blur(10px);
+    transition:background 0.2s;
+  }
+  .download-bar:active { background:rgba(255,255,255,0.09); }
+  .download-bar-left { display:flex; align-items:center; gap:8px; }
+  .download-icon { font-size:16px; }
+  .download-text { font-size:13px; color:var(--testo-muted); font-weight:500; }
+  .download-btn { font-size:12px; font-weight:600; color:var(--verde-light); background:rgba(58,138,58,0.15); border:1px solid rgba(58,138,58,0.3); border-radius:8px; padding:4px 10px; }
   .fade-in { animation:fadeIn 0.4s ease forwards; opacity:0; }
   @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
 </style>
@@ -108,6 +125,15 @@
     <div class="loading"><div class="spinner"></div>Caricamento eventi...</div>
   </div>
 
+
+  <!-- Download bar -->
+  <a class="download-bar" href="https://drive.google.com/drive/folders/1Jw-LAj4uGHCqn9hsOEp9Si6W642g48EL" target="_blank">
+    <div class="download-bar-left">
+      <span class="download-icon">📸</span>
+      <span class="download-text">Foto degli eventi</span>
+    </div>
+    <div class="download-btn">Scarica ↓</div>
+  </a>
   <div class="contacts">
     <div class="contacts-title">Contatti</div>
     <a class="contact-item" href="tel:+393534918218">

@@ -240,7 +240,45 @@
       document.getElementById('events-list').innerHTML = html;
     } catch(e) { document.getElementById('events-list').innerHTML = '<div class="loading">Errore nel caricamento.</div>'; }
   }
+  async function loadPartner() {
+    try {
+      const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Partner`;
+      const res = await fetch(url);
+      const text = await res.text();
+      const json = JSON.parse(text.substring(47, text.length - 2));
+      let rows = json.table.rows;
+      if (!rows || rows.length === 0) return;
+      if (rows[0] && (rows[0].c[0]?.v||'').toString().toUpperCase() === 'TITOLO') rows = rows.slice(1);
+      const events = rows.map((row, i) => ({
+        titolo: row.c[0]?.v||'',
+        data: row.c[1]?.f || row.c[1]?.v||'',
+        ora: row.c[2]?.v||'',
+        tipo: row.c[3]?.v||'',
+        locandina: row.c[5]?.v||'',
+        attivo: (row.c[7]?.v||'').toString().trim().toUpperCase(),
+        index: i
+      })).filter(e => e.titolo && e.attivo === 'SI');
+
+      const html = events.map((ev, i) => {
+        const emoji = getTypeEmoji(ev.tipo);
+        const poster = ev.locandina ? `<img src="${ev.locandina}" alt="${ev.titolo}" loading="lazy" />` : `<div class="fallback">${emoji}</div>`;
+        return `<a class="event-card fade-in" href="partner.html" style="animation-delay:${i*0.08}s">
+          <div class="event-poster">${poster}<div class="event-overlay"></div>
+            <div class="event-overlay-text">
+              <div class="event-overlay-title">${ev.titolo}</div>
+              ${ev.data ? `<div class="event-overlay-date">${ev.data}</div>` : ''}
+            </div>
+          </div>
+          <div class="event-footer"><div class="event-tipo">Scopri le esclusive</div><div class="event-arrow">→</div></div>
+        </a>`;
+      }).join('');
+
+      document.getElementById('partner-list').innerHTML = html;
+    } catch(e) { console.log('Partner load error:', e); }
+  }
+
   loadEvents();
+  loadPartner();
 </script>
 </body>
 </html>

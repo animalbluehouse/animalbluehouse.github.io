@@ -4,129 +4,96 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>Animal Blue House</title>
-<link href="https://fonts.googleapis.com/css2?family=Bangers&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --verde: #2D6A2D;
-    --verde-light: #4CAF50;
+    --verde: #3a8a3a;
+    --verde-dark: #1a3a1a;
+    --verde-glow: rgba(58,138,58,0.3);
     --giallo: #F5C518;
+    --arancio: #FF8C00;
     --rosso: #E53935;
-    --text: #1a1a1a;
-    --text-muted: #555;
-    --card-bg: rgba(255,255,255,0.92);
-    --border: rgba(0,0,0,0.08);
+    --testo: #f0f0e8;
+    --testo-muted: rgba(240,240,232,0.6);
+    --testo-dim: rgba(240,240,232,0.35);
+    --surface: rgba(255,255,255,0.07);
+    --surface-strong: rgba(255,255,255,0.12);
+    --border: rgba(255,255,255,0.12);
+    --glass: rgba(255,255,255,0.08);
   }
   * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  body { font-family:'Fredoka',sans-serif; color:var(--testo); min-height:100vh; }
 
-  body {
-    font-family:'DM Sans', sans-serif;
-    color:var(--text);
-    min-height:100vh;
-    position:relative;
-  }
-
-  /* Sfondo giornali */
-  .bg {
-    position:fixed; inset:0; z-index:0;
-    background: radial-gradient(ellipse at top left, #1a3a1a 0%, #0d1f0d 40%, #050f05 100%);
-  }
-  .bg-overlay {
-    position:fixed; inset:0; z-index:1;
-    background: radial-gradient(ellipse at bottom right, rgba(45,106,45,0.15) 0%, transparent 60%);
-  }
+  .bg { position:fixed; inset:0; z-index:0; background:radial-gradient(ellipse at top left, #1a3a1a 0%, #0d1f0d 45%, #050f05 100%); }
+  .bg-glow { position:fixed; inset:0; z-index:0; background:radial-gradient(ellipse at 80% 20%, rgba(58,138,58,0.12) 0%, transparent 55%), radial-gradient(ellipse at 20% 80%, rgba(245,197,24,0.06) 0%, transparent 50%); pointer-events:none; }
 
   .container { max-width:480px; margin:0 auto; padding:0 0 48px; position:relative; z-index:2; }
 
-  /* Header */
-  header { padding:32px 20px 20px; text-align:center; }
-  .logo-img { width:110px; height:110px; object-fit:contain; border-radius:50%; background:#fff; padding:6px; box-shadow:0 4px 20px rgba(0,0,0,0.15); }
+  header { padding:36px 20px 24px; text-align:center; }
+  .logo-img { width:100px; height:100px; object-fit:contain; border-radius:50%; background:rgba(255,255,255,0.1); padding:6px; box-shadow:0 0 0 2px rgba(58,138,58,0.4), 0 8px 32px rgba(0,0,0,0.4); backdrop-filter:blur(10px); }
+
   .week-badge {
-    display:inline-block; margin-top:12px;
-    background:rgba(255,255,255,0.85);
-    border:2px solid var(--verde);
-    border-radius:20px; padding:5px 16px;
-    font-family:'Bangers',cursive; font-size:16px; letter-spacing:1px;
-    color:var(--verde);
+    display:inline-flex; align-items:center; gap:8px; margin-top:14px;
+    background:rgba(58,138,58,0.2);
+    border:1.5px solid rgba(58,138,58,0.4);
+    border-radius:20px; padding:6px 18px;
+    font-size:15px; font-weight:600; letter-spacing:0.5px;
+    color:var(--giallo);
+    backdrop-filter:blur(10px);
   }
 
-  /* Sezione eventi */
   .section-label {
-    font-family:'Bangers',cursive; font-size:13px; letter-spacing:2px;
-    color:var(--text-muted); padding:0 20px; margin-bottom:12px;
+    font-size:11px; font-weight:600; letter-spacing:2px;
+    color:var(--verde); padding:0 20px; margin-bottom:14px;
     text-transform:uppercase;
+    display:flex; align-items:center; gap:8px;
   }
+  .section-label::after { content:''; flex:1; height:1px; background:rgba(58,138,58,0.3); }
 
   .events-list { padding:0 16px; display:flex; flex-direction:column; gap:14px; }
 
   .event-card {
-    background:var(--card-bg);
-    border-radius:16px;
-    overflow:hidden;
-    box-shadow:0 3px 16px rgba(0,0,0,0.12);
-    text-decoration:none;
-    display:block;
+    border-radius:18px; overflow:hidden;
+    box-shadow:0 4px 24px rgba(0,0,0,0.3);
+    text-decoration:none; display:block;
     border:1.5px solid var(--border);
+    background:var(--surface);
+    backdrop-filter:blur(10px);
     transition:transform 0.15s, box-shadow 0.15s;
   }
-  .event-card:active { transform:scale(0.98); box-shadow:0 1px 8px rgba(0,0,0,0.1); }
+  .event-card:active { transform:scale(0.97); }
 
-  .event-poster {
-    width:100%; aspect-ratio:16/9;
-    background:#e0d9cc;
-    display:flex; align-items:center; justify-content:center;
-    font-size:40px; position:relative; overflow:hidden;
-  }
-  .event-poster img { width:100%; height:100%; object-fit:cover; filter:grayscale(30%); }
+  .event-poster { width:100%; aspect-ratio:16/9; background:rgba(58,138,58,0.1); display:flex; align-items:center; justify-content:center; font-size:40px; position:relative; overflow:hidden; }
+  .event-poster img { width:100%; height:100%; object-fit:cover; }
   .event-poster .fallback { font-size:40px; }
+  .event-overlay { position:absolute; inset:0; background:linear-gradient(to top, rgba(5,15,5,0.85) 0%, rgba(5,15,5,0.1) 60%); }
+  .event-overlay-text { position:absolute; bottom:12px; left:14px; right:14px; }
+  .event-overlay-title { font-size:20px; font-weight:700; color:#fff; line-height:1.1; text-shadow:0 2px 8px rgba(0,0,0,0.5); }
+  .event-overlay-date { font-size:13px; color:var(--giallo); font-weight:600; margin-top:3px; }
 
-  .event-overlay {
-    position:absolute; inset:0;
-    background:linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%);
-  }
-  .event-overlay-text {
-    position:absolute; bottom:10px; left:12px; right:12px;
-  }
-  .event-overlay-title {
-    font-family:'Bangers',cursive; font-size:22px; letter-spacing:1px;
-    color:#fff; line-height:1.1; text-shadow:0 2px 8px rgba(0,0,0,0.5);
-  }
-  .event-overlay-date {
-    font-family:'Bangers',cursive; font-size:16px; color:var(--giallo);
-    letter-spacing:0.5px; margin-top:2px;
-  }
+  .event-footer { padding:10px 14px; display:flex; align-items:center; justify-content:space-between; }
+  .event-tipo { font-size:12px; font-weight:500; color:var(--testo-muted); text-transform:uppercase; letter-spacing:0.8px; }
+  .event-arrow { width:30px; height:30px; border-radius:50%; background:var(--verde); display:flex; align-items:center; justify-content:center; color:#fff; font-size:14px; font-weight:bold; box-shadow:0 0 12px var(--verde-glow); }
 
-  .event-footer {
-    padding:10px 14px;
-    display:flex; align-items:center; justify-content:space-between;
-  }
-  .event-tipo { font-size:11px; font-weight:500; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.8px; }
-  .event-arrow {
-    width:32px; height:32px; border-radius:50%;
-    background:var(--verde); display:flex; align-items:center; justify-content:center;
-    color:#fff; font-size:16px;
-  }
-
-  /* Loading */
-  .loading { text-align:center; padding:60px 24px; color:var(--text-muted); font-size:14px; }
-  .spinner { width:28px; height:28px; border:3px solid rgba(0,0,0,0.1); border-top-color:var(--verde); border-radius:50%; animation:spin 0.8s linear infinite; margin:0 auto 12px; }
-  @keyframes spin { to { transform:rotate(360deg); } }
-
-  /* Contatti */
-  .contacts { margin:28px 16px 0; background:var(--card-bg); border-radius:16px; padding:16px 18px; box-shadow:0 3px 16px rgba(0,0,0,0.1); border:1.5px solid var(--border); }
-  .contacts-title { font-family:'Bangers',cursive; font-size:16px; letter-spacing:1px; color:var(--verde); margin-bottom:12px; }
-  .contact-item { display:flex; align-items:center; gap:12px; padding:9px 0; border-bottom:0.5px solid var(--border); font-size:14px; color:var(--text-muted); text-decoration:none; }
-  .contact-icon { width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
-  .contact-icon svg { width:22px; height:22px; display:block; }
+  /* Contatti glassmorphism */
+  .contacts { margin:28px 16px 0; background:rgba(255,255,255,0.06); border-radius:20px; padding:18px 20px; border:1px solid rgba(255,255,255,0.12); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); box-shadow:0 8px 32px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.1); }
+  .contacts-title { font-size:13px; font-weight:600; letter-spacing:1.5px; color:var(--verde); margin-bottom:14px; text-transform:uppercase; }
+  .contact-item { display:flex; align-items:center; gap:14px; padding:10px 0; border-bottom:0.5px solid rgba(255,255,255,0.08); font-size:14px; color:var(--testo-muted); text-decoration:none; transition:color 0.2s; }
   .contact-item:last-child { border-bottom:none; }
-  .contact-item span { font-size:18px; }
+  .contact-item:active { color:var(--testo); }
+  .contact-icon { width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .contact-icon svg { width:20px; height:20px; display:block; }
 
+  .loading { text-align:center; padding:60px 24px; color:var(--testo-muted); font-size:15px; }
+  .spinner { width:28px; height:28px; border:3px solid rgba(255,255,255,0.1); border-top-color:var(--verde); border-radius:50%; animation:spin 0.8s linear infinite; margin:0 auto 12px; }
+  @keyframes spin { to { transform:rotate(360deg); } }
   .fade-in { animation:fadeIn 0.4s ease forwards; opacity:0; }
   @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
 </style>
 </head>
 <body>
 <div class="bg"></div>
-<div class="bg-overlay"></div>
+<div class="bg-glow"></div>
 <div class="container">
   <header>
     <img src="logo.jpg.jpeg" alt="Animal Blue House" class="logo-img" />
@@ -138,23 +105,23 @@
     <div class="loading"><div class="spinner"></div>Caricamento eventi...</div>
   </div>
 
-<div class="contacts">
+  <div class="contacts">
     <div class="contacts-title">Contatti</div>
     <a class="contact-item" href="tel:+393534918218">
-      <div class="contact-icon" style="background:#E8F5E9;">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#2D6A2D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>
+      <div class="contact-icon" style="background:rgba(58,138,58,0.2);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#3a8a3a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>
       </div>
       +39 353 4918218
     </a>
     <a class="contact-item" href="https://instagram.com/animalbluehouse" target="_blank">
-      <div class="contact-icon" style="background:#fce4ec;">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="url(#ig)"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" stroke="url(#ig)"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="url(#ig)"/><defs><linearGradient id="ig" x1="2" y1="22" x2="22" y2="2" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#f09433"/><stop offset="25%" stop-color="#e6683c"/><stop offset="50%" stop-color="#dc2743"/><stop offset="75%" stop-color="#cc2366"/><stop offset="100%" stop-color="#bc1888"/></linearGradient></defs></svg>
+      <div class="contact-icon" style="background:rgba(220,39,67,0.15);">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="url(#ig)"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" stroke="url(#ig)"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="url(#ig)"/><defs><linearGradient id="ig" x1="2" y1="22" x2="22" y2="2" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#f09433"/><stop offset="50%" stop-color="#dc2743"/><stop offset="100%" stop-color="#bc1888"/></linearGradient></defs></svg>
       </div>
       @animalbluehouse
     </a>
     <a class="contact-item" href="mailto:animalbluehouse.sm@gmail.com">
-      <div class="contact-icon" style="background:#E3F2FD;">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#1565C0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      <div class="contact-icon" style="background:rgba(58,138,58,0.15);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#3a8a3a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
       </div>
       animalbluehouse.sm@gmail.com
     </a>
@@ -171,7 +138,7 @@
     const diff = now.getDate() - day + (day === 0 ? -6 : 1);
     const mon = new Date(now); mon.setDate(diff);
     const sun = new Date(mon); sun.setDate(mon.getDate() + 6);
-    const fmt = d => d.toLocaleDateString('it-IT', { day:'numeric', month:'long' });
+    const fmt = d => d.toLocaleDateString('it-IT', { day:'numeric', month:'short' });
     return `${fmt(mon)} → ${fmt(sun)}`;
   }
   document.getElementById('week-label').textContent = getWeekLabel();
@@ -188,58 +155,27 @@
       const text = await res.text();
       const json = JSON.parse(text.substring(47, text.length - 2));
       const rows = json.table.rows;
-
-      if (!rows || rows.length === 0) {
-        document.getElementById('events-list').innerHTML = '<div class="loading">Nessun evento in programma.</div>';
-        return;
-      }
-
-      const events = rows.map((row, i) => ({
-        titolo: row.c[0]?.v || '',
-        data: row.c[1]?.v || '',
-        ora: row.c[2]?.v || '',
-        tipo: row.c[3]?.v || '',
-        descrizione: row.c[4]?.v || '',
-        locandina: row.c[5]?.v || '',
-        index: i
-      })).filter(e => e.titolo);
-
-      if (events.length === 0) {
-        document.getElementById('events-list').innerHTML = '<div class="loading">Nessun evento in programma.</div>';
-        return;
-      }
-
+      if (!rows || rows.length === 0) { document.getElementById('events-list').innerHTML = '<div class="loading">Nessun evento in programma.</div>'; return; }
+      const events = rows.map((row, i) => ({ titolo:row.c[0]?.v||'', data:row.c[1]?.v||'', ora:row.c[2]?.v||'', tipo:row.c[3]?.v||'', descrizione:row.c[4]?.v||'', locandina:row.c[5]?.v||'', index:i })).filter(e => e.titolo);
+      if (events.length === 0) { document.getElementById('events-list').innerHTML = '<div class="loading">Nessun evento in programma.</div>'; return; }
       const html = events.map((ev, i) => {
         const emoji = getTypeEmoji(ev.tipo);
         const isCinema = (ev.tipo||'').toLowerCase() === 'cinema';
         const href = isCinema ? 'cinema.html' : `evento.html?i=${ev.index}`;
-        const poster = ev.locandina
-          ? `<img src="${ev.locandina}" alt="${ev.titolo}" loading="lazy" />`
-          : `<div class="fallback">${emoji}</div>`;
-
-        return `
-          <a class="event-card fade-in" href="${href}" style="animation-delay:${i*0.08}s">
-            <div class="event-poster">
-              ${poster}
-              <div class="event-overlay"></div>
-              <div class="event-overlay-text">
-                <div class="event-overlay-title">${ev.titolo}</div>
-                ${ev.data ? `<div class="event-overlay-date">${ev.data}${ev.ora ? ' · ' + ev.ora : ''}</div>` : ''}
-              </div>
+        const poster = ev.locandina ? `<img src="${ev.locandina}" alt="${ev.titolo}" loading="lazy" />` : `<div class="fallback">${emoji}</div>`;
+        return `<a class="event-card fade-in" href="${href}" style="animation-delay:${i*0.08}s">
+          <div class="event-poster">${poster}<div class="event-overlay"></div>
+            <div class="event-overlay-text">
+              <div class="event-overlay-title">${ev.titolo}</div>
+              ${ev.data ? `<div class="event-overlay-date">${ev.data}${ev.ora?' · '+ev.ora:''}</div>` : ''}
             </div>
-            <div class="event-footer">
-              <div class="event-tipo">${ev.tipo || 'Evento'}</div>
-              <div class="event-arrow">→</div>
-            </div>
-          </a>`;
+          </div>
+          <div class="event-footer"><div class="event-tipo">${ev.tipo||'Evento'}</div><div class="event-arrow">→</div></div>
+        </a>`;
       }).join('');
-
       document.getElementById('events-list').innerHTML = html;
-    } catch(e) {
-      document.getElementById('events-list').innerHTML = '<div class="loading">Errore nel caricamento.</div>';
-    }
+    } catch(e) { document.getElementById('events-list').innerHTML = '<div class="loading">Errore nel caricamento.</div>'; }
   }
-
   loadEvents();
 </script>
 </body>

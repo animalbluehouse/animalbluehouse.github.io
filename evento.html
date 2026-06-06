@@ -4,45 +4,211 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>Evento — Animal Blue House</title>
-<link href="https://fonts.googleapis.com/css2?family=Bangers&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root { --verde:#2D6A2D; --giallo:#F5C518; --card-bg:rgba(255,255,255,0.92); --border:rgba(0,0,0,0.08); --text:#1a1a1a; --text-muted:#555; }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family:'DM Sans',sans-serif; color:var(--text); min-height:100vh; }
-  .bg { position:fixed; inset:0; z-index:0; background-image:url('https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1200&q=80'); background-size:cover; background-position:center; filter:blur(3px) brightness(0.85) saturate(0.4); transform:scale(1.05); }
-  .bg-overlay { position:fixed; inset:0; z-index:1; background:rgba(240,235,220,0.55); }
+  :root {
+    --verde: #3a8a3a;
+    --verde-light: #5aaa5a;
+    --verde-glow: rgba(58,138,58,0.3);
+    --giallo: #F5C518;
+    --testo: #f0f0e8;
+    --testo-muted: rgba(240,240,232,0.6);
+    --testo-dim: rgba(240,240,232,0.3);
+    --border: rgba(255,255,255,0.1);
+    --surface: rgba(255,255,255,0.06);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  body { font-family:'Fredoka',sans-serif; color:var(--testo); min-height:100vh; background:#050f05; overflow-x:hidden; }
+
+  /* Background */
+  .bg { position:fixed; inset:0; z-index:0; background:radial-gradient(ellipse at top left, #1a3a1a 0%, #0d1f0d 45%, #050f05 100%); }
+  .bg-glow { position:fixed; inset:0; z-index:0; background:radial-gradient(ellipse at 70% 10%, rgba(58,138,58,0.1) 0%, transparent 50%), radial-gradient(ellipse at 20% 90%, rgba(245,197,24,0.05) 0%, transparent 50%); pointer-events:none; }
+
   .container { max-width:480px; margin:0 auto; padding:0 0 48px; position:relative; z-index:2; }
-  .top-bar { padding:20px 20px 16px; display:flex; align-items:center; gap:12px; }
-  .back-btn { width:36px; height:36px; border-radius:50%; background:var(--card-bg); border:1.5px solid var(--border); display:flex; align-items:center; justify-content:center; text-decoration:none; font-size:18px; box-shadow:0 2px 8px rgba(0,0,0,0.1); }
-  .poster { width:100%; aspect-ratio:16/9; background:#e0d9cc; display:flex; align-items:center; justify-content:center; font-size:48px; overflow:hidden; }
-  .poster img { width:100%; height:100%; object-fit:cover; }
-  .content { margin:16px; background:var(--card-bg); border-radius:16px; padding:20px; box-shadow:0 3px 16px rgba(0,0,0,0.1); border:1.5px solid var(--border); }
-  .event-tipo { font-size:11px; font-weight:500; color:var(--verde); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; }
-  .event-title { font-family:'Bangers',cursive; font-size:28px; letter-spacing:1px; line-height:1.1; margin-bottom:14px; }
-  .meta { display:flex; gap:16px; margin-bottom:16px; flex-wrap:wrap; }
-  .meta-item { display:flex; flex-direction:column; gap:2px; }
-  .meta-label { font-size:10px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.8px; }
-  .meta-value { font-size:14px; font-weight:500; color:var(--text); }
-  .divider { height:1px; background:var(--border); margin-bottom:16px; }
-  .description { font-size:15px; color:var(--text-muted); line-height:1.7; }
-  .spinner { width:28px; height:28px; border:3px solid rgba(0,0,0,0.1); border-top-color:var(--verde); border-radius:50%; animation:spin 0.8s linear infinite; margin:60px auto; }
+
+  /* Back button */
+  .back-btn {
+    position:absolute; top:20px; left:20px; z-index:10;
+    width:40px; height:40px; border-radius:50%;
+    background:rgba(58,138,58,0.3);
+    border:1.5px solid rgba(58,138,58,0.5);
+    display:flex; align-items:center; justify-content:center;
+    text-decoration:none; font-size:20px; color:#fff;
+    box-shadow:0 0 16px rgba(58,138,58,0.3);
+  }
+
+  /* Header dinamico */
+  .event-header {
+    position:relative;
+    min-height:260px;
+    display:flex; flex-direction:column; justify-content:flex-end;
+    overflow:hidden;
+    padding:24px 20px 28px;
+  }
+
+  /* Forma dinamica sfondo header */
+  .event-header::before {
+    content:'';
+    position:absolute; inset:0; z-index:0;
+    background:linear-gradient(135deg, rgba(58,138,58,0.25) 0%, rgba(245,197,24,0.08) 50%, rgba(58,100,58,0.2) 100%);
+  }
+  .header-blob {
+    position:absolute; z-index:0;
+    border-radius:50%;
+    filter:blur(40px);
+    opacity:0.5;
+  }
+  .blob1 { width:200px; height:200px; background:rgba(58,138,58,0.3); top:-60px; right:-40px; animation:float1 6s ease-in-out infinite; }
+  .blob2 { width:150px; height:150px; background:rgba(245,197,24,0.15); bottom:-30px; left:-20px; animation:float2 8s ease-in-out infinite; }
+  .blob3 { width:100px; height:100px; background:rgba(90,170,90,0.2); top:40px; left:30%; animation:float3 5s ease-in-out infinite; }
+
+  @keyframes float1 { 0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-10px,10px) scale(1.05)} }
+  @keyframes float2 { 0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(10px,-8px) scale(1.08)} }
+  @keyframes float3 { 0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-5px,12px) scale(0.95)} }
+
+  /* Linea decorativa header */
+  .header-deco {
+    position:absolute; top:0; left:0; right:0; height:3px; z-index:1;
+    background:linear-gradient(90deg, transparent, var(--verde), var(--giallo), var(--verde), transparent);
+  }
+
+  .header-content { position:relative; z-index:1; }
+  .event-tipo-badge {
+    display:inline-flex; align-items:center; gap:6px;
+    background:rgba(58,138,58,0.25);
+    border:1px solid rgba(58,138,58,0.4);
+    border-radius:20px; padding:4px 12px;
+    font-size:12px; font-weight:600; color:var(--verde-light);
+    letter-spacing:1px; text-transform:uppercase;
+    margin-bottom:10px;
+    backdrop-filter:blur(10px);
+  }
+  .event-titolo {
+    font-size:32px; font-weight:700; color:var(--testo);
+    line-height:1.1; letter-spacing:-0.5px;
+    margin-bottom:12px;
+  }
+  .event-meta-row {
+    display:flex; gap:14px; flex-wrap:wrap;
+  }
+  .meta-pill {
+    display:flex; align-items:center; gap:6px;
+    background:rgba(255,255,255,0.08);
+    border:0.5px solid rgba(255,255,255,0.12);
+    border-radius:20px; padding:5px 12px;
+    font-size:13px; color:var(--testo-muted);
+    backdrop-filter:blur(10px);
+  }
+  .meta-pill .icon { font-size:14px; }
+
+  /* Gallery */
+  .gallery-section { padding:24px 0 0; }
+  .gallery-label {
+    font-size:11px; font-weight:600; letter-spacing:2px;
+    color:var(--verde); padding:0 20px; margin-bottom:14px;
+    text-transform:uppercase;
+    display:flex; align-items:center; gap:8px;
+  }
+  .gallery-label::after { content:''; flex:1; height:1px; background:rgba(58,138,58,0.3); }
+
+  .gallery-scroll {
+    display:flex; gap:12px;
+    padding:0 20px 16px;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+  }
+  .gallery-scroll::-webkit-scrollbar { display:none; }
+
+  .gallery-item {
+    flex-shrink:0;
+    width:160px; height:160px;
+    border-radius:50%;
+    overflow:hidden;
+    border:3px solid rgba(58,138,58,0.4);
+    box-shadow:0 4px 20px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.05);
+    scroll-snap-align:center;
+    transition:transform 0.3s, border-color 0.3s;
+    cursor:pointer;
+    position:relative;
+  }
+  .gallery-item:active { transform:scale(0.95); }
+  .gallery-item.featured {
+    width:180px; height:180px;
+    border-color:var(--giallo);
+    box-shadow:0 4px 24px rgba(245,197,24,0.2), 0 0 0 1px rgba(245,197,24,0.1);
+  }
+  .gallery-item img { width:100%; height:100%; object-fit:cover; }
+  .gallery-item .placeholder { width:100%; height:100%; background:rgba(58,138,58,0.15); display:flex; align-items:center; justify-content:center; font-size:32px; }
+
+  /* Dots indicator */
+  .gallery-dots { display:flex; gap:6px; justify-content:center; padding:8px 0 0; }
+  .dot { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.2); transition:all 0.3s; }
+  .dot.active { background:var(--verde); width:18px; border-radius:3px; }
+
+  /* Descrizione */
+  .desc-section { padding:24px 16px 0; }
+  .desc-card {
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:18px; padding:20px;
+    backdrop-filter:blur(10px);
+  }
+  .desc-title { font-size:16px; font-weight:700; color:var(--testo); margin-bottom:10px; }
+  .desc-text { font-size:15px; color:var(--testo-muted); line-height:1.7; }
+
+  /* Lightbox */
+  .lightbox { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.9); z-index:100; align-items:center; justify-content:center; }
+  .lightbox.active { display:flex; }
+  .lightbox img { max-width:90vw; max-height:80vh; border-radius:12px; object-fit:contain; }
+  .lightbox-close { position:absolute; top:20px; right:20px; font-size:28px; color:#fff; cursor:pointer; }
+
+  .spinner { width:24px; height:24px; border:3px solid rgba(255,255,255,0.1); border-top-color:var(--verde); border-radius:50%; animation:spin 0.8s linear infinite; margin:60px auto; }
   @keyframes spin { to { transform:rotate(360deg); } }
 </style>
 </head>
 <body>
 <div class="bg"></div>
-<div class="bg-overlay"></div>
+<div class="bg-glow"></div>
+
+<a class="back-btn" href="index.html">←</a>
+
 <div class="container">
-  <div class="top-bar">
-    <a class="back-btn" href="index.html">←</a>
-  </div>
   <div id="content"><div class="spinner"></div></div>
 </div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <span class="lightbox-close">✕</span>
+  <img id="lightbox-img" src="" alt="" />
+</div>
+
 <script>
   const SHEET_ID = '1fjfNvu2nO_8ntIycM9L-qzc7uCL6roEZ-wGypsiqU1w';
   const SHEET_NAME = 'Eventi';
   const idx = parseInt(new URLSearchParams(window.location.search).get('i') || '0');
   const emojis = { cinema:'🎬', torneo:'🃏', cultura:'🎭', musica:'🎵', sport:'⚽', comedy:'🎤', party:'🎉' };
+
+  // Foto per evento — chiave = titolo evento in minuscolo senza spazi
+  const eventPhotos = {
+    'polleggedi': [
+      'polleggedi-1.jpg',
+      'polleggedi-2.jpg',
+      'polleggedi-3.jpg',
+      'polleggedi-4.jpg',
+      'polleggedi-5.jpg'
+    ]
+  };
+
+  function getPhotos(titolo) {
+    const key = (titolo||'').toLowerCase().replace(/\s+/g,'').replace(/[àáâ]/g,'a').replace(/[èéê]/g,'e').replace(/[ìíî]/g,'i').replace(/[òóô]/g,'o').replace(/[ùúû]/g,'u');
+    return eventPhotos[key] || [];
+  }
+
+  function slugify(titolo) {
+    return (titolo||'').toLowerCase().replace(/\s+/g,'-').replace(/[àáâ]/g,'a').replace(/[èéê]/g,'e').replace(/[ìíî]/g,'i').replace(/[òóô]/g,'o').replace(/[ùúû]/g,'u');
+  }
 
   async function load() {
     try {
@@ -50,24 +216,89 @@
       const res = await fetch(url);
       const text = await res.text();
       const json = JSON.parse(text.substring(47, text.length - 2));
-      const row = json.table.rows[idx];
-      if (!row) { document.getElementById('content').innerHTML = '<p style="padding:24px;color:#888">Evento non trovato.</p>'; return; }
-      const titolo = row.c[0]?.v||'', data = row.c[1]?.v||'', ora = row.c[2]?.v||'', tipo = row.c[3]?.v||'', desc = row.c[4]?.v||'', loc = row.c[5]?.v||'';
+      // Salta intestazione
+      let rows = json.table.rows;
+      if (rows[0] && (rows[0].c[0]?.v||'').toString().toUpperCase() === 'TITOLO') rows = rows.slice(1);
+      const row = rows[idx];
+      if (!row) { document.getElementById('content').innerHTML = '<p style="padding:24px;color:rgba(255,255,255,0.4)">Evento non trovato.</p>'; return; }
+
+      const titolo = row.c[0]?.v||'';
+      const dataRaw = row.c[1];
+      const data = dataRaw?.f || dataRaw?.v || '';
+      const ora = row.c[2]?.v||'';
+      const tipo = row.c[3]?.v||'';
+      const desc = row.c[4]?.v||'';
       const emoji = emojis[(tipo||'').toLowerCase()] || '📅';
+      const photos = getPhotos(titolo);
+
       document.title = `${titolo} — Animal Blue House`;
-      document.getElementById('content').innerHTML = `
-        <div class="poster">${loc ? `<img src="${loc}" alt="${titolo}" />` : emoji}</div>
-        <div class="content">
-          <div class="event-tipo">${tipo||'Evento'}</div>
-          <div class="event-title">${titolo}</div>
-          <div class="meta">
-            ${data ? `<div class="meta-item"><div class="meta-label">Data</div><div class="meta-value">${data}</div></div>` : ''}
-            ${ora ? `<div class="meta-item"><div class="meta-label">Orario</div><div class="meta-value">${ora}</div></div>` : ''}
+
+      // Gallery HTML
+      const galleryHTML = photos.length > 0 ? `
+        <div class="gallery-section">
+          <div class="gallery-label">Galleria</div>
+          <div class="gallery-scroll" id="gallery-scroll">
+            ${photos.map((p,i) => `
+              <div class="gallery-item ${i===0?'featured':''}" onclick="openLightbox('${p}')">
+                <img src="${p}" alt="Foto ${i+1}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\'placeholder\\'>${emoji}</div>'" />
+              </div>`).join('')}
           </div>
-          ${desc ? `<div class="divider"></div><div class="description">${desc}</div>` : ''}
-        </div>`;
-    } catch(e) { document.getElementById('content').innerHTML = '<p style="padding:24px;color:#888">Errore nel caricamento.</p>'; }
+          <div class="gallery-dots" id="gallery-dots">
+            ${photos.map((_,i) => `<div class="dot ${i===0?'active':''}" id="dot-${i}"></div>`).join('')}
+          </div>
+        </div>` : '';
+
+      document.getElementById('content').innerHTML = `
+        <div class="event-header">
+          <div class="header-deco"></div>
+          <div class="header-blob blob1"></div>
+          <div class="header-blob blob2"></div>
+          <div class="header-blob blob3"></div>
+          <div class="header-content">
+            <div class="event-tipo-badge">${emoji} ${tipo||'Evento'}</div>
+            <div class="event-titolo">${titolo}</div>
+            <div class="event-meta-row">
+              ${data ? `<div class="meta-pill"><span class="icon">📅</span>${data}</div>` : ''}
+              ${ora ? `<div class="meta-pill"><span class="icon">🕐</span>${ora}</div>` : ''}
+            </div>
+          </div>
+        </div>
+        ${galleryHTML}
+        ${desc ? `
+        <div class="desc-section">
+          <div class="desc-card">
+            <div class="desc-title">Info evento</div>
+            <div class="desc-text">${desc}</div>
+          </div>
+        </div>` : ''}`;
+
+      // Scroll dots
+      if (photos.length > 0) {
+        const scroll = document.getElementById('gallery-scroll');
+        if (scroll) {
+          scroll.addEventListener('scroll', () => {
+            const items = scroll.querySelectorAll('.gallery-item');
+            const scrollLeft = scroll.scrollLeft;
+            const itemWidth = items[0]?.offsetWidth + 12 || 172;
+            const activeIdx = Math.round(scrollLeft / itemWidth);
+            document.querySelectorAll('.dot').forEach((d,i) => d.classList.toggle('active', i === activeIdx));
+          });
+        }
+      }
+
+    } catch(e) {
+      document.getElementById('content').innerHTML = '<p style="padding:24px;color:rgba(255,255,255,0.4)">Errore nel caricamento.</p>';
+    }
   }
+
+  window.openLightbox = function(src) {
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox').classList.add('active');
+  };
+  window.closeLightbox = function() {
+    document.getElementById('lightbox').classList.remove('active');
+  };
+
   load();
 </script>
 </body>

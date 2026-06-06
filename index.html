@@ -38,21 +38,15 @@
 
   .container { max-width:480px; margin:0 auto; padding:0 0 48px; position:relative; z-index:2; }
 
-  header { padding:36px 20px 24px; text-align:center; }
-  .logo-img { width:100px; height:100px; object-fit:contain; border-radius:50%; background:rgba(255,255,255,0.1); padding:6px; box-shadow:0 0 0 2px rgba(58,138,58,0.4), 0 8px 32px rgba(0,0,0,0.4); backdrop-filter:blur(10px); }
-
-  .week-badge {
-    display:inline-flex; align-items:center; gap:8px; margin-top:14px;
-    background:linear-gradient(135deg, rgba(58,138,58,0.3) 0%, rgba(245,197,24,0.15) 100%);
-    border:0px solid transparent;
-    border-radius:0px;
-    clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
-    padding:8px 28px;
-    font-size:16px; font-weight:700; letter-spacing:1px;
-    color:var(--giallo);
-    backdrop-filter:blur(10px);
-    text-transform:uppercase;
-  }
+  header { padding:48px 20px 28px; text-align:center; position:relative; }
+  .logo-wrap { position:relative; display:inline-flex; align-items:center; justify-content:center; }
+  .logo-glow { position:absolute; inset:-24px; border-radius:50%; background:radial-gradient(circle, rgba(58,138,58,0.3) 0%, transparent 70%); animation:pulseGlow 3s ease-in-out infinite; }
+  @keyframes pulseGlow { 0%,100%{transform:scale(1);opacity:0.6} 50%{transform:scale(1.1);opacity:1} }
+  .logo-img { width:110px; height:110px; object-fit:contain; border-radius:50%; mix-blend-mode:lighten; filter:drop-shadow(0 0 14px rgba(58,138,58,0.6)); position:relative; z-index:1; }
+  .header-info { margin-top:18px; display:flex; flex-direction:column; align-items:center; gap:4px; }
+  .week-label-top { font-size:11px; font-weight:500; color:var(--testo-dim); letter-spacing:2px; text-transform:uppercase; }
+  .week-value { font-size:20px; font-weight:700; color:var(--giallo); letter-spacing:0.5px; display:flex; align-items:center; gap:8px; }
+  .week-value::before, .week-value::after { content:''; width:20px; height:1px; background:rgba(245,197,24,0.3); }
 
   .section-label {
     font-size:11px; font-weight:600; letter-spacing:2px;
@@ -131,8 +125,14 @@
 <div class="bg-glow"></div>
 <div class="container">
   <header>
-    <img src="logo.jpg.jpeg" alt="Animal Blue House" class="logo-img" />
-    <div class="week-badge" id="week-label">caricamento...</div>
+    <div class="logo-wrap">
+      <div class="logo-glow"></div>
+      <img src="logo.jpg.jpeg" alt="Animal Blue House" class="logo-img" />
+    </div>
+    <div class="header-info">
+      <div class="week-label-top">settimana corrente</div>
+      <div class="week-value" id="week-label">—</div>
+    </div>
   </header>
 
   <div class="section-label">Eventi in programma</div>

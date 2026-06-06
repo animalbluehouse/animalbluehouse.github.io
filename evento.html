@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Evento — Animal Blue House</title>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --verde:#2D6A2D; --giallo:#F5C518; --card-bg:rgba(255,255,255,0.92); --border:rgba(0,0,0,0.08); --text:#1a1a1a; --text-muted:#555; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'DM Sans',sans-serif; color:var(--text); min-height:100vh; }
+  .bg { position:fixed; inset:0; z-index:0; background-image:url('https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1200&q=80'); background-size:cover; background-position:center; filter:blur(3px) brightness(0.85) saturate(0.4); transform:scale(1.05); }
+  .bg-overlay { position:fixed; inset:0; z-index:1; background:rgba(240,235,220,0.55); }
+  .container { max-width:480px; margin:0 auto; padding:0 0 48px; position:relative; z-index:2; }
+  .top-bar { padding:20px 20px 16px; display:flex; align-items:center; gap:12px; }
+  .back-btn { width:36px; height:36px; border-radius:50%; background:var(--card-bg); border:1.5px solid var(--border); display:flex; align-items:center; justify-content:center; text-decoration:none; font-size:18px; box-shadow:0 2px 8px rgba(0,0,0,0.1); }
+  .poster { width:100%; aspect-ratio:16/9; background:#e0d9cc; display:flex; align-items:center; justify-content:center; font-size:48px; overflow:hidden; }
+  .poster img { width:100%; height:100%; object-fit:cover; }
+  .content { margin:16px; background:var(--card-bg); border-radius:16px; padding:20px; box-shadow:0 3px 16px rgba(0,0,0,0.1); border:1.5px solid var(--border); }
+  .event-tipo { font-size:11px; font-weight:500; color:var(--verde); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; }
+  .event-title { font-family:'Bangers',cursive; font-size:28px; letter-spacing:1px; line-height:1.1; margin-bottom:14px; }
+  .meta { display:flex; gap:16px; margin-bottom:16px; flex-wrap:wrap; }
+  .meta-item { display:flex; flex-direction:column; gap:2px; }
+  .meta-label { font-size:10px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.8px; }
+  .meta-value { font-size:14px; font-weight:500; color:var(--text); }
+  .divider { height:1px; background:var(--border); margin-bottom:16px; }
+  .description { font-size:15px; color:var(--text-muted); line-height:1.7; }
+  .spinner { width:28px; height:28px; border:3px solid rgba(0,0,0,0.1); border-top-color:var(--verde); border-radius:50%; animation:spin 0.8s linear infinite; margin:60px auto; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="bg-overlay"></div>
+<div class="container">
+  <div class="top-bar">
+    <a class="back-btn" href="index.html">←</a>
+  </div>
+  <div id="content"><div class="spinner"></div></div>
+</div>
+<script>
+  const SHEET_ID = '1fjfNvu2nO_8ntIycM9L-qzc7uCL6roEZ-wGypsiqU1w';
+  const SHEET_NAME = 'Eventi';
+  const idx = parseInt(new URLSearchParams(window.location.search).get('i') || '0');
+  const emojis = { cinema:'🎬', torneo:'🃏', cultura:'🎭', musica:'🎵', sport:'⚽', comedy:'🎤', party:'🎉' };
+
+  async function load() {
+    try {
+      const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}`;
+      const res = await fetch(url);
+      const text = await res.text();
+      const json = JSON.parse(text.substring(47, text.length - 2));
+      const row = json.table.rows[idx];
+      if (!row) { document.getElementById('content').innerHTML = '<p style="padding:24px;color:#888">Evento non trovato.</p>'; return; }
+      const titolo = row.c[0]?.v||'', data = row.c[1]?.v||'', ora = row.c[2]?.v||'', tipo = row.c[3]?.v||'', desc = row.c[4]?.v||'', loc = row.c[5]?.v||'';
+      const emoji = emojis[(tipo||'').toLowerCase()] || '📅';
+      document.title = `${titolo} — Animal Blue House`;
+      document.getElementById('content').innerHTML = `
+        <div class="poster">${loc ? `<img src="${loc}" alt="${titolo}" />` : emoji}</div>
+        <div class="content">
+          <div class="event-tipo">${tipo||'Evento'}</div>
+          <div class="event-title">${titolo}</div>
+          <div class="meta">
+            ${data ? `<div class="meta-item"><div class="meta-label">Data</div><div class="meta-value">${data}</div></div>` : ''}
+            ${ora ? `<div class="meta-item"><div class="meta-label">Orario</div><div class="meta-value">${ora}</div></div>` : ''}
+          </div>
+          ${desc ? `<div class="divider"></div><div class="description">${desc}</div>` : ''}
+        </div>`;
+    } catch(e) { document.getElementById('content').innerHTML = '<p style="padding:24px;color:#888">Errore nel caricamento.</p>'; }
+  }
+  load();
+</script>
+</body>
+</html>

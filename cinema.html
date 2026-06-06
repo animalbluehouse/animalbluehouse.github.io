@@ -140,7 +140,7 @@
   <div class="top-bar">
     <a class="back-btn" href="index.html">←</a>
     <div class="page-title" id="page-title">🎬 Serata Cinema</div>
-    <span class="admin-link" onclick="openAdmin()">admin</span>
+
   </div>
 
   <div class="counter-card">
@@ -184,20 +184,7 @@
   </div>
 </div>
 
-<!-- Modal admin -->
-<div class="admin-overlay" id="admin-modal">
-  <div class="admin-modal">
-    <h3>Area Admin</h3>
-    <p>Inserisci la password per accedere</p>
-    <input type="password" id="admin-password" placeholder="Password" />
-    <button class="btn-confirm" style="width:100%;margin-bottom:0;" id="admin-login-btn" onclick="checkAdmin()">Accedi</button>
-    <div class="admin-actions" id="admin-actions" style="display:none;">
-      <button class="btn-download" onclick="downloadData()">⬇ Scarica prenotazioni</button>
-      <button class="btn-reset" onclick="resetSeats()">↺ Azzera tutti i posti</button>
-    </div>
-    <button class="btn-close-admin" onclick="closeAdmin()">✕ Chiudi</button>
-  </div>
-</div>
+
 
 <div class="toast" id="toast"></div>
 
@@ -287,7 +274,28 @@
     if (!name) { showToast('Inserisci il tuo nome'); return; }
     const contact = document.getElementById('booking-contact').value.trim();
     const bookingId = Date.now().toString();
+    const dataOra = new Date().toLocaleString('it-IT');
+
+    // Salva su Firebase per il counter in tempo reale
     await set(ref(db, `seats/${bookingId}`), { name, contact, count:selectedNum, timestamp:new Date().toISOString() });
+
+    // Salva su Google Sheet tramite form nascosto
+    try {
+      var form = document.createElement('form');
+      form.method = 'POST';
+      form.action = 'https://script.google.com/macros/s/AKfycbzQtNTPXpnQzU6GD18gQXjTuJI-dcR6a4FI_YJoJ0CrPZSGftxJFYzvRfLicRY_eoM47A/exec';
+      form.target = 'hidden-iframe';
+      var fields = { id:bookingId, nome:name, contatto:contact, posti:selectedNum, dataOra:dataOra };
+      Object.entries(fields).forEach(([k,v]) => {
+        var input = document.createElement('input');
+        input.type = 'hidden'; input.name = k; input.value = v;
+        form.appendChild(input);
+      });
+      document.body.appendChild(form);
+      form.submit();
+      document.body.removeChild(form);
+    } catch(e) { console.log('Sheet sync error:', e); }
+
     closeModal();
     showToast(`✓ Prenotazione confermata per ${selectedNum} posto${selectedNum>1?'i':''}!`);
     selectedNum = 0;
@@ -336,5 +344,6 @@
     setTimeout(() => t.classList.remove('show'), 2800);
   }
 </script>
+<iframe name="hidden-iframe" style="display:none;"></iframe>
 </body>
 </html>

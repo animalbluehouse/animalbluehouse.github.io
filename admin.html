@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Admin — Animal Blue House</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --verde: #3a8a3a;
+    --verde-glow: rgba(58,138,58,0.35);
+    --giallo: #F5C518;
+    --rosso: #E53935;
+    --testo: #f0f0e8;
+    --testo-muted: rgba(240,240,232,0.6);
+    --testo-dim: rgba(240,240,232,0.35);
+    --border: rgba(255,255,255,0.12);
+    --surface: rgba(255,255,255,0.07);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  body { font-family:'Fredoka',sans-serif; color:var(--testo); min-height:100vh; }
+  .bg { position:fixed; inset:0; z-index:0; background:radial-gradient(ellipse at top left, #1a3a1a 0%, #0d1f0d 45%, #050f05 100%); }
+  .bg-glow { position:fixed; inset:0; z-index:0; background:radial-gradient(ellipse at 80% 20%, rgba(58,138,58,0.12) 0%, transparent 55%); pointer-events:none; }
+
+  .container { max-width:480px; margin:0 auto; padding:0 0 48px; position:relative; z-index:2; }
+
+  /* Login screen */
+  #login-screen { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100vh; padding:24px; }
+  .login-logo { font-size:48px; margin-bottom:16px; }
+  .login-title { font-size:28px; font-weight:700; color:var(--testo); margin-bottom:4px; }
+  .login-sub { font-size:14px; color:var(--testo-dim); margin-bottom:32px; }
+  .login-card { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); border-radius:20px; padding:24px; width:100%; max-width:340px; backdrop-filter:blur(20px); }
+  .login-card input { width:100%; background:rgba(255,255,255,0.08); border:1.5px solid rgba(255,255,255,0.12); border-radius:12px; padding:14px; font-size:16px; color:var(--testo); font-family:'Fredoka',sans-serif; outline:none; margin-bottom:14px; letter-spacing:2px; }
+  .login-card input:focus { border-color:var(--verde); }
+  .login-card input::placeholder { color:var(--testo-dim); letter-spacing:0; }
+  .btn-login { width:100%; background:var(--verde); color:#fff; border:none; border-radius:12px; padding:14px; font-size:17px; font-weight:700; font-family:'Fredoka',sans-serif; cursor:pointer; box-shadow:0 0 20px var(--verde-glow); }
+  .btn-login:active { opacity:0.85; }
+  .login-error { font-size:13px; color:#ff6b6b; text-align:center; margin-top:10px; display:none; }
+
+  /* Admin dashboard */
+  #dashboard { display:none; }
+  .top-bar { padding:20px 20px 16px; display:flex; align-items:center; gap:14px; }
+  .back-btn { width:40px; height:40px; border-radius:50%; background:rgba(58,138,58,0.25); border:1.5px solid rgba(58,138,58,0.5); display:flex; align-items:center; justify-content:center; text-decoration:none; font-size:20px; color:#fff; box-shadow:0 0 16px rgba(58,138,58,0.3); flex-shrink:0; }
+  .page-title { font-size:22px; font-weight:700; }
+  .logout-btn { margin-left:auto; font-size:12px; color:var(--testo-dim); cursor:pointer; padding:4px 10px; border:0.5px solid rgba(255,255,255,0.1); border-radius:20px; }
+
+  .section { padding:0 16px; margin-bottom:20px; }
+  .section-label { font-size:11px; font-weight:600; letter-spacing:2px; color:var(--verde); margin-bottom:12px; text-transform:uppercase; display:flex; align-items:center; gap:8px; }
+  .section-label::after { content:''; flex:1; height:1px; background:rgba(58,138,58,0.3); }
+
+  /* Stats card */
+  .stats-card { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:18px; padding:20px; backdrop-filter:blur(20px); margin-bottom:12px; }
+  .stats-row { display:flex; gap:12px; }
+  .stat-item { flex:1; text-align:center; }
+  .stat-number { font-size:40px; font-weight:700; color:var(--verde); }
+  .stat-label { font-size:12px; color:var(--testo-dim); margin-top:2px; }
+  .counter-bar { height:6px; background:rgba(255,255,255,0.08); border-radius:3px; margin:14px 0 6px; overflow:hidden; }
+  .counter-bar-fill { height:6px; border-radius:3px; transition:width 0.8s ease, background 0.5s; }
+  .counter-status { font-size:14px; font-weight:600; text-align:center; }
+
+  /* Action buttons */
+  .action-card { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:18px; padding:16px; backdrop-filter:blur(20px); display:flex; flex-direction:column; gap:10px; }
+  .btn-action { display:flex; align-items:center; gap:12px; padding:14px 16px; border-radius:12px; border:none; font-size:15px; font-weight:600; font-family:'Fredoka',sans-serif; cursor:pointer; transition:opacity 0.2s; text-align:left; }
+  .btn-action:active { opacity:0.8; }
+  .btn-action .icon { font-size:20px; width:28px; text-align:center; }
+  .btn-download { background:rgba(58,138,58,0.2); color:#7ec87e; border:1.5px solid rgba(58,138,58,0.3) !important; border:none; }
+  .btn-reset { background:rgba(229,57,53,0.15); color:#ff6b6b; border:1.5px solid rgba(229,57,53,0.3) !important; border:none; }
+  .btn-home { background:rgba(255,255,255,0.06); color:var(--testo-muted); border:1px solid rgba(255,255,255,0.1) !important; border:none; }
+
+  /* Prenotazioni list */
+  .bookings-list { display:flex; flex-direction:column; gap:8px; }
+  .booking-item { background:rgba(255,255,255,0.05); border:0.5px solid rgba(255,255,255,0.08); border-radius:12px; padding:12px 14px; display:flex; align-items:center; gap:12px; }
+  .booking-avatar { width:38px; height:38px; border-radius:50%; background:rgba(58,138,58,0.2); border:1px solid rgba(58,138,58,0.3); display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:700; color:var(--verde); flex-shrink:0; }
+  .booking-info { flex:1; min-width:0; }
+  .booking-name { font-size:14px; font-weight:600; color:var(--testo); }
+  .booking-meta { font-size:12px; color:var(--testo-dim); margin-top:2px; }
+  .booking-posti { font-size:13px; font-weight:700; color:var(--verde); background:rgba(58,138,58,0.15); border-radius:8px; padding:4px 10px; flex-shrink:0; }
+
+  .empty-bookings { text-align:center; padding:32px; color:var(--testo-dim); font-size:14px; }
+
+  .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(10px); background:rgba(20,40,20,0.95); border:1px solid rgba(58,138,58,0.4); border-radius:14px; padding:12px 20px; font-size:14px; color:var(--testo); z-index:300; opacity:0; transition:all 0.3s; white-space:nowrap; pointer-events:none; backdrop-filter:blur(10px); }
+  .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+
+  .spinner { width:24px; height:24px; border:3px solid rgba(255,255,255,0.1); border-top-color:var(--verde); border-radius:50%; animation:spin 0.8s linear infinite; margin:20px auto; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="bg-glow"></div>
+
+<!-- Login -->
+<div id="login-screen">
+  <div class="login-logo">🛸</div>
+  <div class="login-title">Area Admin</div>
+  <div class="login-sub">Animal Blue House</div>
+  <div class="login-card">
+    <input type="password" id="pw-input" placeholder="Password" autocomplete="off" />
+    <button class="btn-login" onclick="checkLogin()">Accedi</button>
+    <div class="login-error" id="login-error">Password errata. Riprova.</div>
+  </div>
+</div>
+
+<!-- Dashboard -->
+<div id="dashboard">
+  <div class="container">
+    <div class="top-bar">
+      <a class="back-btn" href="index.html">←</a>
+      <div class="page-title">🎬 Dashboard</div>
+      <span class="logout-btn" onclick="logout()">Esci</span>
+    </div>
+
+    <!-- Stats cinema -->
+    <div class="section">
+      <div class="section-label">Serata cinema</div>
+      <div class="stats-card">
+        <div class="stats-row">
+          <div class="stat-item">
+            <div class="stat-number" id="stat-occupati">—</div>
+            <div class="stat-label">Prenotati</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" id="stat-liberi" style="color:var(--giallo)">—</div>
+            <div class="stat-label">Disponibili</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" style="color:var(--testo-dim)">90</div>
+            <div class="stat-label">Totale</div>
+          </div>
+        </div>
+        <div class="counter-bar"><div class="counter-bar-fill" id="stat-bar" style="width:0%"></div></div>
+        <div class="counter-status" id="stat-status"></div>
+      </div>
+    </div>
+
+    <!-- Azioni -->
+    <div class="section">
+      <div class="section-label">Azioni</div>
+      <div class="action-card">
+        <button class="btn-action btn-download" onclick="downloadData()">
+          <span class="icon">⬇</span> Scarica lista prenotazioni
+        </button>
+        <button class="btn-action btn-reset" onclick="resetSeats()">
+          <span class="icon">↺</span> Azzera tutti i posti
+        </button>
+        <button class="btn-action btn-home" onclick="window.location.href='index.html'">
+          <span class="icon">🏠</span> Torna alla homepage
+        </button>
+      </div>
+    </div>
+
+    <!-- Lista prenotazioni -->
+    <div class="section">
+      <div class="section-label">Prenotazioni</div>
+      <div class="bookings-list" id="bookings-list">
+        <div class="spinner"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+  import { getDatabase, ref, onValue, remove } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
+
+  const app = initializeApp({ databaseURL:"https://animal-blue-house-default-rtdb.europe-west1.firebasedatabase.app" });
+  const db = getDatabase(app);
+  const ADMIN_PASSWORD = "ABH#x9mK2p";
+  const MAX = 90;
+  let seatsData = {};
+
+  // Check se già loggato
+  if (sessionStorage.getItem('abh-admin') === '1') showDashboard();
+
+  window.checkLogin = function() {
+    const pw = document.getElementById('pw-input').value;
+    if (pw === ADMIN_PASSWORD) {
+      sessionStorage.setItem('abh-admin', '1');
+      showDashboard();
+    } else {
+      document.getElementById('login-error').style.display = 'block';
+      document.getElementById('pw-input').value = '';
+    }
+  };
+
+  document.getElementById('pw-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') window.checkLogin();
+  });
+
+  window.logout = function() {
+    sessionStorage.removeItem('abh-admin');
+    document.getElementById('dashboard').style.display = 'none';
+    document.getElementById('login-screen').style.display = 'flex';
+    document.getElementById('pw-input').value = '';
+  };
+
+  function showDashboard() {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    startListening();
+  }
+
+  function startListening() {
+    onValue(ref(db, 'seats'), (snap) => {
+      seatsData = snap.val() || {};
+      updateStats();
+      renderBookings();
+    });
+  }
+
+  function updateStats() {
+    const occupied = Object.values(seatsData).reduce((s,v) => s + (v.count||1), 0);
+    const free = Math.max(0, MAX - occupied);
+    const perc = Math.round((occupied / MAX) * 100);
+    document.getElementById('stat-occupati').textContent = occupied;
+    document.getElementById('stat-liberi').textContent = free;
+    const fill = document.getElementById('stat-bar');
+    fill.style.width = perc + '%';
+    let color, status;
+    if (free === 0) { color='#E53935'; status='SOLD OUT 🔴'; }
+    else if (free <= 15) { color='#FF8C00'; status='Ultimi posti! 🟠'; }
+    else if (free <= 30) { color='#F5C518'; status='Pochi posti rimasti 🟡'; }
+    else { color='#3a8a3a'; status='Disponibile 🟢'; }
+    fill.style.background = color;
+    document.getElementById('stat-status').textContent = status;
+    document.getElementById('stat-status').style.color = color;
+  }
+
+  function renderBookings() {
+    const list = document.getElementById('bookings-list');
+    const entries = Object.entries(seatsData).sort((a,b) => a[0].localeCompare(b[0]));
+    if (entries.length === 0) {
+      list.innerHTML = '<div class="empty-bookings">Nessuna prenotazione ancora</div>';
+      return;
+    }
+    list.innerHTML = entries.map(([id, data]) => {
+      const initial = (data.name||'?')[0].toUpperCase();
+      const time = new Date(data.timestamp).toLocaleString('it-IT', {day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
+      return `<div class="booking-item">
+        <div class="booking-avatar">${initial}</div>
+        <div class="booking-info">
+          <div class="booking-name">${data.name}</div>
+          <div class="booking-meta">${data.contact || 'Nessun contatto'} · ${time}</div>
+        </div>
+        <div class="booking-posti">${data.count||1} 🎟</div>
+      </div>`;
+    }).join('');
+  }
+
+  window.resetSeats = async function() {
+    if (!confirm('Sei sicuro? Tutte le prenotazioni verranno cancellate.')) return;
+    await remove(ref(db, 'seats'));
+    showToast('✓ Tutti i posti azzerati');
+  };
+
+  window.downloadData = function() {
+    const rows = [['ID','Nome','Contatto','Posti','Data prenotazione']];
+    Object.entries(seatsData).sort().forEach(([id,data]) => {
+      rows.push([id, data.name, data.contact||'', data.count||1, new Date(data.timestamp).toLocaleString('it-IT')]);
+    });
+    const csv = rows.map(r => r.map(v => `"${v}"`).join(',')).join('\n');
+    const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'});
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+    a.download = `prenotazioni-${new Date().toLocaleDateString('it-IT').replace(/\//g,'-')}.csv`;
+    a.click(); showToast('✓ Lista scaricata!');
+  };
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2800);
+  }
+</script>
+</body>
+</html>

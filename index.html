@@ -215,9 +215,10 @@
       const html = events.map((ev, i) => {
         const emoji = getTypeEmoji(ev.tipo);
         const isCinema = (ev.tipo||'').toLowerCase() === 'cinema';
-        const href = isCinema ? 'cinema.html' : `evento.html?i=${ev.index}`;
+        const isPartner = (ev.tipo||'').toLowerCase() === 'partner';
+        const href = isCinema ? 'cinema.html' : isPartner ? 'partner.html' : `evento.html?i=${ev.index}`;
         const poster = ev.locandina ? `<img src="${ev.locandina}" alt="${ev.titolo}" loading="lazy" />` : `<div class="fallback">${emoji}</div>`;
-        const footerLabel = isCinema ? 'Prenotati subito!' : (ev.tipo||'Evento');
+        const footerLabel = isCinema ? 'Prenotati subito!' : isPartner ? 'Scopri le esclusive' : (ev.tipo||'Evento');
         const posterSrc = isCinema ? '<img src="cinema-bg.jpg.webp" alt="Cinema" loading="lazy" style="filter:grayscale(100%)" />' : poster;
         return `<a class="event-card fade-in" href="${href}" style="animation-delay:${i*0.08}s">
           <div class="event-poster">${posterSrc}<div class="event-overlay"></div>

@@ -96,6 +96,11 @@
   .contact-item:active { color:var(--testo); }
   .contact-icon { width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
   .contact-icon svg { width:20px; height:20px; display:block; }
+  .maps-btn { display:flex; align-items:center; gap:14px; padding:10px 0; border-bottom:0.5px solid rgba(255,255,255,0.08); text-decoration:none; transition:color 0.2s; }
+  .maps-btn:active { color:var(--testo); }
+  .maps-icon { width:36px; height:36px; border-radius:10px; background:rgba(66,133,244,0.15); display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:20px; }
+  .maps-text { font-size:14px; color:var(--testo-muted); }
+  .maps-address { font-size:11px; color:var(--testo-dim); margin-top:2px; }
 
   .loading { text-align:center; padding:60px 24px; color:var(--testo-muted); font-size:15px; }
   .spinner { width:28px; height:28px; border:3px solid rgba(255,255,255,0.1); border-top-color:var(--verde); border-radius:50%; animation:spin 0.8s linear infinite; margin:0 auto 12px; }
@@ -190,6 +195,13 @@
   </a>
   <div class="contacts">
     <div class="contacts-title">Contatti</div>
+    <a class="maps-btn" href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x477e2fae29f6a83d:0x732bc6a0ddff6651" target="_blank">
+      <div class="maps-icon">📍</div>
+      <div>
+        <div class="maps-text">Dove siamo</div>
+        <div class="maps-address">Piazzetta De Andrè 1, Budrio</div>
+      </div>
+    </a>
     <a class="contact-item" href="tel:+393534918218">
       <div class="contact-icon" style="background:rgba(58,138,58,0.2);">
         <svg viewBox="0 0 24 24" fill="none" stroke="#3a8a3a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>

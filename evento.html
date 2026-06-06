@@ -4,14 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>Evento — Animal Blue House</title>
-<meta name="description" content="Scopri i dettagli dell evento e unisciti alla community di Animal Blue House a Budrio.">
-<meta name="keywords" content="Animal Blue House eventi, Budrio serate, circolo privato eventi">
-<meta name="robots" content="index, follow">
-<meta property="og:title" content="Evento — Animal Blue House">
-<meta property="og:description" content="Scopri i dettagli dell evento e unisciti alla community di Animal Blue House a Budrio.">
-<meta property="og:type" content="website">
-<meta property="og:image" content="https://animalbluehouse.github.io/logo.jpg.jpeg">
-<meta name="theme-color" content="#0d1f0d">
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -26,7 +18,6 @@
   }
   * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
   body { font-family:'Fredoka',sans-serif; color:var(--testo); min-height:100vh; background:#050f05; overflow-x:hidden; }
-
   .bg { position:fixed; inset:0; z-index:0; background:radial-gradient(ellipse at top left, #1a3a1a 0%, #0d1f0d 45%, #050f05 100%); }
   .bg-glow { position:fixed; inset:0; z-index:0; background:radial-gradient(ellipse at 70% 10%, rgba(58,138,58,0.1) 0%, transparent 50%); pointer-events:none; }
 
@@ -43,64 +34,65 @@
   }
 
   /* Header compatto */
-  .event-header {
-    padding:72px 20px 20px;
-    position:relative; overflow:hidden;
-  }
+  .event-header { padding:72px 20px 20px; position:relative; overflow:hidden; }
   .header-deco { position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, transparent, var(--verde), var(--giallo), var(--verde), transparent); }
   .event-tipo-badge { display:inline-flex; align-items:center; gap:6px; background:rgba(58,138,58,0.2); border:1px solid rgba(58,138,58,0.35); border-radius:20px; padding:3px 10px; font-size:11px; font-weight:600; color:var(--verde-light); letter-spacing:1px; text-transform:uppercase; margin-bottom:8px; }
-  .event-titolo { font-size:28px; font-weight:700; color:var(--testo); line-height:1.1; margin-bottom:10px; }
-  .event-meta-row { display:flex; gap:8px; flex-wrap:wrap; }
-  .meta-pill { display:flex; align-items:center; gap:5px; background:rgba(255,255,255,0.07); border:0.5px solid rgba(255,255,255,0.1); border-radius:20px; padding:4px 10px; font-size:12px; color:var(--testo-muted); }
+  .event-titolo { font-size:28px; font-weight:700; color:var(--testo); line-height:1.1; margin-bottom:12px; }
 
   /* Descrizione */
-  .desc-section { padding:20px 20px 0; }
+  .desc-section { padding:0 20px 20px; }
   .desc-text { font-size:15px; color:var(--testo-muted); line-height:1.8; }
   .desc-text p { margin-bottom:8px; }
   .desc-text p:last-child { margin-bottom:0; }
 
-  /* Divisore */
-  .divider { margin:24px 20px 0; height:1px; background:linear-gradient(90deg, transparent, rgba(58,138,58,0.4), transparent); }
+  /* Meta pillole */
+  .meta-row { display:flex; gap:8px; flex-wrap:wrap; padding:0 20px 20px; }
+  .meta-pill { display:flex; align-items:center; gap:5px; background:rgba(255,255,255,0.07); border:0.5px solid rgba(255,255,255,0.1); border-radius:20px; padding:5px 12px; font-size:13px; color:var(--testo-muted); }
 
-  /* Foto grandi scorrevoli */
+  /* Card artista con foto */
+  .artist-card {
+    margin:0 16px;
+    border-radius:20px;
+    overflow:hidden;
+    position:relative;
+    aspect-ratio:3/4;
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.08);
+    box-shadow:0 8px 32px rgba(0,0,0,0.4);
+  }
+  .artist-photo { width:100%; height:100%; object-fit:cover; display:block; }
+  .artist-photo-placeholder { width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-size:64px; background:rgba(58,138,58,0.08); }
+
+  /* Overlay in basso con nome e IG */
+  .artist-overlay {
+    position:absolute; bottom:0; left:0; right:0;
+    background:linear-gradient(to top, rgba(5,15,5,0.92) 0%, rgba(5,15,5,0.6) 60%, transparent 100%);
+    padding:24px 18px 18px;
+    display:flex; align-items:flex-end; justify-content:space-between; gap:12px;
+  }
+  .artist-info { flex:1; min-width:0; }
+  .artist-label { font-size:10px; font-weight:600; color:rgba(240,240,232,0.4); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:4px; }
+  .artist-name { font-size:22px; font-weight:700; color:#fff; line-height:1.1; }
+  .ig-btn {
+    display:flex; align-items:center; gap:6px;
+    background:rgba(220,39,67,0.2);
+    border:1px solid rgba(220,39,67,0.35);
+    border-radius:20px; padding:9px 14px;
+    text-decoration:none; font-size:13px; font-weight:600;
+    color:#ED93B1; flex-shrink:0; white-space:nowrap;
+  }
+  .ig-btn:active { background:rgba(220,39,67,0.3); }
+  .ig-btn svg { display:block; }
+
+  /* Gallery foto evento (polleggedì ecc) */
   .photos-section { padding:24px 0 0; }
   .photos-label { font-size:11px; font-weight:600; letter-spacing:2px; color:var(--verde); padding:0 20px; margin-bottom:16px; text-transform:uppercase; display:flex; align-items:center; gap:8px; }
   .photos-label::after { content:''; flex:1; height:1px; background:rgba(58,138,58,0.3); }
-
-  .photos-scroll {
-    display:flex; gap:14px;
-    padding:0 20px 20px;
-    overflow-x:auto;
-    scroll-snap-type:x mandatory;
-    -webkit-overflow-scrolling:touch;
-    scrollbar-width:none;
-  }
+  .photos-scroll { display:flex; gap:14px; padding:0 20px 20px; overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
   .photos-scroll::-webkit-scrollbar { display:none; }
-
-  .photo-item {
-    flex-shrink:0;
-    width:280px;
-    scroll-snap-align:center;
-    border-radius:18px;
-    overflow:hidden;
-    border:1px solid rgba(255,255,255,0.08);
-    box-shadow:0 8px 32px rgba(0,0,0,0.4);
-    position:relative;
-  }
-  .photo-item img {
-    width:100%; height:320px;
-    object-fit:cover; display:block;
-  }
-  .photo-item .photo-overlay {
-    position:absolute; bottom:0; left:0; right:0;
-    background:linear-gradient(to top, rgba(5,15,5,0.7) 0%, transparent 60%);
-    padding:16px 14px 12px;
-    font-size:12px; color:rgba(240,240,232,0.5);
-  }
-
-  /* Hint scorri */
-  .scroll-hint { display:flex; align-items:center; justify-content:center; gap:6px; padding:4px 0 0; font-size:12px; color:var(--testo-dim); }
-  .scroll-hint-dots { display:flex; gap:5px; }
+  .photo-item { flex-shrink:0; width:280px; scroll-snap-align:center; border-radius:18px; overflow:hidden; border:1px solid rgba(255,255,255,0.08); box-shadow:0 8px 32px rgba(0,0,0,0.4); position:relative; cursor:pointer; }
+  .photo-item img { width:100%; height:320px; object-fit:cover; display:block; }
+  .sdot-row { display:flex; gap:5px; justify-content:center; padding:4px 0 0; }
   .sdot { width:5px; height:5px; border-radius:50%; background:rgba(255,255,255,0.15); transition:all 0.3s; }
   .sdot.active { background:var(--verde); width:14px; border-radius:3px; }
 
@@ -110,20 +102,12 @@
   .lightbox img { max-width:92vw; max-height:82vh; border-radius:14px; object-fit:contain; }
   .lightbox-close { position:absolute; top:20px; right:20px; font-size:28px; color:#fff; cursor:pointer; }
 
+  .divider { margin:24px 20px 0; height:1px; background:linear-gradient(90deg, transparent, rgba(58,138,58,0.4), transparent); }
+
   .spinner { width:24px; height:24px; border:3px solid rgba(255,255,255,0.1); border-top-color:var(--verde); border-radius:50%; animation:spin 0.8s linear infinite; margin:80px auto; }
   @keyframes spin { to { transform:rotate(360deg); } }
-
-
   .fade-in { animation:fadeIn 0.4s ease forwards; opacity:0; }
   @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
-
-  /* Artista */
-  .artist-section { padding:16px 16px 0; }
-  .artist-card { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:16px 18px; display:flex; align-items:center; justify-content:space-between; gap:12px; backdrop-filter:blur(10px); }
-  .artist-label { font-size:10px; font-weight:600; color:var(--testo-dim); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:4px; }
-  .artist-name { font-size:20px; font-weight:700; color:var(--testo); }
-  .ig-btn { display:flex; align-items:center; gap:7px; background:rgba(220,39,67,0.12); border:1px solid rgba(220,39,67,0.25); border-radius:20px; padding:8px 14px; text-decoration:none; font-size:13px; font-weight:600; color:#ED93B1; flex-shrink:0; white-space:nowrap; }
-  .ig-btn:active { background:rgba(220,39,67,0.2); }
 </style>
 </head>
 <body>
@@ -144,14 +128,15 @@
   const SHEET_ID = '1fjfNvu2nO_8ntIycM9L-qzc7uCL6roEZ-wGypsiqU1w';
   const SHEET_NAME = 'Eventi';
   const idx = parseInt(new URLSearchParams(window.location.search).get('i') || '0');
-  const emojis = { cinema:'🎬', torneo:'🃏', cultura:'🎭', musica:'🎵', sport:'⚽', comedy:'🎤', party:'🎉' };
+  const emojis = { cinema:'🎬', torneo:'🃏', cultura:'🎭', musica:'🎵', sport:'⚽', comedy:'🎤', party:'🎉', hiphop:'🎤', band:'🎸', discovery:'🎵' };
 
   const eventPhotos = {
     'polleggedi': ['polleggedi-1.jpg','polleggedi-2.jpg','polleggedi-3.jpg','polleggedi-4.jpg','polleggedi-5.jpg']
   };
 
   const eventDescriptions = {
-    'polleggedi': `<p>Polleggedì non è solo una serata — è il rituale che trasforma un venerdì qualunque in qualcosa che aspetti tutta la settimana.</p><p>Musica, risate, facce che conosci e facce nuove. Un posto dove puoi arrivare da solo e sentirti già a casa dopo cinque minuti.</p><p>Ci vediamo lì. 🛸</p>`
+    'polleggedi': `<p>Polleggedì non è solo una serata — è il rituale che trasforma un venerdì qualunque in qualcosa che aspetti tutta la settimana.</p><p>Musica, risate, facce che conosci e facce nuove. Un posto dove puoi arrivare da solo e sentirti già a casa dopo cinque minuti.</p><p>Ci vediamo lì. 🛸</p>`,
+    'discoverynight': `<p>Ogni mese un artista diverso, un genere diverso, una storia diversa. Discovery Night è la serata dove la musica parla prima di tutto il resto.</p>`
   };
 
   function getKey(titolo) {
@@ -180,41 +165,19 @@
       const desc = eventDescriptions[key] || (row.c[4]?.v ? `<p>${row.c[4].v}</p>` : '');
       const nomeArtista = row.c[8]?.v || '';
       const linkIG = row.c[9]?.v || '';
+      const fotoArtista = row.c[10]?.v || '';
 
       document.title = `${titolo} — Animal Blue House`;
 
-      const photosHTML = photos.length > 0 ? `
-        <div class="photos-section fade-in">
-          <div class="photos-label">Galleria</div>
-          <div class="photos-scroll" id="photos-scroll">
-            ${photos.map((p,i) => `
-              <div class="photo-item" onclick="openLightbox('${p}')">
-                <img src="${p}" alt="Foto ${i+1}" loading="lazy" />
-                <div class="photo-overlay">${i+1} / ${photos.length}</div>
-              </div>`).join('')}
-          </div>
-          <div class="scroll-hint">
-            <div class="scroll-hint-dots" id="scroll-dots">
-              ${photos.map((_,i) => `<div class="sdot ${i===0?'active':''}"></div>`).join('')}
-            </div>
-          </div>
-        </div>` : '';
-
-      document.getElementById('content').innerHTML = `
-        <div class="event-header fade-in">
-          <div class="header-deco"></div>
-          <div class="event-tipo-badge">${emoji} ${tipo||'Evento'}</div>
-          <div class="event-titolo">${titolo}</div>
-          <div class="event-meta-row">
-            ${data ? `<div class="meta-pill">📅 ${data}</div>` : ''}
-            ${ora ? `<div class="meta-pill">🕐 ${ora}</div>` : ''}
-          </div>
-        </div>
-        ${desc ? `<div class="desc-section fade-in"><div class="desc-text">${desc}</div></div>` : ''}
-        ${(nomeArtista || linkIG) ? `
-        <div class="artist-section fade-in">
-          <div class="artist-card">
-            <div class="artist-left">
+      // Card artista con foto
+      const hasArtist = nomeArtista || fotoArtista;
+      const artistHTML = hasArtist ? `
+        <div class="artist-card fade-in">
+          ${fotoArtista
+            ? `<img class="artist-photo" src="${fotoArtista}" alt="${nomeArtista}" />`
+            : `<div class="artist-photo-placeholder">🎵</div>`}
+          <div class="artist-overlay">
+            <div class="artist-info">
               <div class="artist-label">Artista della serata</div>
               <div class="artist-name">${nomeArtista || '—'}</div>
             </div>
@@ -229,14 +192,42 @@
                   <stop offset="100%" stop-color="#bc1888"/>
                 </linearGradient></defs>
               </svg>
-              <span>Seguilo</span>
+              Seguilo
             </a>` : ''}
           </div>
-        </div>` : ''}
+        </div>` : '';
+
+      // Gallery foto
+      const photosHTML = photos.length > 0 ? `
+        <div class="photos-section">
+          <div class="photos-label">Galleria</div>
+          <div class="photos-scroll" id="photos-scroll">
+            ${photos.map((p,i) => `
+              <div class="photo-item" onclick="openLightbox('${p}')">
+                <img src="${p}" alt="Foto ${i+1}" loading="lazy" />
+              </div>`).join('')}
+          </div>
+          <div class="sdot-row">
+            ${photos.map((_,i) => `<div class="sdot ${i===0?'active':''}"></div>`).join('')}
+          </div>
+        </div>` : '';
+
+      document.getElementById('content').innerHTML = `
+        <div class="event-header fade-in">
+          <div class="header-deco"></div>
+          <div class="event-tipo-badge">${emoji} ${tipo||'Evento'}</div>
+          <div class="event-titolo">${titolo}</div>
+        </div>
+        ${desc ? `<div class="desc-section fade-in"><div class="desc-text">${desc}</div></div>` : ''}
+        <div class="meta-row fade-in">
+          ${data ? `<div class="meta-pill">📅 ${data}</div>` : ''}
+          ${ora ? `<div class="meta-pill">🕐 ${ora}</div>` : ''}
+        </div>
+        ${artistHTML}
         ${photos.length > 0 ? '<div class="divider"></div>' : ''}
         ${photosHTML}`;
 
-      // Dots scroll sync
+      // Dots scroll
       if (photos.length > 0) {
         const scroll = document.getElementById('photos-scroll');
         scroll?.addEventListener('scroll', () => {

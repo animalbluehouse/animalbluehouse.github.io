@@ -2,9 +2,10 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=5">
 <title>Evento — Animal Blue House</title>
 <script>history.scrollRestoration = "manual"; window.onload = function(){ window.scrollTo(0,0); };</script>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://docs.google.com https://sheets.googleapis.com; frame-src 'none'; frame-ancestors 'none';">
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -21,71 +22,28 @@
   body { font-family:'Fredoka',sans-serif; color:var(--testo); min-height:100vh; background:#050f05; overflow-x:hidden; }
   .bg { position:fixed; inset:0; z-index:0; background:radial-gradient(ellipse at top left, #1a3a1a 0%, #0d1f0d 45%, #050f05 100%); }
   .bg-glow { position:fixed; inset:0; z-index:0; background:radial-gradient(ellipse at 70% 10%, rgba(58,138,58,0.1) 0%, transparent 50%); pointer-events:none; }
-
   .container { max-width:480px; margin:0 auto; padding:0 0 48px; position:relative; z-index:2; }
-
-  .back-btn {
-    position:fixed; top:20px; left:20px; z-index:10;
-    width:40px; height:40px; border-radius:50%;
-    background:rgba(58,138,58,0.3);
-    border:1.5px solid rgba(58,138,58,0.5);
-    display:flex; align-items:center; justify-content:center;
-    text-decoration:none; font-size:20px; color:#fff;
-    box-shadow:0 0 16px rgba(58,138,58,0.3);
-  }
-
-  /* Header compatto */
+  .back-btn { position:fixed; top:20px; left:20px; z-index:10; width:40px; height:40px; border-radius:50%; background:rgba(58,138,58,0.3); border:1.5px solid rgba(58,138,58,0.5); display:flex; align-items:center; justify-content:center; text-decoration:none; font-size:20px; color:#fff; box-shadow:0 0 16px rgba(58,138,58,0.3); }
   .event-header { padding:72px 20px 20px; position:relative; overflow:hidden; }
   .header-deco { position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, transparent, var(--verde), var(--giallo), var(--verde), transparent); }
   .event-tipo-badge { display:inline-flex; align-items:center; gap:6px; background:rgba(58,138,58,0.2); border:1px solid rgba(58,138,58,0.35); border-radius:20px; padding:3px 10px; font-size:11px; font-weight:600; color:var(--verde-light); letter-spacing:1px; text-transform:uppercase; margin-bottom:8px; }
   .event-titolo { font-size:28px; font-weight:700; color:var(--testo); line-height:1.1; margin-bottom:12px; }
-
-  /* Descrizione */
   .desc-section { padding:0 20px 20px; }
   .desc-text { font-size:15px; color:var(--testo-muted); line-height:1.8; }
   .desc-text p { margin-bottom:8px; }
   .desc-text p:last-child { margin-bottom:0; }
-
-  /* Meta pillole */
   .meta-row { display:flex; gap:8px; flex-wrap:wrap; padding:0 20px 20px; }
   .meta-pill { display:flex; align-items:center; gap:5px; background:rgba(255,255,255,0.07); border:0.5px solid rgba(255,255,255,0.1); border-radius:20px; padding:5px 12px; font-size:13px; color:var(--testo-muted); }
-
-  /* Card artista con foto */
-  .artist-card {
-    margin:0 16px;
-    border-radius:20px;
-    overflow:hidden;
-    position:relative;
-    aspect-ratio:3/4;
-    background:rgba(255,255,255,0.05);
-    border:1px solid rgba(255,255,255,0.08);
-    box-shadow:0 8px 32px rgba(0,0,0,0.4);
-  }
+  .artist-card { margin:0 16px; border-radius:20px; overflow:hidden; position:relative; aspect-ratio:3/4; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08); box-shadow:0 8px 32px rgba(0,0,0,0.4); }
   .artist-photo { width:100%; height:100%; object-fit:cover; display:block; }
   .artist-photo-placeholder { width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-size:64px; background:rgba(58,138,58,0.08); }
-
-  /* Overlay in basso con nome e IG */
-  .artist-overlay {
-    position:absolute; bottom:0; left:0; right:0;
-    background:linear-gradient(to top, rgba(5,15,5,0.92) 0%, rgba(5,15,5,0.6) 60%, transparent 100%);
-    padding:24px 18px 18px;
-    display:flex; align-items:flex-end; justify-content:space-between; gap:12px;
-  }
+  .artist-overlay { position:absolute; bottom:0; left:0; right:0; background:linear-gradient(to top, rgba(5,15,5,0.92) 0%, rgba(5,15,5,0.6) 60%, transparent 100%); padding:24px 18px 18px; display:flex; align-items:flex-end; justify-content:space-between; gap:12px; }
   .artist-info { flex:1; min-width:0; }
   .artist-label { font-size:10px; font-weight:600; color:rgba(240,240,232,0.4); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:4px; }
   .artist-name { font-size:22px; font-weight:700; color:#fff; line-height:1.1; }
-  .ig-btn {
-    display:flex; align-items:center; gap:6px;
-    background:rgba(220,39,67,0.2);
-    border:1px solid rgba(220,39,67,0.35);
-    border-radius:20px; padding:9px 14px;
-    text-decoration:none; font-size:13px; font-weight:600;
-    color:#ED93B1; flex-shrink:0; white-space:nowrap;
-  }
+  .ig-btn { display:flex; align-items:center; gap:6px; background:rgba(220,39,67,0.2); border:1px solid rgba(220,39,67,0.35); border-radius:20px; padding:9px 14px; text-decoration:none; font-size:13px; font-weight:600; color:#ED93B1; flex-shrink:0; white-space:nowrap; }
   .ig-btn:active { background:rgba(220,39,67,0.3); }
   .ig-btn svg { display:block; }
-
-  /* Gallery foto evento (polleggedì ecc) */
   .photos-section { padding:24px 0 0; }
   .photos-label { font-size:11px; font-weight:600; letter-spacing:2px; color:var(--verde); padding:0 20px; margin-bottom:16px; text-transform:uppercase; display:flex; align-items:center; gap:8px; }
   .photos-label::after { content:''; flex:1; height:1px; background:rgba(58,138,58,0.3); }
@@ -96,15 +54,11 @@
   .sdot-row { display:flex; gap:5px; justify-content:center; padding:4px 0 0; }
   .sdot { width:5px; height:5px; border-radius:50%; background:rgba(255,255,255,0.15); transition:all 0.3s; }
   .sdot.active { background:var(--verde); width:14px; border-radius:3px; }
-
-  /* Lightbox */
   .lightbox { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.93); z-index:100; align-items:center; justify-content:center; }
   .lightbox.active { display:flex; }
   .lightbox img { max-width:92vw; max-height:82vh; border-radius:14px; object-fit:contain; }
   .lightbox-close { position:absolute; top:20px; right:20px; font-size:28px; color:#fff; cursor:pointer; }
-
   .divider { margin:24px 20px 0; height:1px; background:linear-gradient(90deg, transparent, rgba(58,138,58,0.4), transparent); }
-
   .spinner { width:24px; height:24px; border:3px solid rgba(255,255,255,0.1); border-top-color:var(--verde); border-radius:50%; animation:spin 0.8s linear infinite; margin:80px auto; }
   @keyframes spin { to { transform:rotate(360deg); } }
   .fade-in { animation:fadeIn 0.4s ease forwards; opacity:0; }
@@ -115,17 +69,21 @@
 <div class="bg"></div>
 <div class="bg-glow"></div>
 <a class="back-btn" href="index.html">←</a>
-
 <div class="container">
   <div id="content"><div class="spinner"></div></div>
 </div>
-
 <div class="lightbox" id="lightbox" onclick="closeLightbox()">
   <span class="lightbox-close">✕</span>
-  <img id="lightbox-img" src="" alt="" />
+  <img id="lightbox-img" src="" alt="Foto evento" />
 </div>
-
 <script>
+  // Protezione link esterni
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('a[target="_blank"]').forEach(function(a) {
+      a.rel = 'noopener noreferrer';
+    });
+  });
+
   const SHEET_ID = '1fjfNvu2nO_8ntIycM9L-qzc7uCL6roEZ-wGypsiqU1w';
   const SHEET_NAME = 'Eventi';
   const idx = parseInt(new URLSearchParams(window.location.search).get('i') || '0');
@@ -170,19 +128,16 @@
 
       document.title = `${titolo} — Animal Blue House`;
 
-      // Card artista con foto
       const hasArtist = nomeArtista || fotoArtista;
       const artistHTML = hasArtist ? `
         <div class="artist-card fade-in">
-          ${fotoArtista
-            ? `<img class="artist-photo" src="${fotoArtista}" alt="${nomeArtista}" />`
-            : `<div class="artist-photo-placeholder">🎵</div>`}
+          ${fotoArtista ? `<img class="artist-photo" src="${fotoArtista}" alt="${nomeArtista}" />` : `<div class="artist-photo-placeholder">🎵</div>`}
           <div class="artist-overlay">
             <div class="artist-info">
               <div class="artist-label">Artista della serata</div>
               <div class="artist-name">${nomeArtista || '—'}</div>
             </div>
-            ${linkIG ? `<a class="ig-btn" href="${linkIG}" target="_blank">
+            ${linkIG ? `<a class="ig-btn" href="${linkIG}" target="_blank" rel="noopener noreferrer">
               <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
                 <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="url(#ig2)"/>
                 <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" stroke="url(#ig2)"/>
@@ -198,14 +153,13 @@
           </div>
         </div>` : '';
 
-      // Gallery foto
       const photosHTML = photos.length > 0 ? `
         <div class="photos-section">
           <div class="photos-label">Galleria</div>
           <div class="photos-scroll" id="photos-scroll">
             ${photos.map((p,i) => `
               <div class="photo-item" onclick="openLightbox('${p}')">
-                <img src="${p}" alt="Foto ${i+1}" loading="lazy" />
+                <img src="${p}" alt="Foto evento ${i+1}" loading="lazy" />
               </div>`).join('')}
           </div>
           <div class="sdot-row">
@@ -228,7 +182,6 @@
         ${photos.length > 0 ? '<div class="divider"></div>' : ''}
         ${photosHTML}`;
 
-      // Dots scroll
       if (photos.length > 0) {
         const scroll = document.getElementById('photos-scroll');
         scroll?.addEventListener('scroll', () => {
@@ -237,7 +190,6 @@
           document.querySelectorAll('.sdot').forEach((d,i) => d.classList.toggle('active', i === active));
         });
       }
-
     } catch(e) {
       document.getElementById('content').innerHTML = '<p style="padding:80px 24px;color:rgba(255,255,255,0.4);text-align:center">Errore nel caricamento.</p>';
     }
@@ -247,9 +199,7 @@
     document.getElementById('lightbox-img').src = src;
     document.getElementById('lightbox').classList.add('active');
   };
-  window.closeLightbox = function() {
-    document.getElementById('lightbox').classList.remove('active');
-  };
+  window.closeLightbox = function() { document.getElementById('lightbox').classList.remove('active'); };
 
   load();
 </script>

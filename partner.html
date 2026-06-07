@@ -2,9 +2,10 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=5">
 <title>I nostri supporter — Animal Blue House</title>
 <script>history.scrollRestoration = "manual"; window.onload = function(){ window.scrollTo(0,0); };</script>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-src 'none'; frame-ancestors 'none';">
 <meta name="description" content="Le attività di Budrio che supportano Animal Blue House. Mostra la tessera e scopri le esclusive riservate a te.">
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -23,20 +24,8 @@
   body { font-family:'Fredoka',sans-serif; color:var(--testo); min-height:100vh; background:#050f05; }
   .bg { position:fixed; inset:0; z-index:0; background:radial-gradient(ellipse at top left, #1a3a1a 0%, #0d1f0d 45%, #050f05 100%); }
   .bg-glow { position:fixed; inset:0; z-index:0; background:radial-gradient(ellipse at 70% 10%, rgba(58,138,58,0.1) 0%, transparent 50%), radial-gradient(ellipse at 20% 90%, rgba(245,197,24,0.05) 0%, transparent 50%); pointer-events:none; }
-
   .container { max-width:480px; margin:0 auto; padding:0 0 48px; position:relative; z-index:2; }
-
-  .back-btn {
-    position:fixed; top:20px; left:20px; z-index:10;
-    width:40px; height:40px; border-radius:50%;
-    background:rgba(58,138,58,0.3);
-    border:1.5px solid rgba(58,138,58,0.5);
-    display:flex; align-items:center; justify-content:center;
-    text-decoration:none; font-size:20px; color:#fff;
-    box-shadow:0 0 16px rgba(58,138,58,0.3);
-  }
-
-  /* Header */
+  .back-btn { position:fixed; top:20px; left:20px; z-index:10; width:40px; height:40px; border-radius:50%; background:rgba(58,138,58,0.3); border:1.5px solid rgba(58,138,58,0.5); display:flex; align-items:center; justify-content:center; text-decoration:none; font-size:20px; color:#fff; box-shadow:0 0 16px rgba(58,138,58,0.3); }
   .event-header { padding:72px 20px 24px; position:relative; overflow:hidden; }
   .header-deco { position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, transparent, var(--verde), var(--giallo), var(--verde), transparent); }
   .header-blob { position:absolute; z-index:0; border-radius:50%; filter:blur(40px); opacity:0.4; }
@@ -48,58 +37,23 @@
   .header-badge { display:inline-flex; align-items:center; gap:6px; background:rgba(58,138,58,0.2); border:1px solid rgba(58,138,58,0.35); border-radius:20px; padding:3px 10px; font-size:11px; font-weight:600; color:var(--verde-light); letter-spacing:1px; text-transform:uppercase; margin-bottom:8px; }
   .header-title { font-size:28px; font-weight:700; color:var(--testo); line-height:1.1; margin-bottom:10px; }
   .header-desc { font-size:14px; color:var(--testo-muted); line-height:1.7; }
-
-  /* Griglia partner */
   .partners-grid { padding:8px 16px 0; display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-
-  .partner-card {
-    background:var(--surface);
-    border:1px solid var(--border);
-    border-radius:18px; padding:20px 14px;
-    display:flex; flex-direction:column; align-items:center; gap:10px;
-    cursor:pointer; transition:all 0.2s;
-    backdrop-filter:blur(10px);
-    text-align:center;
-  }
+  .partner-card { background:var(--surface); border:1px solid var(--border); border-radius:18px; padding:20px 14px; display:flex; flex-direction:column; align-items:center; gap:10px; cursor:pointer; transition:all 0.2s; backdrop-filter:blur(10px); text-align:center; }
   .partner-card:active { transform:scale(0.96); background:rgba(255,255,255,0.1); border-color:rgba(58,138,58,0.4); }
-
   .partner-emoji { font-size:36px; line-height:1; }
   .partner-name { font-size:14px; font-weight:700; color:var(--testo); line-height:1.2; }
   .partner-hint { font-size:11px; color:var(--verde-light); background:rgba(58,138,58,0.15); border:0.5px solid rgba(58,138,58,0.3); border-radius:20px; padding:3px 10px; margin-top:2px; }
-
-  /* Modal popup */
   .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.75); z-index:100; align-items:flex-end; justify-content:center; }
   .modal-overlay.active { display:flex; }
-  .modal {
-    background:#0d1f0d;
-    border:1px solid rgba(58,138,58,0.3);
-    border-radius:24px 24px 0 0;
-    padding:28px 24px 36px;
-    width:100%; max-width:480px;
-    animation:slideUp 0.3s ease;
-  }
+  .modal { background:#0d1f0d; border:1px solid rgba(58,138,58,0.3); border-radius:24px 24px 0 0; padding:28px 24px 36px; width:100%; max-width:480px; animation:slideUp 0.3s ease; }
   @keyframes slideUp { from { transform:translateY(100%); } to { transform:translateY(0); } }
   .modal-emoji { font-size:48px; text-align:center; display:block; margin-bottom:12px; }
   .modal-name { font-size:22px; font-weight:700; color:var(--testo); text-align:center; margin-bottom:6px; }
   .modal-divider { height:1px; background:rgba(255,255,255,0.08); margin:16px 0; }
   .modal-promo-label { font-size:11px; font-weight:600; letter-spacing:1.5px; color:var(--verde); text-transform:uppercase; margin-bottom:8px; }
-  .modal-promo {
-    background:rgba(58,138,58,0.12);
-    border:1px solid rgba(58,138,58,0.25);
-    border-radius:14px; padding:16px;
-    font-size:16px; font-weight:600; color:var(--testo);
-    line-height:1.5; text-align:center;
-  }
+  .modal-promo { background:rgba(58,138,58,0.12); border:1px solid rgba(58,138,58,0.25); border-radius:14px; padding:16px; font-size:16px; font-weight:600; color:var(--testo); line-height:1.5; text-align:center; }
   .modal-note { font-size:12px; color:var(--testo-dim); text-align:center; margin-top:10px; }
-  .modal-close {
-    margin-top:20px; width:100%;
-    background:rgba(255,255,255,0.07);
-    border:1px solid rgba(255,255,255,0.1);
-    border-radius:12px; padding:13px;
-    font-size:15px; font-weight:600; color:var(--testo-muted);
-    font-family:'Fredoka',sans-serif; cursor:pointer;
-  }
-
+  .modal-close { margin-top:20px; width:100%; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:13px; font-size:15px; font-weight:600; color:var(--testo-muted); font-family:'Fredoka',sans-serif; cursor:pointer; }
   .fade-in { animation:fadeIn 0.4s ease forwards; opacity:0; }
   @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
 </style>
@@ -108,7 +62,6 @@
 <div class="bg"></div>
 <div class="bg-glow"></div>
 <a class="back-btn" href="index.html">←</a>
-
 <div class="container">
   <div class="event-header">
     <div class="header-deco"></div>
@@ -120,7 +73,6 @@
       <div class="header-desc">Queste attività credono nel progetto Animal Blue House. Mostra la tua tessera e scopri cosa hanno riservato solo per te.</div>
     </div>
   </div>
-
   <div class="partners-grid">
     <div class="partner-card fade-in" style="animation-delay:0.05s" onclick="openModal('☕','Bar Centrale','Caffè offerto su ogni consumazione superiore a 5€')">
       <div class="partner-emoji">☕</div>
@@ -154,8 +106,6 @@
     </div>
   </div>
 </div>
-
-<!-- Modal -->
 <div class="modal-overlay" id="modal" onclick="closeModal(event)">
   <div class="modal">
     <span class="modal-emoji" id="modal-emoji"></span>
@@ -167,7 +117,6 @@
     <button class="modal-close" onclick="closeModal()">Chiudi</button>
   </div>
 </div>
-
 <script>
   window.openModal = function(emoji, name, promo) {
     document.getElementById('modal-emoji').textContent = emoji;

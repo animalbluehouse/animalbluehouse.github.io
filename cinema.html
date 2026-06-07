@@ -2,16 +2,17 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=5">
 <title>Serata Cinema — Animal Blue House</title>
 <script>history.scrollRestoration = "manual"; window.onload = function(){ window.scrollTo(0,0); };</script>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://docs.google.com https://sheets.googleapis.com https://animal-blue-house-default-rtdb.europe-west1.firebasedatabase.app https://script.google.com; frame-src 'none'; frame-ancestors 'none';">
 <meta name="description" content="Prenota il tuo posto per la serata cinema di Animal Blue House a Budrio. Posti limitati, assegnati per ordine di arrivo.">
 <meta name="keywords" content="cinema Budrio, Animal Blue House cinema, prenotazione cinema, serate cinema">
 <meta name="robots" content="index, follow">
 <meta property="og:title" content="Serata Cinema — Animal Blue House">
 <meta property="og:description" content="Prenota il tuo posto per la serata cinema di Animal Blue House a Budrio. Posti limitati, assegnati per ordine di arrivo.">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://animalbluehouse.github.io/logo.jpg.jpeg">
+<meta property="og:image" content="https://animalbluehouse.github.io/logo.jpg">
 <meta name="theme-color" content="#0d1f0d">
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -35,30 +36,11 @@
 
   .container { max-width:480px; margin:0 auto; padding:0 0 48px; position:relative; z-index:2; }
 
-  /* Top bar */
   .top-bar { padding:20px 20px 16px; display:flex; align-items:center; gap:14px; position:relative; }
-  .back-btn {
-    width:40px; height:40px; border-radius:50%;
-    background:rgba(58,138,58,0.25);
-    border:1.5px solid rgba(58,138,58,0.5);
-    display:flex; align-items:center; justify-content:center;
-    text-decoration:none; font-size:20px; color:#fff;
-    box-shadow:0 0 16px rgba(58,138,58,0.3);
-    flex-shrink:0;
-  }
+  .back-btn { width:40px; height:40px; border-radius:50%; background:rgba(58,138,58,0.25); border:1.5px solid rgba(58,138,58,0.5); display:flex; align-items:center; justify-content:center; text-decoration:none; font-size:20px; color:#fff; box-shadow:0 0 16px rgba(58,138,58,0.3); flex-shrink:0; }
   .page-title { font-size:22px; font-weight:700; color:var(--testo); letter-spacing:0.5px; }
-  .admin-link { margin-left:auto; font-size:12px; color:var(--testo-dim); cursor:pointer; padding:4px 10px; border:0.5px solid rgba(255,255,255,0.1); border-radius:20px; }
 
-  /* Counter */
-  .counter-card {
-    margin:4px 16px 20px;
-    background:rgba(255,255,255,0.06);
-    border-radius:22px; padding:24px 20px;
-    border:1px solid rgba(255,255,255,0.1);
-    backdrop-filter:blur(20px);
-    text-align:center;
-    box-shadow:0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.08);
-  }
+  .counter-card { margin:4px 16px 20px; background:rgba(255,255,255,0.06); border-radius:22px; padding:24px 20px; border:1px solid rgba(255,255,255,0.1); backdrop-filter:blur(20px); text-align:center; box-shadow:0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.08); }
   .counter-label { font-size:12px; font-weight:500; color:var(--testo-dim); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:6px; }
   .counter-number { font-size:88px; font-weight:700; line-height:1; transition:color 0.5s; }
   .counter-sub { font-size:14px; color:var(--testo-dim); margin-top:2px; }
@@ -66,49 +48,21 @@
   .counter-bar-fill { height:6px; border-radius:3px; transition:width 0.8s ease, background 0.5s; }
   .counter-status { font-size:16px; font-weight:600; letter-spacing:0.5px; }
 
-  /* Selezione posti */
   .seats-section { padding:0 16px; margin-bottom:20px; }
   .seats-title { font-size:15px; font-weight:600; color:var(--testo-muted); margin-bottom:14px; text-align:center; }
   .seats-visual { display:flex; gap:10px; justify-content:center; }
-  .seat-dot {
-    width:64px; height:64px; border-radius:14px;
-    border:2px solid rgba(255,255,255,0.15);
-    display:flex; align-items:center; justify-content:center;
-    font-size:24px; font-weight:700; color:var(--testo-dim);
-    transition:all 0.2s; background:rgba(255,255,255,0.05);
-    cursor:pointer;
-  }
+  .seat-dot { width:64px; height:64px; border-radius:14px; border:2px solid rgba(255,255,255,0.15); display:flex; align-items:center; justify-content:center; font-size:24px; font-weight:700; color:var(--testo-dim); transition:all 0.2s; background:rgba(255,255,255,0.05); cursor:pointer; }
   .seat-dot:active { transform:scale(0.93); }
-  .seat-dot.active {
-    background:var(--verde);
-    border-color:var(--verde);
-    color:#fff;
-    box-shadow:0 0 20px var(--verde-glow);
-  }
+  .seat-dot.active { background:var(--verde); border-color:var(--verde); color:#fff; box-shadow:0 0 20px var(--verde-glow); }
 
-  /* Barra prenota — inline non fissa */
-  .booking-bar {
-    margin:0 16px;
-    background:rgba(58,138,58,0.15);
-    border:1.5px solid rgba(58,138,58,0.35);
-    border-radius:16px; padding:14px 18px;
-    display:flex; align-items:center; gap:12px;
-    backdrop-filter:blur(10px);
-  }
+  .booking-bar { margin:0 16px; background:rgba(58,138,58,0.15); border:1.5px solid rgba(58,138,58,0.35); border-radius:16px; padding:14px 18px; display:flex; align-items:center; gap:12px; backdrop-filter:blur(10px); }
   .selected-info { flex:1; }
   .selected-count { font-size:17px; font-weight:700; color:var(--testo); }
   .selected-hint { font-size:12px; color:var(--testo-dim); margin-top:2px; }
-  .btn-prenota {
-    background:var(--verde); color:#fff; border:none; border-radius:12px;
-    padding:12px 20px; font-size:15px; font-weight:700;
-    font-family:'Fredoka',sans-serif; cursor:pointer; white-space:nowrap;
-    box-shadow:0 0 20px var(--verde-glow);
-    transition:opacity 0.2s, transform 0.1s;
-  }
+  .btn-prenota { background:var(--verde); color:#fff; border:none; border-radius:12px; padding:12px 20px; font-size:15px; font-weight:700; font-family:'Fredoka',sans-serif; cursor:pointer; white-space:nowrap; box-shadow:0 0 20px var(--verde-glow); transition:opacity 0.2s, transform 0.1s; }
   .btn-prenota:disabled { background:rgba(255,255,255,0.1); color:var(--testo-dim); cursor:default; box-shadow:none; }
   .btn-prenota:not(:disabled):active { opacity:0.85; transform:scale(0.97); }
 
-  /* Modal */
   .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:100; align-items:flex-end; justify-content:center; }
   .modal-overlay.active { display:flex; }
   .modal { background:#0d1f0d; border:1px solid rgba(58,138,58,0.3); border-radius:24px 24px 0 0; padding:24px; width:100%; max-width:480px; animation:slideUp 0.3s ease; }
@@ -121,19 +75,6 @@
   .modal-btns { display:flex; gap:10px; }
   .btn-confirm { flex:1; background:var(--verde); color:#fff; border:none; border-radius:12px; padding:14px; font-size:16px; font-weight:700; font-family:'Fredoka',sans-serif; cursor:pointer; box-shadow:0 0 16px var(--verde-glow); }
   .btn-cancel { background:rgba(255,255,255,0.08); color:var(--testo-muted); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:14px 18px; font-size:15px; font-family:'Fredoka',sans-serif; cursor:pointer; }
-
-  /* Admin */
-  .admin-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.75); z-index:200; align-items:center; justify-content:center; padding:24px; }
-  .admin-overlay.active { display:flex; }
-  .admin-modal { background:#0d1f0d; border:1px solid rgba(58,138,58,0.3); border-radius:20px; padding:24px; width:100%; max-width:360px; }
-  .admin-modal h3 { font-size:20px; font-weight:700; margin-bottom:6px; }
-  .admin-modal p { font-size:14px; color:var(--testo-muted); margin-bottom:16px; }
-  .admin-modal input { width:100%; background:rgba(255,255,255,0.08); border:1.5px solid rgba(255,255,255,0.12); border-radius:12px; padding:12px 14px; font-size:15px; color:var(--testo); font-family:'Fredoka',sans-serif; outline:none; margin-bottom:12px; }
-  .admin-modal input:focus { border-color:var(--verde); }
-  .admin-actions { display:flex; flex-direction:column; gap:10px; margin-top:4px; }
-  .btn-reset { background:rgba(229,57,53,0.15); color:#ff6b6b; border:1.5px solid rgba(229,57,53,0.3); border-radius:12px; padding:13px; font-size:15px; font-family:'Fredoka',sans-serif; cursor:pointer; font-weight:600; }
-  .btn-download { background:rgba(58,138,58,0.15); color:#7ec87e; border:1.5px solid rgba(58,138,58,0.3); border-radius:12px; padding:13px; font-size:15px; font-family:'Fredoka',sans-serif; cursor:pointer; font-weight:600; }
-  .btn-close-admin { background:rgba(255,255,255,0.06); color:var(--testo-muted); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:13px; font-size:15px; font-family:'Fredoka',sans-serif; cursor:pointer; width:100%; margin-top:6px; }
 
   .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(10px); background:rgba(20,40,20,0.95); border:1px solid rgba(58,138,58,0.4); border-radius:14px; padding:12px 20px; font-size:14px; color:var(--testo); z-index:300; opacity:0; transition:all 0.3s; white-space:nowrap; pointer-events:none; backdrop-filter:blur(10px); }
   .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
@@ -149,7 +90,6 @@
   <div class="top-bar">
     <a class="back-btn" href="index.html">←</a>
     <div class="page-title" id="page-title">🎬 Serata Cinema</div>
-
   </div>
 
   <div class="counter-card">
@@ -159,8 +99,6 @@
     <div class="counter-bar"><div class="counter-bar-fill" id="counter-fill" style="width:0%"></div></div>
     <div class="counter-status" id="counter-status"></div>
   </div>
-
-
 
   <div class="seats-section">
     <div class="seats-title">Quanti posti vuoi prenotare?</div>
@@ -181,7 +119,6 @@
   </div>
 </div>
 
-<!-- Modal dati -->
 <div class="modal-overlay" id="booking-modal">
   <div class="modal">
     <h3>I tuoi dati</h3>
@@ -195,15 +132,20 @@
   </div>
 </div>
 
-
-
 <div class="toast" id="toast"></div>
+<iframe name="hidden-iframe" style="display:none;"></iframe>
 
 <script type="module">
   import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
   import { getDatabase, ref, onValue, set, remove } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
 
-  // Carica titolo film dallo Sheet
+  // Protezione link esterni
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('a[target="_blank"]').forEach(function(a) {
+      a.rel = 'noopener noreferrer';
+    });
+  });
+
   (async () => {
     try {
       const SHEET_ID = '1fjfNvu2nO_8ntIycM9L-qzc7uCL6roEZ-wGypsiqU1w';
@@ -216,9 +158,7 @@
         const tipo = (row.c[3]?.v || '').toLowerCase();
         if (tipo === 'cinema') {
           const titoloFilm = row.c[6]?.v || '';
-          if (titoloFilm) {
-            document.getElementById('page-title').textContent = '🎬 ' + titoloFilm;
-          }
+          if (titoloFilm) document.getElementById('page-title').textContent = '🎬 ' + titoloFilm;
           break;
         }
       }
@@ -228,6 +168,7 @@
   const app = initializeApp({ databaseURL:"https://animal-blue-house-default-rtdb.europe-west1.firebasedatabase.app" });
   const db = getDatabase(app);
   const MAX = 90;
+  // Nota: spostare ADMIN_PASSWORD in una variabile d'ambiente o proteggere via Firebase Rules
   const ADMIN_PASSWORD = "abh2026";
   let seatsData = {};
   let selectedNum = 0;
@@ -286,11 +227,7 @@
     const contact = document.getElementById('booking-contact').value.trim();
     const bookingId = Date.now().toString();
     const dataOra = new Date().toLocaleString('it-IT');
-
-    // Salva su Firebase per il counter in tempo reale
     await set(ref(db, `seats/${bookingId}`), { name, contact, count:selectedNum, timestamp:new Date().toISOString() });
-
-    // Salva su Google Sheet tramite form nascosto
     try {
       var form = document.createElement('form');
       form.method = 'POST';
@@ -305,8 +242,7 @@
       document.body.appendChild(form);
       form.submit();
       document.body.removeChild(form);
-    } catch(e) { console.log('Sheet sync error:', e); }
-
+    } catch(e) {}
     closeModal();
     showToast(`✓ Prenotazione confermata per ${selectedNum} posto${selectedNum>1?'i':''}!`);
     selectedNum = 0;
@@ -316,45 +252,11 @@
     document.getElementById('btn-prenota').disabled = true;
   };
 
-  window.openAdmin = function() {
-    document.getElementById('admin-modal').classList.add('active');
-    document.getElementById('admin-actions').style.display = 'none';
-    document.getElementById('admin-password').style.display = 'block';
-    document.getElementById('admin-login-btn').style.display = 'block';
-    document.getElementById('admin-password').value = '';
-  };
-  window.closeAdmin = function() { document.getElementById('admin-modal').classList.remove('active'); };
-  window.checkAdmin = function() {
-    if (document.getElementById('admin-password').value === ADMIN_PASSWORD) {
-      document.getElementById('admin-actions').style.display = 'flex';
-      document.getElementById('admin-password').style.display = 'none';
-      document.getElementById('admin-login-btn').style.display = 'none';
-    } else { showToast('Password errata'); }
-  };
-  window.resetSeats = async function() {
-    if (!confirm('Sei sicuro? Tutte le prenotazioni verranno cancellate.')) return;
-    await remove(ref(db, 'seats'));
-    closeAdmin();
-    showToast('Tutti i posti sono stati azzerati');
-  };
-  window.downloadData = function() {
-    const rows = [['ID','Nome','Contatto','Posti','Data']];
-    Object.entries(seatsData).sort().forEach(([id,data]) => {
-      rows.push([id, data.name, data.contact||'', data.count||1, new Date(data.timestamp).toLocaleString('it-IT')]);
-    });
-    const csv = rows.map(r => r.map(v => `"${v}"`).join(',')).join('\n');
-    const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'});
-    const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-    a.download = `prenotazioni-${new Date().toLocaleDateString('it-IT').replace(/\//g,'-')}.csv`;
-    a.click(); showToast('Lista scaricata!');
-  };
-
   function showToast(msg) {
     const t = document.getElementById('toast');
     t.textContent = msg; t.classList.add('show');
     setTimeout(() => t.classList.remove('show'), 2800);
   }
 </script>
-<iframe name="hidden-iframe" style="display:none;"></iframe>
 </body>
 </html>

@@ -2,16 +2,17 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=5">
 <title>Animal Blue House — Eventi a Budrio</title>
 <script>history.scrollRestoration = "manual"; window.onload = function(){ window.scrollTo(0,0); };</script>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://docs.google.com https://sheets.googleapis.com https://animal-blue-house-default-rtdb.europe-west1.firebasedatabase.app https://script.google.com; frame-src 'none'; frame-ancestors 'none';">
 <meta name="description" content="Animal Blue House è il circolo privato di Budrio. Scopri gli eventi della settimana, prenota il tuo posto al cinema e molto altro.">
 <meta name="keywords" content="Animal Blue House, Budrio, eventi, cinema, serate, circolo privato">
 <meta name="robots" content="index, follow">
 <meta property="og:title" content="Animal Blue House — Eventi a Budrio">
 <meta property="og:description" content="Animal Blue House è il circolo privato di Budrio. Scopri gli eventi della settimana, prenota il tuo posto al cinema e molto altro.">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://animalbluehouse.github.io/logo.jpg.jpeg">
+<meta property="og:image" content="https://animalbluehouse.github.io/logo.jpg">
 <meta name="theme-color" content="#0d1f0d">
 <meta name="google-site-verification" content="m7oyiVt7mkRabfK3P2kVNqk5PikHp6fL8NgSubxH1A0" />
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -34,7 +35,6 @@
   * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
   body { font-family:'Fredoka',sans-serif; color:var(--testo); min-height:100vh; }
 
-  /* Splash screen */
   #splash { position:fixed; inset:0; z-index:999; background:#050f05; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px; transition:opacity 0.5s ease; }
   #splash.hide { opacity:0; pointer-events:none; }
   .splash-logo { width:120px; height:120px; object-fit:contain; border-radius:50%; animation:splashIn 0.6s ease forwards; opacity:0; filter:drop-shadow(0 0 20px rgba(58,138,58,0.5)); }
@@ -56,25 +56,12 @@
   .week-label-top { font-size:11px; font-weight:500; color:var(--testo-dim); letter-spacing:2px; text-transform:uppercase; }
   .week-value { font-size:16px; font-weight:700; color:var(--giallo); letter-spacing:0.5px; background:rgba(245,197,24,0.1); border:1.5px solid rgba(245,197,24,0.3); border-radius:20px; padding:6px 18px; margin-top:4px; }
 
-  .section-label {
-    font-size:11px; font-weight:600; letter-spacing:2px;
-    color:var(--verde); padding:0 20px; margin-bottom:14px;
-    text-transform:uppercase;
-    display:flex; align-items:center; gap:8px;
-  }
+  .section-label { font-size:11px; font-weight:600; letter-spacing:2px; color:var(--verde); padding:0 20px; margin-bottom:14px; text-transform:uppercase; display:flex; align-items:center; gap:8px; }
   .section-label::after { content:''; flex:1; height:1px; background:rgba(58,138,58,0.3); }
 
   .events-list { padding:0 16px; display:flex; flex-direction:column; gap:14px; }
 
-  .event-card {
-    border-radius:18px; overflow:hidden;
-    box-shadow:0 4px 24px rgba(0,0,0,0.3);
-    text-decoration:none; display:block;
-    border:1.5px solid var(--border);
-    background:var(--surface);
-    backdrop-filter:blur(10px);
-    transition:transform 0.15s, box-shadow 0.15s;
-  }
+  .event-card { border-radius:18px; overflow:hidden; box-shadow:0 4px 24px rgba(0,0,0,0.3); text-decoration:none; display:block; border:1.5px solid var(--border); background:var(--surface); backdrop-filter:blur(10px); transition:transform 0.15s, box-shadow 0.15s; }
   .event-card:active { transform:scale(0.97); }
 
   .event-poster { width:100%; aspect-ratio:16/9; background:rgba(58,138,58,0.1); display:flex; align-items:center; justify-content:center; font-size:40px; position:relative; overflow:hidden; }
@@ -89,7 +76,6 @@
   .event-tipo { font-size:12px; font-weight:500; color:var(--testo-muted); text-transform:uppercase; letter-spacing:0.8px; }
   .event-arrow { width:30px; height:30px; border-radius:50%; background:var(--verde); display:flex; align-items:center; justify-content:center; color:#fff; font-size:14px; font-weight:bold; box-shadow:0 0 12px var(--verde-glow); }
 
-  /* Contatti glassmorphism */
   .contacts { margin:28px 16px 0; background:rgba(255,255,255,0.06); border-radius:20px; padding:18px 20px; border:1px solid rgba(255,255,255,0.12); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); box-shadow:0 8px 32px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.1); }
   .contacts-title { font-size:13px; font-weight:600; letter-spacing:1.5px; color:var(--verde); margin-bottom:14px; text-transform:uppercase; }
   .contact-item { display:flex; align-items:center; gap:14px; padding:10px 0; border-bottom:0.5px solid rgba(255,255,255,0.08); font-size:14px; color:var(--testo-muted); text-decoration:none; transition:color 0.2s; }
@@ -97,8 +83,6 @@
   .contact-item:active { color:var(--testo); }
   .contact-icon { width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
   .contact-icon svg { width:20px; height:20px; display:block; }
-  .contact-icons-row { display:flex; gap:10px; margin-left:auto; }
-  .contact-icon-btn { width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; text-decoration:none; }
   .maps-btn { display:flex; align-items:center; gap:14px; padding:10px 0; border-bottom:0.5px solid rgba(255,255,255,0.08); text-decoration:none; transition:color 0.2s; }
   .maps-btn:active { color:var(--testo); }
   .maps-icon { width:36px; height:36px; border-radius:10px; background:rgba(66,133,244,0.15); display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:20px; }
@@ -109,11 +93,6 @@
   .spinner { width:28px; height:28px; border:3px solid rgba(255,255,255,0.1); border-top-color:var(--verde); border-radius:50%; animation:spin 0.8s linear infinite; margin:0 auto 12px; }
   @keyframes spin { to { transform:rotate(360deg); } }
 
-  /* Su di noi */
-  .about-card { margin:0 16px 0; background:rgba(255,255,255,0.04); border:0.5px solid rgba(255,255,255,0.08); border-radius:16px; padding:18px; font-size:14px; color:var(--testo-muted); line-height:1.8; display:flex; flex-direction:column; gap:8px; }
-  .about-card strong { color:var(--testo); }
-
-  /* Counter tesserati */
   .members-bar { margin:28px 16px 0; background:rgba(255,255,255,0.05); border:0.5px solid rgba(255,255,255,0.1); border-radius:12px; padding:14px 16px; display:flex; align-items:center; gap:12px; backdrop-filter:blur(10px); cursor:default; }
   .members-icon { font-size:22px; }
   .members-info { flex:1; }
@@ -122,7 +101,6 @@
   .info-btn { width:28px; height:28px; border-radius:50%; background:rgba(245,197,24,0.15); border:2px solid var(--giallo); display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:var(--giallo); cursor:pointer; flex-shrink:0; transition:background 0.2s; }
   .info-btn:active { background:rgba(245,197,24,0.3); }
 
-  /* Info popup */
   .info-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.75); z-index:100; align-items:flex-end; justify-content:center; }
   .info-overlay.active { display:flex; }
   .info-modal { background:#0d1f0d; border:1px solid rgba(58,138,58,0.3); border-radius:24px 24px 0 0; padding:28px 24px 36px; width:100%; max-width:480px; animation:slideUp 0.3s ease; }
@@ -132,24 +110,13 @@
   .info-modal-text { font-size:15px; color:var(--testo-muted); line-height:1.8; margin-bottom:20px; }
   .info-modal-close { width:100%; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:13px; font-size:15px; font-weight:600; color:var(--testo-muted); font-family:'Fredoka',sans-serif; cursor:pointer; }
 
-  /* Download bar */
-  .download-bar {
-    display:flex; align-items:center; justify-content:space-between;
-    margin:20px 16px 0;
-    background:rgba(255,255,255,0.05);
-    border:0.5px solid rgba(255,255,255,0.1);
-    border-radius:12px; padding:10px 14px;
-    text-decoration:none;
-    backdrop-filter:blur(10px);
-    transition:background 0.2s;
-  }
+  .download-bar { display:flex; align-items:center; justify-content:space-between; margin:20px 16px 0; background:rgba(255,255,255,0.05); border:0.5px solid rgba(255,255,255,0.1); border-radius:12px; padding:10px 14px; text-decoration:none; backdrop-filter:blur(10px); transition:background 0.2s; }
   .download-bar:active { background:rgba(255,255,255,0.09); }
   .download-bar-left { display:flex; align-items:center; gap:8px; }
   .download-icon { font-size:16px; }
   .download-text { font-size:13px; color:var(--testo-muted); font-weight:500; }
   .download-btn { font-size:13px; font-weight:700; color:#fff; background:var(--verde); border:none; border-radius:8px; padding:7px 14px; box-shadow:0 0 12px var(--verde-glow); letter-spacing:0.3px; }
 
-  /* Footer */
   .site-footer { margin:24px 16px 0; padding:16px 0 0; border-top:0.5px solid rgba(255,255,255,0.07); display:flex; align-items:center; justify-content:space-between; }
   .footer-copy { font-size:12px; color:var(--testo-dim); }
   .footer-privacy { font-size:12px; color:var(--testo-dim); text-decoration:none; border-bottom:0.5px solid rgba(255,255,255,0.15); padding-bottom:1px; }
@@ -157,11 +124,9 @@
   .fade-in { animation:fadeIn 0.4s ease forwards; opacity:0; }
   @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
 
-  /* Card oggi */
   .event-card.oggi { border-color:rgba(245,197,24,0.5); box-shadow:0 0 0 1px rgba(245,197,24,0.2), 0 4px 24px rgba(245,197,24,0.1); }
   .oggi-badge { position:absolute; top:10px; right:10px; background:var(--giallo); color:#0d1f0d; font-size:11px; font-weight:700; padding:4px 10px; border-radius:20px; letter-spacing:0.5px; z-index:3; }
 
-  /* Campanella */
   .bell-btn { position:absolute; top:10px; left:10px; z-index:3; width:32px; height:32px; border-radius:50%; background:rgba(245,197,24,0.2); border:1.5px solid rgba(245,197,24,0.5); display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:16px; transition:all 0.2s; text-decoration:none; }
   .bell-btn:active { background:rgba(245,197,24,0.4); transform:scale(0.92); }
   @keyframes bellRing { 0%,100%{transform:rotate(0)} 20%{transform:rotate(-15deg)} 40%{transform:rotate(15deg)} 60%{transform:rotate(-10deg)} 80%{transform:rotate(10deg)} }
@@ -176,7 +141,7 @@
   <header>
     <div class="logo-wrap">
       <div class="logo-glow"></div>
-      <img src="logo.jpg.jpeg" alt="Animal Blue House" class="logo-img" />
+      <img src="logo.jpg" alt="Animal Blue House" class="logo-img" />
     </div>
     <div class="header-info">
       <div class="week-label-top">settimana corrente</div>
@@ -189,12 +154,9 @@
     <div class="loading"><div class="spinner"></div>Caricamento eventi...</div>
   </div>
 
-
-  <!-- Su di noi -->
   <div class="section-label" style="margin-top:28px;">Su di noi</div>
   <div class="events-list" id="partner-list" style="margin-top:14px;"></div>
 
-  <!-- Tesserati counter -->
   <div class="members-bar" style="margin-bottom:12px;">
     <div class="members-icon">🛸</div>
     <div class="members-info">
@@ -204,7 +166,6 @@
     <div class="info-btn" onclick="openInfo()">i</div>
   </div>
 
-  <!-- Info popup iscrizione -->
   <div class="info-overlay" id="info-overlay" onclick="closeInfo(event)">
     <div class="info-modal">
       <div class="info-modal-title"><span>i</span> Come iscriversi</div>
@@ -213,40 +174,40 @@
     </div>
   </div>
 
-  <!-- Download bar -->
-  <a class="download-bar" href="https://drive.google.com/drive/folders/1Jw-LAj4uGHCqn9hsOEp9Si6W642g48EL?usp=sharing" target="_blank">
+  <a class="download-bar" href="https://drive.google.com/drive/folders/1Jw-LAj4uGHCqn9hsOEp9Si6W642g48EL?usp=sharing" target="_blank" rel="noopener noreferrer">
     <div class="download-bar-left">
       <span class="download-icon">📸</span>
       <span class="download-text">Foto degli eventi</span>
     </div>
     <div class="download-btn">Scarica ↓</div>
   </a>
+
   <div class="contacts">
     <div class="contacts-title">Contatti</div>
-    <a class="maps-btn" href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x477e2fae29f6a83d:0x732bc6a0ddff6651" target="_blank">
+    <a class="maps-btn" href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x477e2fae29f6a83d:0x732bc6a0ddff6651" target="_blank" rel="noopener noreferrer">
       <div class="maps-icon">📍</div>
       <div>
         <div class="maps-text">Dove siamo</div>
         <div class="maps-address">Piazzetta De Andrè 1, Budrio</div>
       </div>
     </a>
-    <a class="contact-item" href="https://wa.me/393534918218" target="_blank">
+    <a class="contact-item" href="https://wa.me/393534918218" target="_blank" rel="noopener noreferrer">
       <div class="contact-icon" style="background:rgba(37,211,102,0.15);">
         <svg viewBox="0 0 24 24" fill="#25D366" width="20" height="20"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.532 5.859L.057 23.428a.75.75 0 00.916.916l5.569-1.475A11.943 11.943 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.693-.528-5.222-1.443l-.374-.223-3.879 1.027 1.027-3.772-.245-.389A9.954 9.954 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
       </div>
       +39 353 4918218
     </a>
-    <a class="contact-item" href="https://instagram.com/animalbluehouse" target="_blank">
+    <a class="contact-item" href="https://instagram.com/animalbluehouse" target="_blank" rel="noopener noreferrer">
       <div class="contact-icon" style="background:rgba(220,39,67,0.15);">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="url(#ig)"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" stroke="url(#ig)"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="url(#ig)"/><defs><linearGradient id="ig" x1="2" y1="22" x2="22" y2="2" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#f09433"/><stop offset="50%" stop-color="#dc2743"/><stop offset="100%" stop-color="#bc1888"/></linearGradient></defs></svg>
       </div>
       @animalbluehouse
     </a>
-    <a class="contact-item" href="mailto:animalbluehouse.sm@gmail.com">
+    <a class="contact-item" id="email-link" href="#">
       <div class="contact-icon" style="background:rgba(58,138,58,0.15);">
         <svg viewBox="0 0 24 24" fill="none" stroke="#3a8a3a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
       </div>
-      animalbluehouse.sm@gmail.com
+      <span id="email-label">Scrivici via email</span>
     </a>
   </div>
 
@@ -257,6 +218,25 @@
 </div>
 
 <script>
+  // Email offuscata — non esposta nel DOM statico
+  (function() {
+    var u = 'animalbluehouse.sm';
+    var d = 'gmail' + '.' + 'com';
+    var el = document.getElementById('email-link');
+    var lb = document.getElementById('email-label');
+    if (el && lb) {
+      el.href = 'mailto:' + u + '@' + d;
+      lb.textContent = u + '@' + d;
+    }
+  })();
+
+  // Protezione link esterni — aggiunge noopener noreferrer a tutti i target=_blank
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('a[target="_blank"]').forEach(function(a) {
+      a.rel = 'noopener noreferrer';
+    });
+  });
+
   const SHEET_ID = '1fjfNvu2nO_8ntIycM9L-qzc7uCL6roEZ-wGypsiqU1w';
   const SHEET_NAME = 'Foglio1';
 
@@ -267,9 +247,7 @@
       const text = await res.text();
       const json = JSON.parse(text.substring(47, text.length - 2));
       const val = json.table.rows[0]?.c[0]?.v || '';
-      if (val) {
-        document.getElementById('week-label').textContent = val.replace('-', ' → ');
-      }
+      if (val) document.getElementById('week-label').textContent = val.replace('-', ' → ');
     } catch(e) {}
   }
   loadWeekLabel();
@@ -286,11 +264,11 @@
       const text = await res.text();
       const json = JSON.parse(text.substring(47, text.length - 2));
       const rows = json.table.rows;
-      if (!rows || rows.length === 0) { document.getElementById('events-list').innerHTML = '<div class="loading">Nessun evento in programma.</div>'; return; }
+      if (!rows || rows.length === 0) { document.getElementById('events-list').innerHTML = '<div class="loading">Nessun evento in programma questa settimana.</div>'; return; }
       const parseData = (c) => { if (!c || !c.v) return ''; if (c.f) return c.f; if (typeof c.v === 'string') return c.v; return c.v; };
       if (rows[0] && rows[0].c[0] && (rows[0].c[0].v||'').toString().toUpperCase() === 'TITOLO') rows.shift();
       const events = rows.map((row, i) => ({ titolo:row.c[0]?.v||'', data:parseData(row.c[1]), ora:row.c[2]?.v||'', tipo:row.c[3]?.v||'', descrizione:row.c[4]?.v||'', locandina:row.c[5]?.v||'', attivo:(row.c[7]?.v||'').toString().trim().toUpperCase(), index:i })).filter(e => e.titolo && e.attivo === 'SI');
-      if (events.length === 0) { document.getElementById('events-list').innerHTML = '<div class="loading">Nessun evento in programma.</div>'; return; }
+      if (events.length === 0) { document.getElementById('events-list').innerHTML = '<div class="loading">Nessun evento in programma questa settimana.</div>'; return; }
       const html = events.map((ev, i) => {
         const emoji = getTypeEmoji(ev.tipo);
         const isCinema = (ev.tipo||'').toLowerCase() === 'cinema';
@@ -299,7 +277,6 @@
         const poster = ev.locandina ? `<img src="${ev.locandina}" alt="${ev.titolo}" loading="lazy" />` : `<div class="fallback">${emoji}</div>`;
         const footerLabel = isCinema ? 'Prenotati subito!' : isPartner ? 'Scopri le esclusive' : (ev.tipo||'Evento');
         const posterSrc = isCinema ? '<img src="cinema-bg.jpg.webp" alt="Cinema" loading="lazy" style="filter:grayscale(100%)" />' : poster;
-        // Controlla se oggi
         let isOggi = false;
         if (ev.data) {
           const oggi = new Date();
@@ -311,12 +288,11 @@
         }
         const oggiBadge = isOggi ? '<div class="oggi-badge">STASERA</div>' : '';
         const oggiClass = isOggi ? ' oggi' : '';
-        const bellBtn = ev.data ? `<div class="bell-btn" onclick="event.preventDefault();event.stopPropagation();createICS('${ev.titolo.replace(/'/g,"\'")}','${ev.data}','${ev.ora||"00:00"}','Evento Animal Blue House')"><span class="bell-icon">🔔</span></div>` : '';
-
+        const safeTitolo = ev.titolo.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+        const bellBtn = ev.data ? `<div class="bell-btn" onclick="event.preventDefault();event.stopPropagation();createICS('${safeTitolo}','${ev.data}','${ev.ora||"00:00"}','Evento Animal Blue House')"><span class="bell-icon">🔔</span></div>` : '';
         return `<a class="event-card fade-in${oggiClass}" href="${href}" style="animation-delay:${i*0.08}s">
           <div class="event-poster">${posterSrc}<div class="event-overlay"></div>
-            ${bellBtn}
-            ${oggiBadge}
+            ${bellBtn}${oggiBadge}
             <div class="event-overlay-text">
               <div class="event-overlay-title">${ev.titolo}</div>
               ${ev.data ? `<div class="event-overlay-date">${ev.data}${ev.ora?' · '+ev.ora:''}</div>` : ''}
@@ -326,8 +302,9 @@
         </a>`;
       }).join('');
       document.getElementById('events-list').innerHTML = html;
-    } catch(e) { document.getElementById('events-list').innerHTML = '<div class="loading">Errore nel caricamento.</div>'; }
+    } catch(e) { document.getElementById('events-list').innerHTML = '<div class="loading">Errore nel caricamento. Riprova o <a href="https://instagram.com/animalbluehouse" target="_blank" rel="noopener noreferrer" style="color:#5aaa5a">seguici su Instagram</a>.</div>'; }
   }
+
   async function loadPartner() {
     try {
       const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Partner`;
@@ -337,16 +314,7 @@
       let rows = json.table.rows;
       if (!rows || rows.length === 0) return;
       if (rows[0] && (rows[0].c[0]?.v||'').toString().toUpperCase() === 'TITOLO') rows = rows.slice(1);
-      const events = rows.map((row, i) => ({
-        titolo: row.c[0]?.v||'',
-        data: row.c[1]?.f || row.c[1]?.v||'',
-        ora: row.c[2]?.v||'',
-        tipo: row.c[3]?.v||'',
-        locandina: row.c[5]?.v||'',
-        attivo: (row.c[7]?.v||'').toString().trim().toUpperCase(),
-        index: i
-      })).filter(e => e.titolo && e.attivo === 'SI');
-
+      const events = rows.map((row, i) => ({ titolo:row.c[0]?.v||'', data:row.c[1]?.f||row.c[1]?.v||'', ora:row.c[2]?.v||'', tipo:row.c[3]?.v||'', locandina:row.c[5]?.v||'', attivo:(row.c[7]?.v||'').toString().trim().toUpperCase(), index:i })).filter(e => e.titolo && e.attivo === 'SI');
       const html = events.map((ev, i) => {
         const emoji = getTypeEmoji(ev.tipo);
         const poster = ev.locandina ? `<img src="${ev.locandina}" alt="${ev.titolo}" loading="lazy" />` : `<div class="fallback">${emoji}</div>`;
@@ -360,9 +328,8 @@
           <div class="event-footer"><div class="event-tipo">Scopri le esclusive</div><div class="event-arrow">→</div></div>
         </a>`;
       }).join('');
-
       document.getElementById('partner-list').innerHTML = html;
-    } catch(e) { console.log('Partner load error:', e); }
+    } catch(e) {}
   }
 
   async function loadMembersCount() {
@@ -373,17 +340,15 @@
       const json = JSON.parse(text.substring(47, text.length - 2));
       let rows = json.table.rows;
       if (!rows) return;
-      // Salta intestazione e conta righe con numero tessera
       const count = rows.filter((row, i) => {
         if (i === 0 && (row.c[0]?.v||'').toString().toUpperCase().includes('TESSERA')) return false;
         return row.c[0]?.v;
       }).length;
       document.getElementById('members-count').textContent = count + ' iscritti';
-    } catch(e) { console.log('Members error:', e); }
+    } catch(e) {}
   }
 
   function createICS(titolo, data, ora, descrizione) {
-    // data formato gg/mm/aaaa, ora formato HH:MM
     const parts = (data||'').split('/');
     if (parts.length !== 3) return;
     const dd = parts[0].padStart(2,'0');
@@ -393,35 +358,17 @@
     const hh = (timeParts[0]||'00').padStart(2,'0');
     const min = (timeParts[1]||'00').padStart(2,'0');
     const dtStart = `${yyyy}${mm}${dd}T${hh}${min}00`;
-    // Fine evento +2 ore
     const endH = String(parseInt(hh)+2).padStart(2,'0');
     const dtEnd = `${yyyy}${mm}${dd}T${endH}${min}00`;
-    const ics = [
-      'BEGIN:VCALENDAR',
-      'VERSION:2.0',
-      'PRODID:-//Animal Blue House//IT',
-      'BEGIN:VEVENT',
-      `DTSTART:${dtStart}`,
-      `DTEND:${dtEnd}`,
-      `SUMMARY:${titolo} — Animal Blue House`,
-      `DESCRIPTION:${descrizione || 'Evento Animal Blue House'}`,
-      'LOCATION:Piazzetta De Andrè 1\, Budrio',
-      `UID:${dtStart}-${titolo.replace(/ /g,"")}@animalbluehouse`,
-      'END:VEVENT',
-      'END:VCALENDAR'
-    ].join('\r\n');
+    const ics = ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Animal Blue House//IT','BEGIN:VEVENT',`DTSTART:${dtStart}`,`DTEND:${dtEnd}`,`SUMMARY:${titolo} — Animal Blue House`,`DESCRIPTION:${descrizione||'Evento Animal Blue House'}`,'LOCATION:Piazzetta De Andrè 1\\, Budrio',`UID:${dtStart}-${titolo.replace(/ /g,"")}@animalbluehouse`,'END:VEVENT','END:VCALENDAR'].join('\r\n');
     const blob = new Blob([ics], {type:'text/calendar;charset=utf-8'});
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = url;
-    a.download = titolo.replace(/ /g,'-') + '.ics';
-    a.click();
+    a.href = url; a.download = titolo.replace(/ /g,'-') + '.ics'; a.click();
     URL.revokeObjectURL(url);
   }
 
-  window.openInfo = function() {
-    document.getElementById('info-overlay').classList.add('active');
-  };
+  window.openInfo = function() { document.getElementById('info-overlay').classList.add('active'); };
   window.closeInfo = function(e) {
     if (!e || e.target === document.getElementById('info-overlay')) {
       document.getElementById('info-overlay').classList.remove('active');
@@ -431,8 +378,6 @@
   loadEvents();
   loadPartner();
   loadMembersCount();
-
-
 </script>
 </body>
 </html>

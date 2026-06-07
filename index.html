@@ -170,10 +170,6 @@
 </style>
 </head>
 <body>
-<div id="splash">
-  <img src="logo.jpg.jpeg" alt="Animal Blue House" class="splash-logo" />
-  <div class="splash-name">Benvenuto nel club.</div>
-</div>
 <div class="bg"></div>
 <div class="bg-glow"></div>
 <div class="container">
@@ -437,16 +433,7 @@
   loadPartner();
   loadMembersCount();
 
-  // Splash screen
-  var splash = document.getElementById('splash');
-  if (splash) {
-    setTimeout(function() {
-      splash.style.opacity = '0';
-      setTimeout(function() {
-        if (splash && splash.parentNode) splash.parentNode.removeChild(splash);
-      }, 500);
-    }, 1500);
-  }
+
 </script>
 </body>
 </html>

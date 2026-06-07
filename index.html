@@ -112,11 +112,23 @@
   .about-card strong { color:var(--testo); }
 
   /* Counter tesserati */
-  .members-bar { margin:28px 16px 0; background:rgba(255,255,255,0.05); border:0.5px solid rgba(255,255,255,0.1); border-radius:12px; padding:14px 16px; display:flex; align-items:center; gap:12px; backdrop-filter:blur(10px); }
+  .members-bar { margin:28px 16px 0; background:rgba(255,255,255,0.05); border:0.5px solid rgba(255,255,255,0.1); border-radius:12px; padding:14px 16px; display:flex; align-items:center; gap:12px; backdrop-filter:blur(10px); cursor:default; }
   .members-icon { font-size:22px; }
   .members-info { flex:1; }
-  .members-label { font-size:12px; font-weight:500; color:var(--testo-muted); }
+  .members-label { font-size:13px; font-weight:500; color:var(--testo-muted); }
   .members-count { font-size:24px; font-weight:700; color:var(--verde-light); line-height:1.2; }
+  .info-btn { width:28px; height:28px; border-radius:50%; background:rgba(245,197,24,0.15); border:2px solid var(--giallo); display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:var(--giallo); cursor:pointer; flex-shrink:0; transition:background 0.2s; }
+  .info-btn:active { background:rgba(245,197,24,0.3); }
+
+  /* Info popup */
+  .info-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.75); z-index:100; align-items:flex-end; justify-content:center; }
+  .info-overlay.active { display:flex; }
+  .info-modal { background:#0d1f0d; border:1px solid rgba(58,138,58,0.3); border-radius:24px 24px 0 0; padding:28px 24px 36px; width:100%; max-width:480px; animation:slideUp 0.3s ease; }
+  @keyframes slideUp { from { transform:translateY(100%); } to { transform:translateY(0); } }
+  .info-modal-title { font-size:20px; font-weight:700; color:var(--testo); margin-bottom:14px; display:flex; align-items:center; gap:10px; }
+  .info-modal-title span { width:28px; height:28px; border-radius:50%; background:rgba(245,197,24,0.15); border:2px solid var(--giallo); display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; color:var(--giallo); flex-shrink:0; }
+  .info-modal-text { font-size:15px; color:var(--testo-muted); line-height:1.8; margin-bottom:20px; }
+  .info-modal-close { width:100%; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:13px; font-size:15px; font-weight:600; color:var(--testo-muted); font-family:'Fredoka',sans-serif; cursor:pointer; }
 
   /* Download bar */
   .download-bar {
@@ -181,8 +193,18 @@
   <div class="members-bar" style="margin-bottom:12px;">
     <div class="members-icon">🛸</div>
     <div class="members-info">
-      <div class="members-label">Adesso siamo in</div>
+      <div class="members-label">Unisciti ai nostri</div>
       <div class="members-count" id="members-count">—</div>
+    </div>
+    <div class="info-btn" onclick="openInfo()">i</div>
+  </div>
+
+  <!-- Info popup iscrizione -->
+  <div class="info-overlay" id="info-overlay" onclick="closeInfo(event)">
+    <div class="info-modal">
+      <div class="info-modal-title"><span>i</span> Come iscriversi</div>
+      <div class="info-modal-text">Per entrare a far parte dell'Animal Blue House ti basterà recarti presso la sede negli orari di apertura, compilare il modulo e pagare la quota annuale di 5€. La tessera ti darà numerosi vantaggi e la partecipazione agli eventi.</div>
+      <button class="info-modal-close" onclick="closeInfo()">Chiudi</button>
     </div>
   </div>
 
@@ -352,6 +374,15 @@
       document.getElementById('members-count').textContent = count + ' iscritti';
     } catch(e) { console.log('Members error:', e); }
   }
+
+  window.openInfo = function() {
+    document.getElementById('info-overlay').classList.add('active');
+  };
+  window.closeInfo = function(e) {
+    if (!e || e.target === document.getElementById('info-overlay')) {
+      document.getElementById('info-overlay').classList.remove('active');
+    }
+  };
 
   loadEvents();
   loadPartner();

@@ -160,6 +160,13 @@
   /* Card oggi */
   .event-card.oggi { border-color:rgba(245,197,24,0.5); box-shadow:0 0 0 1px rgba(245,197,24,0.2), 0 4px 24px rgba(245,197,24,0.1); }
   .oggi-badge { position:absolute; top:10px; right:10px; background:var(--giallo); color:#0d1f0d; font-size:11px; font-weight:700; padding:4px 10px; border-radius:20px; letter-spacing:0.5px; z-index:3; }
+
+  /* Campanella */
+  .bell-btn { position:absolute; top:10px; left:10px; z-index:3; width:32px; height:32px; border-radius:50%; background:rgba(245,197,24,0.2); border:1.5px solid rgba(245,197,24,0.5); display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:16px; transition:all 0.2s; text-decoration:none; }
+  .bell-btn:active { background:rgba(245,197,24,0.4); transform:scale(0.92); }
+  @keyframes bellRing { 0%,100%{transform:rotate(0)} 20%{transform:rotate(-15deg)} 40%{transform:rotate(15deg)} 60%{transform:rotate(-10deg)} 80%{transform:rotate(10deg)} }
+  .bell-btn:hover .bell-icon { animation:bellRing 0.5s ease; }
+  .bell-icon { display:block; }
 </style>
 </head>
 <body>
@@ -308,9 +315,11 @@
         }
         const oggiBadge = isOggi ? '<div class="oggi-badge">STASERA</div>' : '';
         const oggiClass = isOggi ? ' oggi' : '';
+        const bellBtn = ev.data ? `<div class="bell-btn" onclick="event.preventDefault();event.stopPropagation();createICS('${ev.titolo.replace(/'/g,"\'")}','${ev.data}','${ev.ora||"00:00"}','Evento Animal Blue House')"><span class="bell-icon">🔔</span></div>` : '';
 
         return `<a class="event-card fade-in${oggiClass}" href="${href}" style="animation-delay:${i*0.08}s">
           <div class="event-poster">${posterSrc}<div class="event-overlay"></div>
+            ${bellBtn}
             ${oggiBadge}
             <div class="event-overlay-text">
               <div class="event-overlay-title">${ev.titolo}</div>
@@ -375,6 +384,44 @@
       }).length;
       document.getElementById('members-count').textContent = count + ' iscritti';
     } catch(e) { console.log('Members error:', e); }
+  }
+
+  function createICS(titolo, data, ora, descrizione) {
+    // data formato gg/mm/aaaa, ora formato HH:MM
+    const parts = (data||'').split('/');
+    if (parts.length !== 3) return;
+    const dd = parts[0].padStart(2,'0');
+    const mm = parts[1].padStart(2,'0');
+    const yyyy = parts[2];
+    const timeParts = (ora||'00:00').split(':');
+    const hh = (timeParts[0]||'00').padStart(2,'0');
+    const min = (timeParts[1]||'00').padStart(2,'0');
+    const dtStart = `${yyyy}${mm}${dd}T${hh}${min}00`;
+    // Fine evento +2 ore
+    const endH = String(parseInt(hh)+2).padStart(2,'0');
+    const dtEnd = `${yyyy}${mm}${dd}T${endH}${min}00`;
+    const ics = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//Animal Blue House//IT',
+      'BEGIN:VEVENT',
+      `DTSTART:${dtStart}`,
+      `DTEND:${dtEnd}`,
+      `SUMMARY:${titolo} — Animal Blue House`,
+      `DESCRIPTION:${descrizione || 'Evento Animal Blue House'}`,
+      'LOCATION:Piazzetta De Andrè 1\, Budrio',
+      `UID:${dtStart}-${titolo.replace(/\s/g,'')}@animalbluehouse`,
+      'END:VEVENT',
+      'END:VCALENDAR'
+    ].join('
+');
+    const blob = new Blob([ics], {type:'text/calendar;charset=utf-8'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${titolo.replace(/\s/g,'-')}.ics`;
+    a.click();
+    URL.revokeObjectURL(url);
   }
 
   window.openInfo = function() {

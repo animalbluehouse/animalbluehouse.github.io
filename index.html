@@ -438,15 +438,20 @@
   loadMembersCount();
 
   // Splash screen - solo al primo avvio
+  function hideSplash() {
+    const s = document.getElementById('splash');
+    if (!s) return;
+    s.classList.add('hide');
+    setTimeout(() => { if(s.parentNode) s.parentNode.removeChild(s); }, 500);
+  }
   if (!sessionStorage.getItem('abh-visited')) {
     sessionStorage.setItem('abh-visited', '1');
-    setTimeout(() => {
-      document.getElementById('splash').classList.add('hide');
-      setTimeout(() => document.getElementById('splash').remove(), 500);
-    }, 1500);
+    setTimeout(hideSplash, 1500);
   } else {
-    document.getElementById('splash').remove();
+    hideSplash();
   }
+  // Sicurezza: rimuovi dopo 3 secondi comunque
+  setTimeout(hideSplash, 3000);
 </script>
 </body>
 </html>

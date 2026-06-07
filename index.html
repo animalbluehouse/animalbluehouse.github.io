@@ -437,21 +437,16 @@
   loadPartner();
   loadMembersCount();
 
-  // Splash screen - solo al primo avvio
-  function hideSplash() {
-    const s = document.getElementById('splash');
-    if (!s) return;
-    s.classList.add('hide');
-    setTimeout(() => { if(s.parentNode) s.parentNode.removeChild(s); }, 500);
+  // Splash screen
+  var splash = document.getElementById('splash');
+  if (splash) {
+    setTimeout(function() {
+      splash.style.opacity = '0';
+      setTimeout(function() {
+        if (splash && splash.parentNode) splash.parentNode.removeChild(splash);
+      }, 500);
+    }, 1500);
   }
-  if (!sessionStorage.getItem('abh-visited')) {
-    sessionStorage.setItem('abh-visited', '1');
-    setTimeout(hideSplash, 1500);
-  } else {
-    hideSplash();
-  }
-  // Sicurezza: rimuovi dopo 3 secondi comunque
-  setTimeout(hideSplash, 3000);
 </script>
 </body>
 </html>

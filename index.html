@@ -406,16 +406,15 @@
       `SUMMARY:${titolo} — Animal Blue House`,
       `DESCRIPTION:${descrizione || 'Evento Animal Blue House'}`,
       'LOCATION:Piazzetta De Andrè 1\, Budrio',
-      `UID:${dtStart}-${titolo.replace(/\s/g,'')}@animalbluehouse`,
+      `UID:${dtStart}-${titolo.replace(/ /g,"")}@animalbluehouse`,
       'END:VEVENT',
       'END:VCALENDAR'
-    ].join('
-');
+    ].join('\r\n');
     const blob = new Blob([ics], {type:'text/calendar;charset=utf-8'});
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `${titolo.replace(/\s/g,'-')}.ics`;
+    a.download = titolo.replace(/ /g,'-') + '.ics';
     a.click();
     URL.revokeObjectURL(url);
   }

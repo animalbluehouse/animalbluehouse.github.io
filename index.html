@@ -218,23 +218,16 @@
 </div>
 
 <script>
-  // Email offuscata — non esposta nel DOM statico
   (function() {
     var u = 'animalbluehouse.sm';
     var d = 'gmail' + '.' + 'com';
     var el = document.getElementById('email-link');
     var lb = document.getElementById('email-label');
-    if (el && lb) {
-      el.href = 'mailto:' + u + '@' + d;
-      lb.textContent = u + '@' + d;
-    }
+    if (el && lb) { el.href = 'mailto:' + u + '@' + d; lb.textContent = u + '@' + d; }
   })();
 
-  // Protezione link esterni — aggiunge noopener noreferrer a tutti i target=_blank
   document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('a[target="_blank"]').forEach(function(a) {
-      a.rel = 'noopener noreferrer';
-    });
+    document.querySelectorAll('a[target="_blank"]').forEach(function(a) { a.rel = 'noopener noreferrer'; });
   });
 
   const SHEET_ID = '1fjfNvu2nO_8ntIycM9L-qzc7uCL6roEZ-wGypsiqU1w';
@@ -257,6 +250,14 @@
     return map[(tipo||'').toLowerCase()] || '📅';
   }
 
+  // Converte dd/mm/yyyy → millisecondi per il confronto cronologico
+  // Gli eventi senza data finiscono in fondo (Infinity)
+  function dateToMs(d) {
+    if (!d) return Infinity;
+    const p = d.toString().split('/');
+    return p.length === 3 ? new Date(p[2], p[1] - 1, p[0]).getTime() : Infinity;
+  }
+
   async function loadEvents() {
     try {
       const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}`;
@@ -267,7 +268,26 @@
       if (!rows || rows.length === 0) { document.getElementById('events-list').innerHTML = '<div class="loading">Nessun evento in programma questa settimana.</div>'; return; }
       const parseData = (c) => { if (!c || !c.v) return ''; if (c.f) return c.f; if (typeof c.v === 'string') return c.v; return c.v; };
       if (rows[0] && rows[0].c[0] && (rows[0].c[0].v||'').toString().toUpperCase() === 'TITOLO') rows.shift();
-      const events = rows.map((row, i) => ({ titolo:row.c[0]?.v||'', data:parseData(row.c[1]), ora:row.c[2]?.v||'', tipo:row.c[3]?.v||'', descrizione:row.c[4]?.v||'', locandina:row.c[5]?.v||'', attivo:(row.c[7]?.v||'').toString().trim().toUpperCase(), index:i })).filter(e => e.titolo && e.attivo === 'SI');
+
+      const events = rows
+        .map((row, i) => ({
+          titolo:      row.c[0]?.v || '',
+          data:        parseData(row.c[1]),
+          ora:         row.c[2]?.v || '',
+          tipo:        row.c[3]?.v || '',
+          descrizione: row.c[4]?.v || '',
+          locandina:   row.c[5]?.v || '',
+          attivo:      (row.c[7]?.v || '').toString().trim().toUpperCase(),
+          index:       i
+        }))
+        .filter(e => e.titolo && e.attivo === 'SI')
+        // Ordina per data crescente; a parità di data, per orario
+        .sort((a, b) => {
+          const diff = dateToMs(a.data) - dateToMs(b.data);
+          if (diff !== 0) return diff;
+          return (a.ora || '').localeCompare(b.ora || '');
+        });
+
       if (events.length === 0) { document.getElementById('events-list').innerHTML = '<div class="loading">Nessun evento in programma questa settimana.</div>'; return; }
       const html = events.map((ev, i) => {
         const emoji = getTypeEmoji(ev.tipo);

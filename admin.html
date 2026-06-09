@@ -7,7 +7,7 @@
 <script>history.scrollRestoration = "manual"; window.onload = function(){ window.scrollTo(0,0); };</script>
 <meta name="description" content="Area riservata Animal Blue House.">
 <meta name="keywords" content="">
-<meta name="robots" content="index, follow">
+<meta name="robots" content="noindex, nofollow">
 <meta property="og:title" content="Admin — Animal Blue House">
 <meta property="og:description" content="Area riservata Animal Blue House.">
 <meta property="og:type" content="website">
@@ -33,20 +33,20 @@
 
   .container { max-width:480px; margin:0 auto; padding:0 0 48px; position:relative; z-index:2; }
 
-  /* Login screen */
+  /* Login */
   #login-screen { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100vh; padding:24px; }
   .login-logo { font-size:48px; margin-bottom:16px; }
   .login-title { font-size:28px; font-weight:700; color:var(--testo); margin-bottom:4px; }
   .login-sub { font-size:14px; color:var(--testo-dim); margin-bottom:32px; }
   .login-card { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); border-radius:20px; padding:24px; width:100%; max-width:340px; backdrop-filter:blur(20px); }
-  .login-card input { width:100%; margin-bottom:10px; background:rgba(255,255,255,0.08); border:1.5px solid rgba(255,255,255,0.12); border-radius:12px; padding:14px; font-size:16px; color:var(--testo); font-family:'Fredoka',sans-serif; outline:none; margin-bottom:14px; letter-spacing:2px; }
+  .login-card input { width:100%; background:rgba(255,255,255,0.08); border:1.5px solid rgba(255,255,255,0.12); border-radius:12px; padding:14px; font-size:16px; color:var(--testo); font-family:'Fredoka',sans-serif; outline:none; margin-bottom:14px; letter-spacing:2px; }
   .login-card input:focus { border-color:var(--verde); }
   .login-card input::placeholder { color:var(--testo-dim); letter-spacing:0; }
   .btn-login { width:100%; background:var(--verde); color:#fff; border:none; border-radius:12px; padding:14px; font-size:17px; font-weight:700; font-family:'Fredoka',sans-serif; cursor:pointer; box-shadow:0 0 20px var(--verde-glow); }
   .btn-login:active { opacity:0.85; }
   .login-error { font-size:13px; color:#ff6b6b; text-align:center; margin-top:10px; display:none; }
 
-  /* Admin dashboard */
+  /* Dashboard */
   #dashboard { display:none; }
   .top-bar { padding:20px 20px 16px; display:flex; align-items:center; gap:14px; }
   .back-btn { width:40px; height:40px; border-radius:50%; background:rgba(58,138,58,0.25); border:1.5px solid rgba(58,138,58,0.5); display:flex; align-items:center; justify-content:center; text-decoration:none; font-size:20px; color:#fff; box-shadow:0 0 16px rgba(58,138,58,0.3); flex-shrink:0; }
@@ -57,7 +57,7 @@
   .section-label { font-size:11px; font-weight:600; letter-spacing:2px; color:var(--verde); margin-bottom:12px; text-transform:uppercase; display:flex; align-items:center; gap:8px; }
   .section-label::after { content:''; flex:1; height:1px; background:rgba(58,138,58,0.3); }
 
-  /* Stats card */
+  /* Stats */
   .stats-card { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:18px; padding:20px; backdrop-filter:blur(20px); margin-bottom:12px; }
   .stats-row { display:flex; gap:12px; }
   .stat-item { flex:1; text-align:center; }
@@ -72,18 +72,35 @@
   .btn-action { display:flex; align-items:center; gap:12px; padding:14px 16px; border-radius:12px; border:none; font-size:15px; font-weight:600; font-family:'Fredoka',sans-serif; cursor:pointer; transition:opacity 0.2s; text-align:left; }
   .btn-action:active { opacity:0.8; }
   .btn-action .icon { font-size:20px; width:28px; text-align:center; }
-  .btn-download { background:rgba(58,138,58,0.2); color:#7ec87e; border:1.5px solid rgba(58,138,58,0.3) !important; border:none; }
-  .btn-reset { background:rgba(229,57,53,0.15); color:#ff6b6b; border:1.5px solid rgba(229,57,53,0.3) !important; border:none; }
-  .btn-home { background:rgba(255,255,255,0.06); color:var(--testo-muted); border:1px solid rgba(255,255,255,0.1) !important; border:none; }
+  .btn-download { background:rgba(58,138,58,0.2); color:#7ec87e; border:1.5px solid rgba(58,138,58,0.3) !important; }
+  .btn-reset { background:rgba(229,57,53,0.15); color:#ff6b6b; border:1.5px solid rgba(229,57,53,0.3) !important; }
+  .btn-home { background:rgba(255,255,255,0.06); color:var(--testo-muted); border:1px solid rgba(255,255,255,0.1) !important; }
 
-  /* Prenotazioni list */
+  /* Prenotazioni */
   .bookings-list { display:flex; flex-direction:column; gap:8px; }
-  .booking-item { background:rgba(255,255,255,0.05); border:0.5px solid rgba(255,255,255,0.08); border-radius:12px; padding:12px 14px; display:flex; align-items:center; gap:12px; }
+  .booking-item {
+    background:rgba(255,255,255,0.05);
+    border:0.5px solid rgba(255,255,255,0.08);
+    border-radius:12px; padding:12px 14px;
+    display:flex; align-items:center; gap:12px;
+    transition: background 0.2s;
+  }
   .booking-avatar { width:38px; height:38px; border-radius:50%; background:rgba(58,138,58,0.2); border:1px solid rgba(58,138,58,0.3); display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:700; color:var(--verde); flex-shrink:0; }
   .booking-info { flex:1; min-width:0; }
   .booking-name { font-size:14px; font-weight:600; color:var(--testo); }
-  .booking-meta { font-size:12px; color:var(--testo-dim); margin-top:2px; }
-  .booking-posti { font-size:13px; font-weight:700; color:var(--verde); background:rgba(58,138,58,0.15); border-radius:8px; padding:4px 10px; flex-shrink:0; }
+  .booking-meta { font-size:12px; color:var(--testo-dim); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .booking-right { display:flex; align-items:center; gap:8px; flex-shrink:0; }
+  .booking-posti { font-size:13px; font-weight:700; color:var(--verde); background:rgba(58,138,58,0.15); border-radius:8px; padding:4px 10px; }
+  .btn-delete-booking {
+    width:32px; height:32px; border-radius:8px;
+    background:rgba(229,57,53,0.12); border:1px solid rgba(229,57,53,0.25);
+    display:flex; align-items:center; justify-content:center;
+    font-size:15px; cursor:pointer; color:#ff6b6b;
+    transition:background 0.2s, transform 0.1s;
+    flex-shrink:0;
+  }
+  .btn-delete-booking:hover { background:rgba(229,57,53,0.25); }
+  .btn-delete-booking:active { transform:scale(0.92); }
 
   .empty-bookings { text-align:center; padding:32px; color:var(--testo-dim); font-size:14px; }
 
@@ -99,10 +116,23 @@
   .member-name { font-size:14px; font-weight:600; color:var(--testo); }
   .member-meta { font-size:12px; color:var(--testo-dim); margin-top:2px; }
   .member-badge { font-size:11px; font-weight:600; padding:3px 8px; border-radius:20px; flex-shrink:0; }
-  .badge-active { background:rgba(58,138,58,0.2); color:var(--verde-light); border:0.5px solid rgba(58,138,58,0.3); }
+  .badge-active { background:rgba(58,138,58,0.2); color:#7ec87e; border:0.5px solid rgba(58,138,58,0.3); }
   .badge-inactive { background:rgba(255,255,255,0.05); color:var(--testo-dim); border:0.5px solid rgba(255,255,255,0.1); }
   .members-total { font-size:13px; color:var(--testo-dim); margin-bottom:10px; }
-  .members-total span { color:var(--verde-light); font-weight:700; }
+  .members-total span { color:#7ec87e; font-weight:700; }
+
+  /* Confirm dialog */
+  .confirm-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:200; align-items:center; justify-content:center; padding:24px; }
+  .confirm-overlay.active { display:flex; }
+  .confirm-dialog { background:#0d1f0d; border:1px solid rgba(229,57,53,0.3); border-radius:20px; padding:24px; width:100%; max-width:340px; text-align:center; }
+  .confirm-dialog-icon { font-size:32px; margin-bottom:12px; }
+  .confirm-dialog-title { font-size:18px; font-weight:700; margin-bottom:8px; }
+  .confirm-dialog-text { font-size:14px; color:var(--testo-muted); margin-bottom:20px; line-height:1.5; }
+  .confirm-dialog-name { color:var(--testo); font-weight:600; }
+  .confirm-dialog-btns { display:flex; gap:10px; }
+  .btn-dialog-cancel { flex:1; background:rgba(255,255,255,0.07); color:var(--testo-muted); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:13px; font-size:15px; font-family:'Fredoka',sans-serif; cursor:pointer; }
+  .btn-dialog-confirm { flex:1; background:rgba(229,57,53,0.2); color:#ff6b6b; border:1.5px solid rgba(229,57,53,0.4); border-radius:12px; padding:13px; font-size:15px; font-weight:600; font-family:'Fredoka',sans-serif; cursor:pointer; }
+  .btn-dialog-confirm:active { opacity:0.8; }
 
   .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(10px); background:rgba(20,40,20,0.95); border:1px solid rgba(58,138,58,0.4); border-radius:14px; padding:12px 20px; font-size:14px; color:var(--testo); z-index:300; opacity:0; transition:all 0.3s; white-space:nowrap; pointer-events:none; backdrop-filter:blur(10px); }
   .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
@@ -159,14 +189,14 @@
       </div>
     </div>
 
-    <!-- Azioni -->
+    <!-- Azioni globali -->
     <div class="section">
       <div class="section-label">Azioni</div>
       <div class="action-card">
         <button class="btn-action btn-download" onclick="downloadData()">
           <span class="icon">⬇</span> Scarica lista prenotazioni
         </button>
-        <button class="btn-action btn-reset" onclick="resetSeats()">
+        <button class="btn-action btn-reset" onclick="resetAllSeats()">
           <span class="icon">↺</span> Azzera tutti i posti
         </button>
         <button class="btn-action btn-home" onclick="window.location.href='index.html'">
@@ -200,21 +230,40 @@
   </div>
 </div>
 
+<!-- Dialog conferma eliminazione singola prenotazione -->
+<div class="confirm-overlay" id="delete-overlay">
+  <div class="confirm-dialog">
+    <div class="confirm-dialog-icon">🗑</div>
+    <div class="confirm-dialog-title">Annulla prenotazione?</div>
+    <div class="confirm-dialog-text">
+      Stai per annullare la prenotazione di<br>
+      <span class="confirm-dialog-name" id="delete-name-label"></span>.<br>
+      Questa azione non è reversibile.
+    </div>
+    <div class="confirm-dialog-btns">
+      <button class="btn-dialog-cancel" onclick="closeDeleteDialog()">Indietro</button>
+      <button class="btn-dialog-confirm" onclick="confirmDeleteBooking()">Annulla prenotazione</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script type="module">
   import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
   import { getDatabase, ref, onValue, remove } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
 
-  const app = initializeApp({ databaseURL:"https://animal-blue-house-default-rtdb.europe-west1.firebasedatabase.app" });
+  const app = initializeApp({ databaseURL: "https://animal-blue-house-default-rtdb.europe-west1.firebasedatabase.app" });
   const db = getDatabase(app);
   const ADMIN_PASSWORD = "ABH#x9mK2p";
   const MAX = 90;
   let seatsData = {};
+  let pendingDeleteId = null;
 
-  // Check se già loggato
+  // Check sessione attiva
   if (sessionStorage.getItem('abh-admin') === '1') showDashboard();
 
+  // ── Login ────────────────────────────────────────────────────────────────────
   window.checkLogin = function() {
     const pw = document.getElementById('pw-input').value;
     if (pw === ADMIN_PASSWORD) {
@@ -230,7 +279,6 @@
     if (e.key === 'Enter') window.checkLogin();
   });
 
-
   window.logout = function() {
     sessionStorage.removeItem('abh-admin');
     document.getElementById('dashboard').style.display = 'none';
@@ -245,6 +293,7 @@
     loadMembers();
   }
 
+  // ── Firebase listener ────────────────────────────────────────────────────────
   function startListening() {
     onValue(ref(db, 'seats'), (snap) => {
       seatsData = snap.val() || {};
@@ -253,8 +302,9 @@
     });
   }
 
+  // ── Stats ────────────────────────────────────────────────────────────────────
   function updateStats() {
-    const occupied = Object.values(seatsData).reduce((s,v) => s + (v.count||1), 0);
+    const occupied = Object.values(seatsData).reduce((s, v) => s + (v.count || 1), 0);
     const free = Math.max(0, MAX - occupied);
     const perc = Math.round((occupied / MAX) * 100);
     document.getElementById('stat-occupati').textContent = occupied;
@@ -262,77 +312,121 @@
     const fill = document.getElementById('stat-bar');
     fill.style.width = perc + '%';
     let color, status;
-    if (free === 0) { color='#E53935'; status='SOLD OUT 🔴'; }
-    else if (free <= 15) { color='#FF8C00'; status='Ultimi posti! 🟠'; }
-    else if (free <= 30) { color='#F5C518'; status='Pochi posti rimasti 🟡'; }
-    else { color='#3a8a3a'; status='Disponibile 🟢'; }
+    if (free === 0)      { color = '#E53935'; status = 'SOLD OUT 🔴'; }
+    else if (free <= 15) { color = '#FF8C00'; status = 'Ultimi posti! 🟠'; }
+    else if (free <= 30) { color = '#F5C518'; status = 'Pochi posti rimasti 🟡'; }
+    else                 { color = '#3a8a3a'; status = 'Disponibile 🟢'; }
     fill.style.background = color;
     document.getElementById('stat-status').textContent = status;
     document.getElementById('stat-status').style.color = color;
   }
 
+  // ── Render prenotazioni ──────────────────────────────────────────────────────
   function renderBookings() {
     const list = document.getElementById('bookings-list');
-    const entries = Object.entries(seatsData).sort((a,b) => a[0].localeCompare(b[0]));
+    const entries = Object.entries(seatsData).sort((a, b) => a[0].localeCompare(b[0]));
     if (entries.length === 0) {
       list.innerHTML = '<div class="empty-bookings">Nessuna prenotazione ancora</div>';
       return;
     }
     list.innerHTML = entries.map(([id, data]) => {
-      const initial = (data.name||'?')[0].toUpperCase();
-      const time = new Date(data.timestamp).toLocaleString('it-IT', {day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
-      return `<div class="booking-item">
+      const initial = (data.name || '?')[0].toUpperCase();
+      const time = new Date(data.timestamp).toLocaleString('it-IT', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+      const cfDisplay = data.cf ? ` · ${data.cf}` : '';
+      const tesseraDisplay = data.tessera ? ' · 🎟' : '';
+      return `<div class="booking-item" id="booking-${id}">
         <div class="booking-avatar">${initial}</div>
         <div class="booking-info">
-          <div class="booking-name">${data.name}</div>
-          <div class="booking-meta">${data.contact || 'Nessun contatto'} · ${time}</div>
+          <div class="booking-name">${escapeHtml(data.name)}</div>
+          <div class="booking-meta">${cfDisplay.slice(3)}${tesseraDisplay} · ${time}</div>
         </div>
-        <div class="booking-posti">${data.count||1} 🎟</div>
+        <div class="booking-right">
+          <div class="booking-posti">${data.count || 1} 🎟</div>
+          <button class="btn-delete-booking" onclick="openDeleteDialog('${id}', '${escapeHtml(data.name)}')" title="Annulla prenotazione">✕</button>
+        </div>
       </div>`;
     }).join('');
   }
 
-  window.resetSeats = async function() {
-    if (!confirm('Sei sicuro? Tutte le prenotazioni verranno cancellate.')) return;
+  function escapeHtml(str) {
+    return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  }
+
+  // ── Eliminazione singola prenotazione ────────────────────────────────────────
+  window.openDeleteDialog = function(id, name) {
+    pendingDeleteId = id;
+    document.getElementById('delete-name-label').textContent = name;
+    document.getElementById('delete-overlay').classList.add('active');
+  };
+
+  window.closeDeleteDialog = function() {
+    pendingDeleteId = null;
+    document.getElementById('delete-overlay').classList.remove('active');
+  };
+
+  window.confirmDeleteBooking = async function() {
+    if (!pendingDeleteId) return;
+    const id = pendingDeleteId;
+    const name = seatsData[id]?.name || '';
+    closeDeleteDialog();
+    await remove(ref(db, `seats/${id}`));
+    showToast(`✓ Prenotazione di ${name} annullata`);
+  };
+
+  // ── Reset totale ─────────────────────────────────────────────────────────────
+  window.resetAllSeats = async function() {
+    if (!confirm('Sei sicuro? TUTTE le prenotazioni verranno cancellate.')) return;
     await remove(ref(db, 'seats'));
     showToast('✓ Tutti i posti azzerati');
   };
 
+  // ── Download CSV ─────────────────────────────────────────────────────────────
   window.downloadData = function() {
-    const rows = [['ID','Nome','Contatto','Posti','Data prenotazione']];
-    Object.entries(seatsData).sort().forEach(([id,data]) => {
-      rows.push([id, data.name, data.contact||'', data.count||1, new Date(data.timestamp).toLocaleString('it-IT')]);
+    const rows = [['ID', 'Nome', 'Codice Fiscale', 'Posti', 'Tessera ABH', 'Data prenotazione']];
+    Object.entries(seatsData).sort().forEach(([id, data]) => {
+      rows.push([
+        id,
+        data.name || '',
+        data.cf || '',
+        data.count || 1,
+        data.tessera ? 'SI' : 'NO',
+        new Date(data.timestamp).toLocaleString('it-IT')
+      ]);
     });
     const csv = rows.map(r => r.map(v => `"${v}"`).join(',')).join('\n');
-    const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'});
-    const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-    a.download = `prenotazioni-${new Date().toLocaleDateString('it-IT').replace(/\//g,'-')}.csv`;
-    a.click(); showToast('✓ Lista scaricata!');
+    const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `prenotazioni-${new Date().toLocaleDateString('it-IT').replace(/\//g, '-')}.csv`;
+    a.click();
+    showToast('✓ Lista scaricata!');
   };
 
-  const SHEET_ID_MAIN = '1fjfNvu2nO_8ntIycM9L-qzc7uCL6roEZ-wGypsiqU1w';
+  // ── Tesserati ────────────────────────────────────────────────────────────────
+  const SHEET_ID = '1fjfNvu2nO_8ntIycM9L-qzc7uCL6roEZ-wGypsiqU1w';
   let allMembers = [];
 
   async function loadMembers() {
     try {
-      const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID_MAIN}/gviz/tq?tqx=out:json&sheet=Tesserati`;
+      const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Tesserati`;
       const res = await fetch(url);
       const text = await res.text();
       const json = JSON.parse(text.substring(47, text.length - 2));
       let rows = json.table.rows;
       if (!rows) { document.getElementById('members-list').innerHTML = '<div style="text-align:center;padding:20px;color:var(--testo-dim)">Nessun tesserato</div>'; return; }
-      // Salta sempre la prima riga (intestazione)
-      rows = rows.slice(1);
+      rows = rows.slice(1); // salta intestazione
       allMembers = rows.filter(row => row.c[0]?.v != null || row.c[1]?.v).map(row => ({
-        tessera: row.c[0]?.f || row.c[0]?.v || '—',
-        nome: row.c[1]?.v || '',
-        cognome: row.c[2]?.v || '',
-        nascita: row.c[3]?.f || row.c[3]?.v || '',
+        tessera:  row.c[0]?.f || row.c[0]?.v || '—',
+        nome:     row.c[1]?.v || '',
+        cognome:  row.c[2]?.v || '',
+        nascita:  row.c[3]?.f || row.c[3]?.v || '',
         contatto: row.c[4]?.f || row.c[4]?.v || '',
-        rinnovata: row.c[5]?.v === true || (row.c[5]?.v||'').toString().toLowerCase() === 'true'
+        rinnovata: row.c[5]?.v === true || (row.c[5]?.v || '').toString().toLowerCase() === 'true'
       }));
       renderMembers(allMembers);
-    } catch(e) { document.getElementById('members-list').innerHTML = '<div style="text-align:center;padding:20px;color:var(--testo-dim)">Errore caricamento</div>'; }
+    } catch(e) {
+      document.getElementById('members-list').innerHTML = '<div style="text-align:center;padding:20px;color:var(--testo-dim)">Errore caricamento</div>';
+    }
   }
 
   function renderMembers(members) {
@@ -342,14 +436,14 @@
       return;
     }
     document.getElementById('members-list').innerHTML = members.map(m => {
-      const initial = ((m.nome||'?')[0] + (m.cognome||'?')[0]).toUpperCase();
+      const initial = ((m.nome || '?')[0] + (m.cognome || '?')[0]).toUpperCase();
       const badgeClass = m.rinnovata ? 'badge-active' : 'badge-inactive';
-      const badgeText = m.rinnovata ? '✓ Rinnovata' : 'Non rinnovata';
+      const badgeText  = m.rinnovata ? '✓ Rinnovata' : 'Non rinnovata';
       return `<div class="member-item">
         <div class="member-avatar">${initial}</div>
         <div class="member-info">
-          <div class="member-name">${m.nome} ${m.cognome} <span style="color:var(--testo-dim);font-size:12px">#${m.tessera}</span></div>
-          <div class="member-meta">${m.contatto ? m.contatto + ' · ' : ''}${m.nascita || ''}</div>
+          <div class="member-name">${escapeHtml(m.nome)} ${escapeHtml(m.cognome)} <span style="color:var(--testo-dim);font-size:12px">#${m.tessera}</span></div>
+          <div class="member-meta">${m.contatto ? escapeHtml(m.contatto) + ' · ' : ''}${m.nascita || ''}</div>
         </div>
         <div class="member-badge ${badgeClass}">${badgeText}</div>
       </div>`;
@@ -359,13 +453,13 @@
   window.filterMembers = function() {
     const search = (document.getElementById('search-input')?.value || '').toLowerCase();
     const filter = document.getElementById('filter-select')?.value || 'tutti';
-    let filtered = allMembers.filter(m => {
+    const filtered = allMembers.filter(m => {
       const matchSearch = !search ||
         (m.nome + ' ' + m.cognome).toLowerCase().includes(search) ||
         m.tessera.toString().toLowerCase().includes(search) ||
         m.contatto.toLowerCase().includes(search);
       const matchFilter = filter === 'tutti' ||
-        (filter === 'attivi' && m.rinnovata) ||
+        (filter === 'attivi'  && m.rinnovata) ||
         (filter === 'scaduti' && !m.rinnovata);
       return matchSearch && matchFilter;
     });

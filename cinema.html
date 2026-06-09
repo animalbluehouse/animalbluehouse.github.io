@@ -333,7 +333,7 @@
   window.openModal = function() {
     if (selectedNum === 0) return;
     document.getElementById('modal-recap').textContent =
-      `${selectedNum} posto${selectedNum > 1 ? 'i' : ''} — assegnati per ordine di arrivo`;
+      `${selectedNum} posto${selectedNum > 1 ? 'i' : ''} — ${selectedNum > 1 ? 'assegnati' : 'assegnato'} per ordine di arrivo`;
     document.getElementById('booking-name').value = '';
     document.getElementById('booking-cf').value = '';
     clearErrors();
@@ -426,7 +426,7 @@
     // Messaggio di conferma personalizzato
     const firstName = name.split(' ')[0];
     document.getElementById('confirm-title').textContent = `Fatto, ${firstName}! 🎬`;
-    let confirmText = `Hai prenotato <strong>${selectedNum} posto${selectedNum > 1 ? 'i' : ''}</strong> per la serata cinema.<br>I posti sono assegnati per ordine di arrivo.`;
+    let confirmText = `Hai prenotato <strong>${selectedNum} posto${selectedNum > 1 ? 'i' : ''}</strong> per la serata cinema.<br>${selectedNum > 1 ? 'I posti sono assegnati' : 'Il posto è assegnato'} per ordine di arrivo.`;
     if (!hasTessera) {
       confirmText += `<br><br>⚠️ Ricordati di presentarti almeno <strong>10 minuti prima</strong> per il tesseramento.`;
     }

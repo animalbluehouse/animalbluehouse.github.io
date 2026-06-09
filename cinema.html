@@ -47,7 +47,6 @@
     flex-shrink:0;
   }
   .page-title { font-size:22px; font-weight:700; color:var(--testo); letter-spacing:0.5px; }
-  .admin-link { margin-left:auto; font-size:12px; color:var(--testo-dim); cursor:pointer; padding:4px 10px; border:0.5px solid rgba(255,255,255,0.1); border-radius:20px; }
 
   /* Counter */
   .counter-card {
@@ -86,7 +85,7 @@
     box-shadow:0 0 20px var(--verde-glow);
   }
 
-  /* Barra prenota — inline non fissa */
+  /* Barra prenota */
   .booking-bar {
     margin:0 16px;
     background:rgba(58,138,58,0.15);
@@ -115,14 +114,20 @@
   @keyframes slideUp { from { transform:translateY(100%); } to { transform:translateY(0); } }
   .modal h3 { font-size:22px; font-weight:700; margin-bottom:4px; }
   .modal-recap { font-size:14px; color:var(--testo-muted); margin-bottom:20px; }
-  .modal input { width:100%; background:rgba(255,255,255,0.08); border:1.5px solid rgba(255,255,255,0.12); border-radius:12px; padding:14px; font-size:15px; color:var(--testo); font-family:'Fredoka',sans-serif; outline:none; margin-bottom:12px; }
+  .modal input {
+    width:100%; background:rgba(255,255,255,0.08);
+    border:1.5px solid rgba(255,255,255,0.12); border-radius:12px;
+    padding:14px; font-size:15px; color:var(--testo);
+    font-family:'Fredoka',sans-serif; outline:none; margin-bottom:12px;
+  }
   .modal input:focus { border-color:var(--verde); }
   .modal input::placeholder { color:var(--testo-dim); }
-  .modal input.error { border-color:#E53935; }
-  .input-error-msg { font-size:12px; color:#ff6b6b; margin-top:-8px; margin-bottom:12px; display:none; }
+  .modal input.error { border-color:#E53935; margin-bottom:4px; }
+  .input-error-msg { font-size:12px; color:#ff6b6b; margin-bottom:12px; display:none; padding-left:4px; }
+  .input-error-msg.visible { display:block; }
 
   /* Toggle tessera */
-  .tessera-toggle { display:flex; align-items:center; justify-content:space-between; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:12px 14px; margin-bottom:12px; cursor:pointer; }
+  .tessera-toggle { display:flex; align-items:center; justify-content:space-between; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:12px 14px; margin-bottom:16px; cursor:pointer; }
   .tessera-label { font-size:14px; color:var(--testo-muted); }
   .toggle-switch { width:44px; height:24px; border-radius:12px; background:rgba(255,255,255,0.1); position:relative; transition:background 0.3s; flex-shrink:0; }
   .toggle-switch.on { background:var(--verde); }
@@ -138,20 +143,8 @@
 
   .modal-btns { display:flex; gap:10px; }
   .btn-confirm { flex:1; background:var(--verde); color:#fff; border:none; border-radius:12px; padding:14px; font-size:16px; font-weight:700; font-family:'Fredoka',sans-serif; cursor:pointer; box-shadow:0 0 16px var(--verde-glow); }
+  .btn-confirm:disabled { opacity:0.5; cursor:default; }
   .btn-cancel { background:rgba(255,255,255,0.08); color:var(--testo-muted); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:14px 18px; font-size:15px; font-family:'Fredoka',sans-serif; cursor:pointer; }
-
-  /* Admin */
-  .admin-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.75); z-index:200; align-items:center; justify-content:center; padding:24px; }
-  .admin-overlay.active { display:flex; }
-  .admin-modal { background:#0d1f0d; border:1px solid rgba(58,138,58,0.3); border-radius:20px; padding:24px; width:100%; max-width:360px; }
-  .admin-modal h3 { font-size:20px; font-weight:700; margin-bottom:6px; }
-  .admin-modal p { font-size:14px; color:var(--testo-muted); margin-bottom:16px; }
-  .admin-modal input { width:100%; background:rgba(255,255,255,0.08); border:1.5px solid rgba(255,255,255,0.12); border-radius:12px; padding:12px 14px; font-size:15px; color:var(--testo); font-family:'Fredoka',sans-serif; outline:none; margin-bottom:12px; }
-  .admin-modal input:focus { border-color:var(--verde); }
-  .admin-actions { display:flex; flex-direction:column; gap:10px; margin-top:4px; }
-  .btn-reset { background:rgba(229,57,53,0.15); color:#ff6b6b; border:1.5px solid rgba(229,57,53,0.3); border-radius:12px; padding:13px; font-size:15px; font-family:'Fredoka',sans-serif; cursor:pointer; font-weight:600; }
-  .btn-download { background:rgba(58,138,58,0.15); color:#7ec87e; border:1.5px solid rgba(58,138,58,0.3); border-radius:12px; padding:13px; font-size:15px; font-family:'Fredoka',sans-serif; cursor:pointer; font-weight:600; }
-  .btn-close-admin { background:rgba(255,255,255,0.06); color:var(--testo-muted); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:13px; font-size:15px; font-family:'Fredoka',sans-serif; cursor:pointer; width:100%; margin-top:6px; }
 
   .toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(10px); background:rgba(20,40,20,0.95); border:1px solid rgba(58,138,58,0.4); border-radius:14px; padding:12px 20px; font-size:14px; color:var(--testo); z-index:300; opacity:0; transition:all 0.3s; white-space:nowrap; pointer-events:none; backdrop-filter:blur(10px); }
   .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
@@ -167,7 +160,6 @@
   <div class="top-bar">
     <a class="back-btn" href="index.html">←</a>
     <div class="page-title" id="page-title">🎬 Serata Cinema</div>
-
   </div>
 
   <div class="counter-card">
@@ -176,13 +168,6 @@
     <div class="counter-sub">su 90 posti totali</div>
     <div class="counter-bar"><div class="counter-bar-fill" id="counter-fill" style="width:0%"></div></div>
     <div class="counter-status" id="counter-status"></div>
-  </div>
-
-  <div class="share-bar">
-    <div style="font-size:13px;color:var(--testo-dim);">Hai amici da portare?</div>
-    <a class="share-btn" href="#" onclick="shareWA(); return false;" target="_blank" id="share-link">
-      💬 Condividi con gli amici
-    </a>
   </div>
 
   <div class="seats-section">
@@ -211,8 +196,10 @@
     <div class="modal-recap" id="modal-recap"></div>
 
     <div id="booking-form">
-      <input type="text" id="booking-name" placeholder="Nome prenotazione" autocomplete="off" />
-      <input type="text" id="booking-cf" placeholder="Codice Fiscale *" autocomplete="off" maxlength="16" style="text-transform:uppercase;" />
+      <input type="text" id="booking-name" placeholder="Nome prenotazione *" autocomplete="off" />
+      <div class="input-error-msg" id="name-error">Inserisci il nome prenotazione</div>
+
+      <input type="text" id="booking-cf" placeholder="Codice Fiscale *" autocomplete="off" maxlength="16" style="text-transform:uppercase;" oninput="this.value=this.value.toUpperCase()" />
       <div class="input-error-msg" id="cf-error">Codice Fiscale non valido</div>
       <div class="input-error-msg" id="cf-duplicate">Hai già una prenotazione per questa serata</div>
 
@@ -223,7 +210,7 @@
 
       <div class="modal-btns">
         <button class="btn-cancel" onclick="closeModal()">Indietro</button>
-        <button class="btn-confirm" onclick="confirmBooking()">Conferma</button>
+        <button class="btn-confirm" id="btn-confirm" onclick="confirmBooking()">Conferma</button>
       </div>
     </div>
 
@@ -236,15 +223,13 @@
   </div>
 </div>
 
-
-
 <div class="toast" id="toast"></div>
 
 <script type="module">
   import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-  import { getDatabase, ref, onValue, set, remove } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
+  import { getDatabase, ref, onValue, set, get, remove } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
 
-  // Carica titolo film dallo Sheet
+  // ── Carica titolo film dallo Sheet ──────────────────────────────────────────
   (async () => {
     try {
       const SHEET_ID = '1fjfNvu2nO_8ntIycM9L-qzc7uCL6roEZ-wGypsiqU1w';
@@ -257,89 +242,179 @@
         const tipo = (row.c[3]?.v || '').toLowerCase();
         if (tipo === 'cinema') {
           const titoloFilm = row.c[6]?.v || '';
-          if (titoloFilm) {
-            document.getElementById('page-title').textContent = '🎬 ' + titoloFilm;
-          }
+          if (titoloFilm) document.getElementById('page-title').textContent = '🎬 ' + titoloFilm;
           break;
         }
       }
     } catch(e) {}
   })();
 
-  const app = initializeApp({ databaseURL:"https://animal-blue-house-default-rtdb.europe-west1.firebasedatabase.app" });
+  // ── Firebase ────────────────────────────────────────────────────────────────
+  const app = initializeApp({ databaseURL: "https://animal-blue-house-default-rtdb.europe-west1.firebasedatabase.app" });
   const db = getDatabase(app);
   const MAX = 90;
-  const ADMIN_PASSWORD = "abh2026";
   let seatsData = {};
   let selectedNum = 0;
+  let hasTessera = false;
 
   onValue(ref(db, 'seats'), (snap) => {
     seatsData = snap.val() || {};
     updateCounter();
   });
 
+  // ── Counter ─────────────────────────────────────────────────────────────────
   function updateCounter() {
-    const occupied = Object.values(seatsData).reduce((s,v) => s + (v.count||1), 0);
+    const occupied = Object.values(seatsData).reduce((s, v) => s + (v.count || 1), 0);
     const free = Math.max(0, MAX - occupied);
     const perc = Math.round((occupied / MAX) * 100);
     document.getElementById('counter-num').textContent = free;
     const fill = document.getElementById('counter-fill');
     fill.style.width = perc + '%';
     let color, status;
-    if (free === 0) { color='#E53935'; status='SOLD OUT 🔴'; }
-    else if (free <= 15) { color='#FF8C00'; status='Ultimi posti! 🟠'; }
-    else if (free <= 30) { color='#F5C518'; status='Pochi posti rimasti 🟡'; }
-    else { color='#3a8a3a'; status='Disponibile 🟢'; }
+    if (free === 0)      { color = '#E53935'; status = 'SOLD OUT 🔴'; }
+    else if (free <= 15) { color = '#FF8C00'; status = 'Ultimi posti! 🟠'; }
+    else if (free <= 30) { color = '#F5C518'; status = 'Pochi posti rimasti 🟡'; }
+    else                 { color = '#3a8a3a'; status = 'Disponibile 🟢'; }
     document.getElementById('counter-num').style.color = color;
     fill.style.background = color;
     document.getElementById('counter-status').textContent = status;
     document.getElementById('counter-status').style.color = color;
     if (free === 0) {
-      document.querySelectorAll('.seat-dot').forEach(d => { d.style.opacity='0.3'; d.style.pointerEvents='none'; });
+      document.querySelectorAll('.seat-dot').forEach(d => { d.style.opacity = '0.3'; d.style.pointerEvents = 'none'; });
       document.getElementById('selected-hint').textContent = 'Tutti i posti sono esauriti';
     }
   }
 
+  // ── Validazione Codice Fiscale ───────────────────────────────────────────────
+  function validateCF(cf) {
+    cf = cf.toUpperCase().trim();
+    if (cf.length !== 16) return false;
+    if (!/^[A-Z0-9]{16}$/.test(cf)) return false;
+    const odd  = { 0:1,  1:0,  2:5,  3:7,  4:9,  5:13, 6:15, 7:17, 8:19, 9:21,
+                   A:1,  B:0,  C:5,  D:7,  E:9,  F:13, G:15, H:17, I:19, J:21,
+                   K:2,  L:4,  M:18, N:20, O:11, P:3,  Q:6,  R:8,  S:12, T:14,
+                   U:16, V:10, W:22, X:25, Y:24, Z:23 };
+    const even = { 0:0,  1:1,  2:2,  3:3,  4:4,  5:5,  6:6,  7:7,  8:8,  9:9,
+                   A:0,  B:1,  C:2,  D:3,  E:4,  F:5,  G:6,  H:7,  I:8,  J:9,
+                   K:10, L:11, M:12, N:13, O:14, P:15, Q:16, R:17, S:18, T:19,
+                   U:20, V:21, W:22, X:23, Y:24, Z:25 };
+    let sum = 0;
+    for (let i = 0; i < 15; i++) {
+      const c = cf[i];
+      sum += (i % 2 === 0) ? odd[c] : even[c];
+    }
+    return cf[15] === String.fromCharCode(65 + (sum % 26));
+  }
+
+  // ── Controlla duplicato CF ──────────────────────────────────────────────────
+  function cfAlreadyBooked(cf) {
+    return Object.values(seatsData).some(v => (v.cf || '').toUpperCase() === cf.toUpperCase());
+  }
+
+  // ── Selezione posti ─────────────────────────────────────────────────────────
   window.selectNum = function(n) {
     selectedNum = n;
-    document.querySelectorAll('.seat-dot').forEach((d,i) => {
+    document.querySelectorAll('.seat-dot').forEach((d, i) => {
       d.classList.toggle('active', i < n);
-      d.textContent = i < n ? '✓' : i+1;
+      d.textContent = i < n ? '✓' : i + 1;
     });
-    document.getElementById('selected-count').textContent = `${n} posto${n>1?'i':''} selezionato${n>1?'i':''}`;
+    document.getElementById('selected-count').textContent = `${n} posto${n > 1 ? 'i' : ''} selezionato${n > 1 ? 'i' : ''}`;
     document.getElementById('selected-hint').textContent = 'Clicca Prenota per continuare';
     document.getElementById('btn-prenota').disabled = false;
   };
 
+  // ── Toggle tessera ──────────────────────────────────────────────────────────
+  window.toggleTessera = function() {
+    hasTessera = !hasTessera;
+    document.getElementById('tessera-switch').classList.toggle('on', hasTessera);
+  };
+
+  // ── Apertura / chiusura modal ───────────────────────────────────────────────
   window.openModal = function() {
     if (selectedNum === 0) return;
-    document.getElementById('modal-recap').textContent = `${selectedNum} posto${selectedNum>1?'i':''} — assegnati per ordine di arrivo`;
+    document.getElementById('modal-recap').textContent =
+      `${selectedNum} posto${selectedNum > 1 ? 'i' : ''} — assegnati per ordine di arrivo`;
     document.getElementById('booking-name').value = '';
-    document.getElementById('booking-contact').value = '';
+    document.getElementById('booking-cf').value = '';
+    clearErrors();
+    document.getElementById('booking-form').style.display = 'block';
+    document.getElementById('confirm-message').style.display = 'none';
+    document.getElementById('btn-confirm').disabled = false;
     document.getElementById('booking-modal').classList.add('active');
     setTimeout(() => document.getElementById('booking-name').focus(), 350);
   };
-  window.closeModal = function() { document.getElementById('booking-modal').classList.remove('active'); };
 
+  window.closeModal = function() {
+    document.getElementById('booking-modal').classList.remove('active');
+    hasTessera = false;
+    document.getElementById('tessera-switch').classList.remove('on');
+  };
+
+  function clearErrors() {
+    ['name-error', 'cf-error', 'cf-duplicate'].forEach(id => {
+      document.getElementById(id).classList.remove('visible');
+    });
+    document.getElementById('booking-name').classList.remove('error');
+    document.getElementById('booking-cf').classList.remove('error');
+  }
+
+  // ── Conferma prenotazione ───────────────────────────────────────────────────
   window.confirmBooking = async function() {
-    const name = document.getElementById('booking-name').value.trim();
-    if (!name) { showToast('Inserisci il tuo nome'); return; }
-    const contact = document.getElementById('booking-contact').value.trim();
+    clearErrors();
+
+    const nameInput = document.getElementById('booking-name');
+    const cfInput   = document.getElementById('booking-cf');
+    const name = nameInput.value.trim();
+    const cf   = cfInput.value.trim().toUpperCase();
+
+    let hasError = false;
+
+    // Validazione nome
+    if (!name) {
+      nameInput.classList.add('error');
+      document.getElementById('name-error').classList.add('visible');
+      hasError = true;
+    }
+
+    // Validazione CF
+    if (!cf || !validateCF(cf)) {
+      cfInput.classList.add('error');
+      document.getElementById('cf-error').classList.add('visible');
+      hasError = true;
+    } else if (cfAlreadyBooked(cf)) {
+      cfInput.classList.add('error');
+      document.getElementById('cf-duplicate').classList.add('visible');
+      hasError = true;
+    }
+
+    if (hasError) return;
+
+    // Disabilita pulsante durante il salvataggio
+    const btnConfirm = document.getElementById('btn-confirm');
+    btnConfirm.disabled = true;
+    btnConfirm.textContent = '...';
+
     const bookingId = Date.now().toString();
-    const dataOra = new Date().toLocaleString('it-IT');
+    const dataOra   = new Date().toLocaleString('it-IT');
 
-    // Salva su Firebase per il counter in tempo reale
-    await set(ref(db, `seats/${bookingId}`), { name, contact, count:selectedNum, timestamp:new Date().toISOString() });
+    // Salva su Firebase
+    await set(ref(db, `seats/${bookingId}`), {
+      name,
+      cf,
+      count:     selectedNum,
+      tessera:   hasTessera,
+      timestamp: new Date().toISOString()
+    });
 
-    // Salva su Google Sheet tramite form nascosto
+    // Sync Google Sheet (best-effort)
     try {
-      var form = document.createElement('form');
+      const form = document.createElement('form');
       form.method = 'POST';
       form.action = 'https://script.google.com/macros/s/AKfycbzQtNTPXpnQzU6GD18gQXjTuJI-dcR6a4FI_YJoJ0CrPZSGftxJFYzvRfLicRY_eoM47A/exec';
       form.target = 'hidden-iframe';
-      var fields = { id:bookingId, nome:name, contatto:contact, posti:selectedNum, dataOra:dataOra };
-      Object.entries(fields).forEach(([k,v]) => {
-        var input = document.createElement('input');
+      const fields = { id: bookingId, nome: name, cf, posti: selectedNum, tessera: hasTessera ? 'SI' : 'NO', dataOra };
+      Object.entries(fields).forEach(([k, v]) => {
+        const input = document.createElement('input');
         input.type = 'hidden'; input.name = k; input.value = v;
         form.appendChild(input);
       });
@@ -348,46 +423,23 @@
       document.body.removeChild(form);
     } catch(e) { console.log('Sheet sync error:', e); }
 
-    closeModal();
-    showToast(`✓ Prenotazione confermata per ${selectedNum} posto${selectedNum>1?'i':''}!`);
+    // Messaggio di conferma personalizzato
+    const firstName = name.split(' ')[0];
+    document.getElementById('confirm-title').textContent = `Fatto, ${firstName}! 🎬`;
+    let confirmText = `Hai prenotato <strong>${selectedNum} posto${selectedNum > 1 ? 'i' : ''}</strong> per la serata cinema.<br>I posti sono assegnati per ordine di arrivo.`;
+    if (!hasTessera) {
+      confirmText += `<br><br>⚠️ Ricordati di presentarti almeno <strong>10 minuti prima</strong> per il tesseramento.`;
+    }
+    document.getElementById('confirm-text').innerHTML = confirmText;
+    document.getElementById('booking-form').style.display = 'none';
+    document.getElementById('confirm-message').style.display = 'block';
+
+    // Reset selezione
     selectedNum = 0;
-    document.querySelectorAll('.seat-dot').forEach((d,i) => { d.classList.remove('active'); d.textContent = i+1; });
+    document.querySelectorAll('.seat-dot').forEach((d, i) => { d.classList.remove('active'); d.textContent = i + 1; });
     document.getElementById('selected-count').textContent = 'Nessun posto selezionato';
     document.getElementById('selected-hint').textContent = 'Tocca un numero qui sopra';
     document.getElementById('btn-prenota').disabled = true;
-  };
-
-  window.openAdmin = function() {
-    document.getElementById('admin-modal').classList.add('active');
-    document.getElementById('admin-actions').style.display = 'none';
-    document.getElementById('admin-password').style.display = 'block';
-    document.getElementById('admin-login-btn').style.display = 'block';
-    document.getElementById('admin-password').value = '';
-  };
-  window.closeAdmin = function() { document.getElementById('admin-modal').classList.remove('active'); };
-  window.checkAdmin = function() {
-    if (document.getElementById('admin-password').value === ADMIN_PASSWORD) {
-      document.getElementById('admin-actions').style.display = 'flex';
-      document.getElementById('admin-password').style.display = 'none';
-      document.getElementById('admin-login-btn').style.display = 'none';
-    } else { showToast('Password errata'); }
-  };
-  window.resetSeats = async function() {
-    if (!confirm('Sei sicuro? Tutte le prenotazioni verranno cancellate.')) return;
-    await remove(ref(db, 'seats'));
-    closeAdmin();
-    showToast('Tutti i posti sono stati azzerati');
-  };
-  window.downloadData = function() {
-    const rows = [['ID','Nome','Contatto','Posti','Data']];
-    Object.entries(seatsData).sort().forEach(([id,data]) => {
-      rows.push([id, data.name, data.contact||'', data.count||1, new Date(data.timestamp).toLocaleString('it-IT')]);
-    });
-    const csv = rows.map(r => r.map(v => `"${v}"`).join(',')).join('\n');
-    const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'});
-    const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-    a.download = `prenotazioni-${new Date().toLocaleDateString('it-IT').replace(/\//g,'-')}.csv`;
-    a.click(); showToast('Lista scaricata!');
   };
 
   function showToast(msg) {

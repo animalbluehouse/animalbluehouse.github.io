@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=5">
+<title>Animal Blue House — Eventi a Budrio</title>
+<script>history.scrollRestoration = "manual"; window.onload = function(){ window.scrollTo(0,0); };</script>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://docs.google.com https://sheets.googleapis.com https://animal-blue-house-default-rtdb.europe-west1.firebasedatabase.app https://script.google.com; frame-src 'none'; frame-ancestors 'none';">
+<meta name="description" content="Animal Blue House è il circolo privato di Budrio. Scopri gli eventi della settimana, prenota il tuo posto al cinema e molto altro.">
+<meta name="keywords" content="Animal Blue House, Budrio, eventi, cinema, serate, circolo privato">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Animal Blue House — Eventi a Budrio">
+<meta property="og:description" content="Animal Blue House è il circolo privato di Budrio. Scopri gli eventi della settimana, prenota il tuo posto al cinema e molto altro.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://animalbluehouse.github.io/logo.jpg">
+<meta name="theme-color" content="#001a0a">
+<meta name="google-site-verification" content="m7oyiVt7mkRabfK3P2kVNqk5PikHp6fL8NgSubxH1A0" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://docs.google.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brand-green:      #00ed64;
+    --brand-green-dark: #00684a;
+    --brand-green-soft: #c3f0d2;
+    --brand-teal-deep:  #001a0a;
+    --brand-teal:       #002d14;
+    --brand-teal-mid:   #00401e;
+    --canvas-dark:      #001a0a;
+    --surface-feature:  #e3fcef;
+    --ink:              #001a0a;
+    --steel:            #5c7066;
+    --stone:            #7c9286;
+    --muted:            #a8bdb3;
+    --on-dark:          #ffffff;
+    --on-dark-muted:    #a8bdb3;
+    --on-primary:       #001a0a;
+    --hairline:         #e1e8e4;
+    --hairline-dark:    #1c3a28;
+    --r-sm:   6px;
+    --r-md:   8px;
+    --r-lg:   12px;
+    --r-xl:   16px;
+    --r-xxl:  24px;
+    --r-full: 9999px;
+    --sp-xs:  8px;
+    --sp-sm:  12px;
+    --sp-md:  16px;
+    --sp-lg:  20px;
+    --sp-xl:  24px;
+    --sp-xxl: 32px;
+  }
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  body { font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; font-size:16px; line-height:1.55; color:var(--on-dark); background:var(--brand-teal-deep); min-height:100vh; -webkit-font-smoothing:antialiased; }
+
+  /* SPLASH */
+  #splash { position:fixed; inset:0; z-index:999; background:var(--brand-teal-deep); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px; transition:opacity 0.5s ease; }
+  #splash.hide { opacity:0; pointer-events:none; }
+  .splash-logo { width:88px; height:88px; object-fit:contain; border-radius:50%; animation:splashIn 0.5s ease forwards; opacity:0; border:1px solid var(--hairline-dark); box-shadow:0 0 32px rgba(0,237,100,0.15); }
+  .splash-name { font-size:13px; font-weight:600; letter-spacing:0.12em; color:var(--on-dark-muted); text-transform:uppercase; animation:splashIn 0.5s ease 0.25s forwards; opacity:0; }
+  .splash-name strong { color:var(--brand-green); }
+  @keyframes splashIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+  /* LAYOUT */
+  .page { max-width:480px; margin:0 auto; padding-bottom:64px; }
+
+  /* HERO */
+  .hero { background:var(--brand-teal-deep); padding:48px var(--sp-xl) 32px; text-align:center; position:relative; overflow:hidden; border-bottom:1px solid var(--hairline-dark); }
+  .hero::before { content:''; position:absolute; top:-60px; left:50%; transform:translateX(-50%); width:320px; height:320px; background:radial-gradient(circle, rgba(0,237,100,0.07) 0%, transparent 70%); pointer-events:none; }
+  .hero-logo { width:80px; height:80px; object-fit:contain; border-radius:50%; border:1px solid var(--hairline-dark); display:block; margin:0 auto 20px; position:relative; z-index:1; }
+  .hero-eyebrow { font-size:11px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:var(--brand-green); margin-bottom:8px; }
+  .hero-title { font-size:26px; font-weight:700; line-height:1.15; letter-spacing:-0.5px; color:var(--on-dark); }
+  .week-pill { display:inline-flex; align-items:center; gap:6px; background:var(--brand-green); color:var(--on-primary); font-size:13px; font-weight:600; padding:6px 16px; border-radius:var(--r-full); margin-top:14px; letter-spacing:0.02em; }
+
+  /* SECTION LABEL */
+  .section-label { display:flex; align-items:center; gap:10px; padding:0 var(--sp-xl); margin:28px 0 14px; font-size:11px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:var(--brand-green); }
+  .section-label::after { content:''; flex:1; height:1px; background:var(--hairline-dark); }
+
+  /* EVENTI */
+  .events-list { padding:0 var(--sp-md); display:flex; flex-direction:column; gap:10px; }
+
+  .event-card { display:block; text-decoration:none; background:var(--brand-teal); border:1px solid var(--hairline-dark); border-radius:var(--r-lg); overflow:hidden; transition:border-color 0.15s, transform 0.1s; }
+  .event-card:active { transform:scale(0.98); border-color:var(--brand-green-dark); }
+  .event-card.oggi { border-color:var(--brand-green-dark); box-shadow:0 0 0 1px rgba(0,237,100,0.12); }
+
+  .event-poster { width:100%; aspect-ratio:16/9; background:var(--brand-teal-mid); position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+  .event-poster img { width:100%; height:100%; object-fit:cover; }
+  .event-poster .fallback { font-size:36px; }
+  .event-overlay { position:absolute; inset:0; background:linear-gradient(to top, rgba(0,26,10,0.9) 0%, transparent 60%); }
+  .event-overlay-text { position:absolute; bottom:12px; left:14px; right:14px; }
+  .event-overlay-title { font-size:18px; font-weight:600; color:var(--on-dark); line-height:1.2; letter-spacing:-0.2px; }
+  .event-overlay-date { font-size:12px; color:var(--brand-green); font-weight:500; margin-top:3px; }
+
+  .event-footer { display:flex; align-items:center; justify-content:space-between; padding:10px 14px; border-top:1px solid var(--hairline-dark); }
+  .event-tipo { font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:var(--steel); }
+  .event-cta { background:var(--brand-green); color:var(--on-primary); font-size:12px; font-weight:600; padding:5px 14px; border-radius:var(--r-full); letter-spacing:0.02em; white-space:nowrap; }
+
+  .oggi-badge { position:absolute; top:10px; right:10px; background:var(--brand-green); color:var(--on-primary); font-size:10px; font-weight:700; padding:3px 10px; border-radius:var(--r-full); letter-spacing:0.08em; text-transform:uppercase; z-index:3; }
+  .bell-btn { position:absolute; top:10px; left:10px; z-index:3; width:32px; height:32px; border-radius:var(--r-full); background:rgba(0,237,100,0.12); border:1px solid rgba(0,237,100,0.3); display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:14px; transition:background 0.15s; }
+  .bell-btn:active { background:rgba(0,237,100,0.25); }
+
+  /* LOADING */
+  .loading { text-align:center; padding:48px 24px; color:var(--steel); font-size:14px; line-height:1.6; }
+  .spinner { width:24px; height:24px; border:2px solid var(--hairline-dark); border-top-color:var(--brand-green); border-radius:50%; animation:spin 0.7s linear infinite; margin:0 auto 12px; }
+  @keyframes spin { to{transform:rotate(360deg)} }
+
+  /* MEMBERS */
+  .members-bar { margin:0 var(--sp-md); background:var(--brand-teal); border:1px solid var(--hairline-dark); border-radius:var(--r-lg); padding:var(--sp-md) var(--sp-lg); display:flex; align-items:center; gap:12px; }
+  .members-icon { font-size:20px; flex-shrink:0; }
+  .members-info { flex:1; }
+  .members-label { font-size:12px; color:var(--steel); font-weight:500; }
+  .members-count { font-size:22px; font-weight:700; color:var(--brand-green); line-height:1.2; letter-spacing:-0.3px; }
+  .info-btn { width:28px; height:28px; border-radius:var(--r-full); background:rgba(0,237,100,0.1); border:1px solid rgba(0,237,100,0.3); display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; color:var(--brand-green); cursor:pointer; flex-shrink:0; transition:background 0.15s; }
+  .info-btn:active { background:rgba(0,237,100,0.2); }
+
+  /* INFO MODAL */
+  .info-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:100; align-items:flex-end; justify-content:center; }
+  .info-overlay.active { display:flex; }
+  .info-modal { background:var(--brand-teal); border:1px solid var(--hairline-dark); border-top:none; border-radius:var(--r-xxl) var(--r-xxl) 0 0; padding:28px var(--sp-xl) 36px; width:100%; max-width:480px; animation:slideUp 0.25s ease; }
+  @keyframes slideUp { from{transform:translateY(100%)} to{transform:translateY(0)} }
+  .info-modal-title { font-size:18px; font-weight:600; color:var(--on-dark); margin-bottom:12px; display:flex; align-items:center; gap:10px; }
+  .info-modal-title .badge { width:26px; height:26px; border-radius:var(--r-full); background:rgba(0,237,100,0.15); border:1px solid rgba(0,237,100,0.4); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; color:var(--brand-green); flex-shrink:0; }
+  .info-modal-text { font-size:14px; color:var(--on-dark-muted); line-height:1.7; margin-bottom:20px; }
+  .info-modal-close { width:100%; background:transparent; border:1px solid var(--hairline-dark); border-radius:var(--r-full); padding:12px; font-size:14px; font-weight:600; color:var(--on-dark-muted); font-family:'DM Sans',sans-serif; cursor:pointer; transition:border-color 0.15s; }
+  .info-modal-close:active { border-color:var(--brand-green-dark); }
+
+  /* DOWNLOAD */
+  .download-bar { display:flex; align-items:center; justify-content:space-between; margin:var(--sp-sm) var(--sp-md) 0; background:var(--brand-teal); border:1px solid var(--hairline-dark); border-radius:var(--r-lg); padding:12px 14px; text-decoration:none; transition:border-color 0.15s; }
+  .download-bar:active { border-color:var(--brand-green-dark); }
+  .download-bar-left { display:flex; align-items:center; gap:10px; }
+  .download-icon { font-size:16px; }
+  .download-text { font-size:13px; color:var(--on-dark-muted); font-weight:500; }
+  .btn-primary { background:var(--brand-green); color:var(--on-primary); font-size:13px; font-weight:600; padding:7px 16px; border-radius:var(--r-full); border:none; font-family:'DM Sans',sans-serif; cursor:pointer; white-space:nowrap; }
+
+  /* CONTATTI */
+  .contacts { margin:var(--sp-sm) var(--sp-md) 0; background:var(--brand-teal); border:1px solid var(--hairline-dark); border-radius:var(--r-lg); overflow:hidden; }
+  .contacts-header { padding:14px var(--sp-lg) 12px; border-bottom:1px solid var(--hairline-dark); font-size:11px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:var(--brand-green); }
+  .contact-item { display:flex; align-items:center; gap:12px; padding:12px var(--sp-lg); border-bottom:1px solid var(--hairline-dark); font-size:14px; color:var(--on-dark-muted); text-decoration:none; transition:color 0.15s, background 0.15s; }
+  .contact-item:last-child { border-bottom:none; }
+  .contact-item:active { background:rgba(255,255,255,0.03); color:var(--on-dark); }
+  .contact-icon { width:34px; height:34px; border-radius:var(--r-md); display:flex; align-items:center; justify-content:center; flex-shrink:0; border:1px solid var(--hairline-dark); }
+  .contact-icon svg { width:18px; height:18px; display:block; }
+  .maps-icon { width:34px; height:34px; border-radius:var(--r-md); background:rgba(61,79,159,0.2); border:1px solid rgba(61,79,159,0.3); display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:18px; }
+  .maps-text { font-size:14px; color:var(--on-dark-muted); }
+  .maps-address { font-size:11px; color:var(--steel); margin-top:2px; }
+
+  /* FOOTER */
+  .site-footer { margin:var(--sp-xl) var(--sp-md) 0; padding:var(--sp-md) 0 0; border-top:1px solid var(--hairline-dark); display:flex; align-items:center; justify-content:space-between; }
+  .footer-copy { font-size:12px; color:var(--steel); }
+  .footer-privacy { font-size:12px; color:var(--on-dark-muted); text-decoration:none; border-bottom:1px solid var(--hairline-dark); padding-bottom:1px; }
+  .footer-privacy:active { color:var(--brand-green); }
+
+  .fade-in { animation:fadeIn 0.35s ease forwards; opacity:0; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+</style>
+</head>
+<body>
+
+<div id="splash">
+  <img src="logo.jpg" alt="Animal Blue House" class="splash-logo" />
+  <div class="splash-name"><strong>Animal</strong> Blue House</div>
+</div>
+
+<div class="page">
+
+  <header class="hero">
+    <img src="logo.jpg" alt="Animal Blue House" class="hero-logo" />
+    <div class="hero-eyebrow">Circolo Privato · Budrio</div>
+    <div class="hero-title">Animal Blue House</div>
+    <div class="week-pill">📅 <span id="week-label">Settimana corrente</span></div>
+  </header>
+
+  <div class="section-label">Eventi in programma</div>
+  <div class="events-list" id="events-list">
+    <div class="loading"><div class="spinner"></div>Caricamento eventi...</div>
+  </div>
+
+  <div class="section-label" style="margin-top:32px;">Su di noi</div>
+  <div class="events-list" id="partner-list"></div>
+
+  <div class="section-label" style="margin-top:32px;">La community</div>
+  <div class="members-bar" style="margin-bottom:10px;">
+    <div class="members-icon">🛸</div>
+    <div class="members-info">
+      <div class="members-label">Tesserati attivi</div>
+      <div class="members-count" id="members-count">—</div>
+    </div>
+    <div class="info-btn" onclick="openInfo()">i</div>
+  </div>
+
+  <div class="info-overlay" id="info-overlay" onclick="closeInfo(event)">
+    <div class="info-modal">
+      <div class="info-modal-title"><span class="badge">i</span> Come iscriversi</div>
+      <div class="info-modal-text">Per entrare a far parte dell'Animal Blue House recati presso la sede negli orari di apertura, compila il modulo e paga la quota annuale di <strong style="color:var(--brand-green)">5€</strong>. La tessera ti dà accesso a tutti gli eventi e alle esclusive dei nostri partner.</div>
+      <button class="info-modal-close" onclick="closeInfo()">Chiudi</button>
+    </div>
+  </div>
+
+  <a class="download-bar" href="https://drive.google.com/drive/folders/1Jw-LAj4uGHCqn9hsOEp9Si6W642g48EL?usp=sharing" target="_blank" rel="noopener noreferrer">
+    <div class="download-bar-left">
+      <span class="download-icon">📸</span>
+      <span class="download-text">Foto degli eventi</span>
+    </div>
+    <span class="btn-primary">Scarica ↓</span>
+  </a>
+
+  <div class="section-label" style="margin-top:28px;">Contatti</div>
+  <div class="contacts">
+    <div class="contacts-header">Come trovarci</div>
+    <a class="contact-item" href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x477e2fae29f6a83d:0x732bc6a0ddff6651" target="_blank" rel="noopener noreferrer">
+      <div class="maps-icon">📍</div>
+      <div><div class="maps-text">Dove siamo</div><div class="maps-address">Piazzetta De Andrè 1, Budrio</div></div>
+    </a>
+    <a class="contact-item" href="https://wa.me/393534918218" target="_blank" rel="noopener noreferrer">
+      <div class="contact-icon" style="background:rgba(37,211,102,0.1);border-color:rgba(37,211,102,0.2);">
+        <svg viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.532 5.859L.057 23.428a.75.75 0 00.916.916l5.569-1.475A11.943 11.943 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.693-.528-5.222-1.443l-.374-.223-3.879 1.027 1.027-3.772-.245-.389A9.954 9.954 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+      </div>
+      +39 353 4918218
+    </a>
+    <a class="contact-item" href="https://instagram.com/animalbluehouse" target="_blank" rel="noopener noreferrer">
+      <div class="contact-icon" style="background:rgba(220,39,67,0.1);border-color:rgba(220,39,67,0.2);">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="url(#ig)"/>
+          <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" stroke="url(#ig)"/>
+          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="url(#ig)"/>
+          <defs><linearGradient id="ig" x1="2" y1="22" x2="22" y2="2" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#f09433"/><stop offset="50%" stop-color="#dc2743"/><stop offset="100%" stop-color="#bc1888"/></linearGradient></defs>
+        </svg>
+      </div>
+      @animalbluehouse
+    </a>
+    <a class="contact-item" id="email-link" href="#">
+      <div class="contact-icon" style="background:rgba(0,237,100,0.08);border-color:rgba(0,237,100,0.2);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--brand-green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      </div>
+      <span id="email-label">Scrivici via email</span>
+    </a>
+  </div>
+
+  <div class="site-footer">
+    <span class="footer-copy">© 2026 Animal Blue House</span>
+    <a class="footer-privacy" href="privacy.html">Privacy Policy</a>
+  </div>
+
+</div>
+
+<script>
+  (function(){
+    var u='animalbluehouse.sm',d='gmail'+'.'+'com';
+    var el=document.getElementById('email-link'),lb=document.getElementById('email-label');
+    if(el&&lb){el.href='mailto:'+u+'@'+d;lb.textContent=u+'@'+d;}
+  })();
+
+  document.addEventListener('DOMContentLoaded',function(){
+    document.querySelectorAll('a[target="_blank"]').forEach(function(a){a.rel='noopener noreferrer';});
+    setTimeout(function(){document.getElementById('splash').classList.add('hide');},1200);
+  });
+
+  const SHEET_ID='1fjfNvu2nO_8ntIycM9L-qzc7uCL6roEZ-wGypsiqU1w';
+
+  async function loadWeekLabel(){
+    try{
+      const res=await fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Config`);
+      const text=await res.text();
+      const json=JSON.parse(text.substring(47,text.length-2));
+      const val=json.table.rows[0]?.c[0]?.v||'';
+      if(val)document.getElementById('week-label').textContent=val.replace('-',' → ');
+    }catch(e){}
+  }
+  loadWeekLabel();
+
+  function getEmoji(t){return({'cinema':'🎬','torneo':'🃏','cultura':'🎭','musica':'🎵','sport':'⚽','comedy':'🎤','party':'🎉'}[(t||'').toLowerCase()])||'📅';}
+
+  async function loadEvents(){
+    try{
+      const res=await fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Foglio1`);
+      const text=await res.text();
+      const json=JSON.parse(text.substring(47,text.length-2));
+      const rows=json.table.rows;
+      if(!rows||rows.length===0){document.getElementById('events-list').innerHTML='<div class="loading">Nessun evento in programma questa settimana.</div>';return;}
+      const pd=(c)=>{if(!c||!c.v)return'';if(c.f)return c.f;if(typeof c.v==='string')return c.v;return c.v;};
+      if(rows[0]&&(rows[0].c[0]?.v||'').toString().toUpperCase()==='TITOLO')rows.shift();
+      const events=rows.map((row,i)=>({titolo:row.c[0]?.v||'',data:pd(row.c[1]),ora:row.c[2]?.v||'',tipo:row.c[3]?.v||'',locandina:row.c[5]?.v||'',attivo:(row.c[7]?.v||'').toString().trim().toUpperCase(),index:i})).filter(e=>e.titolo&&e.attivo==='SI');
+      if(events.length===0){document.getElementById('events-list').innerHTML='<div class="loading">Nessun evento in programma.</div>';return;}
+      const html=events.map((ev,i)=>{
+        const isCinema=(ev.tipo||'').toLowerCase()==='cinema';
+        const isPartner=(ev.tipo||'').toLowerCase()==='partner';
+        const href=isCinema?'cinema.html':isPartner?'partner.html':`evento.html?i=${ev.index}`;
+        const poster=ev.locandina?`<img src="${ev.locandina}" alt="${ev.titolo}" loading="lazy" width="480" height="270" decoding="async" />`:(isCinema?`<img src="cinema-bg.jpg.webp" alt="Cinema" loading="lazy" width="480" height="270" style="filter:grayscale(80%)" />`:`<div class="fallback">${getEmoji(ev.tipo)}</div>`);
+        const cta=isCinema?'Prenota →':isPartner?'Esclusive →':'Scopri →';
+        const label=isCinema?'Cinema':isPartner?'Partner':(ev.tipo||'Evento');
+        let isOggi=false;
+        if(ev.data){const p=ev.data.toString().split('/');if(p.length===3){const de=new Date(p[2],p[1]-1,p[0]);isOggi=de.toDateString()===new Date().toDateString();}}
+        const st=ev.titolo.replace(/'/g,"\\'").replace(/"/g,'&quot;');
+        const bell=ev.data?`<div class="bell-btn" onclick="event.preventDefault();event.stopPropagation();createICS('${st}','${ev.data}','${ev.ora||"00:00"}','Evento Animal Blue House')">🔔</div>`:'';
+        return`<a class="event-card fade-in${isOggi?' oggi':''}" href="${href}" style="animation-delay:${i*0.07}s">
+          <div class="event-poster">${poster}<div class="event-overlay"></div>${bell}${isOggi?'<div class="oggi-badge">Stasera</div>':''}
+            <div class="event-overlay-text"><div class="event-overlay-title">${ev.titolo}</div>${ev.data?`<div class="event-overlay-date">${ev.data}${ev.ora?' · '+ev.ora:''}</div>`:''}</div>
+          </div>
+          <div class="event-footer"><span class="event-tipo">${label}</span><span class="event-cta">${cta}</span></div>
+        </a>`;
+      }).join('');
+      document.getElementById('events-list').innerHTML=html;
+    }catch(e){document.getElementById('events-list').innerHTML='<div class="loading">Errore nel caricamento. <a href="https://instagram.com/animalbluehouse" target="_blank" rel="noopener noreferrer" style="color:var(--brand-green)">Seguici su Instagram →</a></div>';}
+  }
+
+  async function loadPartner(){
+    try{
+      const res=await fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Partner`);
+      const text=await res.text();
+      const json=JSON.parse(text.substring(47,text.length-2));
+      let rows=json.table.rows;
+      if(!rows||rows.length===0)return;
+      if(rows[0]&&(rows[0].c[0]?.v||'').toString().toUpperCase()==='TITOLO')rows=rows.slice(1);
+      const events=rows.map((row,i)=>({titolo:row.c[0]?.v||'',data:row.c[1]?.f||row.c[1]?.v||'',tipo:row.c[3]?.v||'',locandina:row.c[5]?.v||'',attivo:(row.c[7]?.v||'').toString().trim().toUpperCase()})).filter(e=>e.titolo&&e.attivo==='SI');
+      const html=events.map((ev,i)=>{
+        const poster=ev.locandina?`<img src="${ev.locandina}" alt="${ev.titolo}" loading="lazy" width="480" height="270" decoding="async" />`:`<div class="fallback">${getEmoji(ev.tipo)}</div>`;
+        return`<a class="event-card fade-in" href="partner.html" style="animation-delay:${i*0.07}s">
+          <div class="event-poster">${poster}<div class="event-overlay"></div>
+            <div class="event-overlay-text"><div class="event-overlay-title">${ev.titolo}</div>${ev.data?`<div class="event-overlay-date">${ev.data}</div>`:''}</div>
+          </div>
+          <div class="event-footer"><span class="event-tipo">Partner</span><span class="event-cta">Esclusive →</span></div>
+        </a>`;
+      }).join('');
+      document.getElementById('partner-list').innerHTML=html;
+    }catch(e){}
+  }
+
+  async function loadMembersCount(){
+    try{
+      const res=await fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Tesserati`);
+      const text=await res.text();
+      const json=JSON.parse(text.substring(47,text.length-2));
+      let rows=json.table.rows;
+      if(!rows)return;
+      const count=rows.filter((row,i)=>{if(i===0&&(row.c[0]?.v||'').toString().toUpperCase().includes('TESSERA'))return false;return row.c[0]?.v;}).length;
+      document.getElementById('members-count').textContent=count+' iscritti';
+    }catch(e){}
+  }
+
+  function createICS(titolo,data,ora,desc){
+    const p=(data||'').split('/');if(p.length!==3)return;
+    const dd=p[0].padStart(2,'0'),mm=p[1].padStart(2,'0'),yyyy=p[2];
+    const tp=(ora||'00:00').split(':');
+    const hh=(tp[0]||'00').padStart(2,'0'),min=(tp[1]||'00').padStart(2,'0');
+    const dtS=`${yyyy}${mm}${dd}T${hh}${min}00`;
+    const dtE=`${yyyy}${mm}${dd}T${String(parseInt(hh)+2).padStart(2,'0')}${min}00`;
+    const ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Animal Blue House//IT','BEGIN:VEVENT',
+      `DTSTART:${dtS}`,`DTEND:${dtE}`,`SUMMARY:${titolo} — Animal Blue House`,
+      `DESCRIPTION:${desc||'Evento Animal Blue House'}`,'LOCATION:Piazzetta De Andrè 1\\, Budrio',
+      `UID:${dtS}-${titolo.replace(/ /g,'')}@animalbluehouse`,'END:VEVENT','END:VCALENDAR'].join('\r\n');
+    const blob=new Blob([ics],{type:'text/calendar;charset=utf-8'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');a.href=url;a.download=titolo.replace(/ /g,'-')+'.ics';a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  window.openInfo=function(){document.getElementById('info-overlay').classList.add('active');};
+  window.closeInfo=function(e){if(!e||e.target===document.getElementById('info-overlay'))document.getElementById('info-overlay').classList.remove('active');};
+
+  loadEvents();
+  loadPartner();
+  loadMembersCount();
+</script>
+</body>
+</html>
